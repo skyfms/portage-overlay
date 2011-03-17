@@ -3,8 +3,9 @@
 # $Header: /var/cvsroot/gentoo-x86/eclass/mysql_fx.eclass,v 1.22 2009/02/12 05:05:14 robbat2 Exp $
 
 # Author: Francesco Riosa (Retired) <vivo@gentoo.org>
-# Maintainer: MySQL Team <mysql-bugs@gentoo.org>
-#		Luca Longinotti <chtekk@gentoo.org>
+# Maintainer:
+#	- MySQL Team <mysql-bugs@gentoo.org>
+#	- Luca Longinotti <chtekk@gentoo.org>
 
 inherit multilib
 
@@ -210,4 +211,72 @@ mysql_lib_symlinks() {
 			done
 		done
 	popd &> /dev/null
+}
+
+# @FUNCTION: mysql_init_vars
+# @DESCRIPTION:
+# void mysql_init_vars()
+# Initialize global variables
+# 2005-11-19 <vivo@gentoo.org>
+mysql_init_vars() {
+	MY_SHAREDSTATEDIR=${MY_SHAREDSTATEDIR="/usr/share/mysql"}
+	MY_SYSCONFDIR=${MY_SYSCONFDIR="/etc/mysql"}
+	MY_LIBDIR=${MY_LIBDIR="/usr/$(get_libdir)/mysql"}
+	MY_LOCALSTATEDIR=${MY_LOCALSTATEDIR="/var/lib/mysql"}
+	MY_LOGDIR=${MY_LOGDIR="/var/log/mysql"}
+	MY_INCLUDEDIR=${MY_INCLUDEDIR="/usr/include/mysql"}
+
+	if [[ -z "${MY_DATADIR}" ]] ; then
+		MY_DATADIR=""
+		if [[ -f "${MY_SYSCONFDIR}/my.cnf" ]] ; then
+			MY_DATADIR=`"my_print_defaults" mysqld 2>/dev/null \
+				| sed -ne '/datadir/s|^--datadir=||p' \
+				| tail -n1`
+			if [[ -z "${MY_DATADIR}" ]] ; then
+				MY_DATADIR=`grep ^datadir "${MY_SYSCONFDIR}/my.cnf" \
+				| sed -e 's/.*=\s*//' \
+				| tail -n1`
+			fi
+		fi
+		if [[ -z "${MY_DATADIR}" ]] ; then
+			MY_DATADIR="${MY_LOCALSTATEDIR}"
+			einfo "Using default MY_DATADIR"
+		fi
+		elog "MySQL MY_DATADIR is ${MY_DATADIR}"
+
+		if [[ -z "${PREVIOUS_DATADIR}" ]] ; then
+			if [[ -e "${MY_DATADIR}" ]] ; then
+				# If you get this and you're wondering about it, see bug #207636
+				elog "MySQL datadir found in ${MY_DATADIR}"
+				elog "A new one will not be created."
+				PREVIOUS_DATADIR="yes"
+			else
+				PREVIOUS_DATADIR="no"
+			fi
+			export PREVIOUS_DATADIR
+		fi
+	else
+		if [[ ${EBUILD_PHASE} == "config" ]]; then
+			local new_MY_DATADIR
+			new_MY_DATADIR=`"my_print_defaults" mysqld 2>/dev/null \
+				| sed -ne '/datadir/s|^--datadir=||p' \
+				| tail -n1`
+
+			if [[ ( -n "${new_MY_DATADIR}" ) && ( "${new_MY_DATADIR}" != "${MY_DATADIR}" ) ]]; then
+				ewarn "MySQL MY_DATADIR has changed"
+				ewarn "from ${MY_DATADIR}"
+				ewarn "to ${new_MY_DATADIR}"
+				MY_DATADIR="${new_MY_DATADIR}"
+			fi
+		fi
+	fi
+
+	if [ "${MY_SOURCEDIR:-unset}" == "unset" ]; then
+		MY_SOURCEDIR=${SERVER_URI##*/}
+		MY_SOURCEDIR=${MY_SOURCEDIR%.tar*}
+	fi
+
+	export MY_SHAREDSTATEDIR MY_SYSCONFDIR
+	export MY_LIBDIR MY_LOCALSTATEDIR MY_LOGDIR
+	export MY_INCLUDEDIR MY_DATADIR MY_SOURCEDIR
 }
