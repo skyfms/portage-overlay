@@ -184,32 +184,41 @@ mysql_version_is_at_least() {
 # library to the best version available.
 #
 mysql_lib_symlinks() {
+
 	local d dirlist maxdots libname libnameln libsuffix reldir
 	libsuffix=$(get_libname)
-	einfo "Updating MySQL ${libsuffix} symlinks"
+
+	ewarn "libsuffix = ${libsuffix}"
+	ewarn "Updating MySQL libraries symlinks"
+
 	reldir="${1}"
 	pushd "${reldir}/usr/$(get_libdir)" &> /dev/null
-		# dirlist must contain the less significative directory left
-		dirlist="mysql"
 
-		# waste some time in removing and recreating symlinks
-		for d in $dirlist ; do
-			for libname in $( find "${d}" -name "*.${libsuffix}*" -and -not -type "l" 2>/dev/null ) ; do
-				# maxdot is a limit versus infinite loop
-				maxdots=0
-				libnameln=${libname##*/}
-				# loop in version of the library to link it, similar to how
-				# libtool works
-				while [[ ${libnameln:0-3} != '${libsuffix}' ]] && [[ ${maxdots} -lt 6 ]] ; do
-					rm -f "${libnameln}"
-					ln -s "${libname}" "${libnameln}"
-					(( ++maxdots ))
-					libnameln="${libnameln%.*}"
-				done
+	# dirlist must contain the less significative directory left
+	dirlist="mysql"
+
+	# waste some time in removing and recreating symlinks
+	for d in $dirlist ; do
+		for libname in $( find "${d}" -name "*${libsuffix}*" -and -not -type "l" 2>/dev/null ) ; do
+			# maxdot is a limit versus infinite loop
+			maxdots=0
+			libnameln=${libname##*/}
+			# loop in version of the library to link it, similar to how
+			# libtool works
+			while [[ ${libnameln:0-3} != '${libsuffix}' ]] && [[ ${maxdots} -lt 6 ]] ; do
 				rm -f "${libnameln}"
 				ln -s "${libname}" "${libnameln}"
+				(( ++maxdots ))
+				libnameln="${libnameln%.*}"
 			done
+			rm -f "${libnameln}"
+			ln -s "${libname}" "${libnameln}"
+
+			ewarn "ln -s ${libname} ${libnameln}"
+
 		done
+	done
+
 	popd &> /dev/null
 }
 
