@@ -188,8 +188,8 @@ mysql_lib_symlinks() {
 	local d dirlist maxdots libname libnameln libsuffix reldir
 	libsuffix=$(get_libname)
 
-	ewarn "libsuffix = ${libsuffix}"
-	ewarn "Updating MySQL libraries symlinks"
+	einfo "libsuffix = ${libsuffix}"
+	einfo "Updating MySQL libraries symlinks"
 
 	reldir="${1}"
 	pushd "${reldir}/usr/$(get_libdir)" &> /dev/null
@@ -213,9 +213,6 @@ mysql_lib_symlinks() {
 			done
 			rm -f "${libnameln}"
 			ln -s "${libname}" "${libnameln}"
-
-			ewarn "ln -s ${libname} ${libnameln}"
-
 		done
 	done
 
