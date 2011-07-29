@@ -229,13 +229,8 @@ mysql_init_vars() {
 	MY_SYSCONFDIR=${MY_SYSCONFDIR="/etc/mysql"}
 	MY_LOCALSTATEDIR=${MY_LOCALSTATEDIR="/var/lib/mysql"}
 	MY_LOGDIR=${MY_LOGDIR="/var/log/mysql"}
-	if [[ ${PN} == "mariadb" ]]; then
-		MY_INCLUDEDIR=${MY_INCLUDEDIR="/usr/include/mysql"}
-		MY_LIBDIR=${MY_LIBDIR="/usr/$(get_libdir)/mysql"}
-	else
-		MY_INCLUDEDIR=${MY_INCLUDEDIR="/usr/include"}
-		MY_LIBDIR=${MY_LIBDIR="/usr/$(get_libdir)"}
-	fi
+	MY_INCLUDEDIR=${MY_INCLUDEDIR="/usr/include/mysql"}
+	MY_LIBDIR=${MY_LIBDIR="/usr/$(get_libdir)/mysql"}
 
 	if [[ -z "${MY_DATADIR}" ]] ; then
 		MY_DATADIR=""
