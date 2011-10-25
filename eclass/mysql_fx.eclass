@@ -234,12 +234,12 @@ mysql_init_vars() {
 
 	if [[ -z "${MY_DATADIR}" ]] ; then
 		MY_DATADIR=""
-		if [[ -f "${MY_SYSCONFDIR}/my.cnf" ]] ; then
+		if [[ -f "${EPREFIX}${MY_SYSCONFDIR}/my.cnf" ]] ; then
 			MY_DATADIR=`"my_print_defaults" mysqld 2>/dev/null \
 				| sed -ne '/datadir/s|^--datadir=||p' \
 				| tail -n1`
 			if [[ -z "${MY_DATADIR}" ]] ; then
-				MY_DATADIR=`grep ^datadir "${MY_SYSCONFDIR}/my.cnf" \
+				MY_DATADIR=`grep ^datadir "${EPREFIX}${MY_SYSCONFDIR}/my.cnf" \
 				| sed -e 's/.*=\s*//' \
 				| tail -n1`
 			fi
@@ -247,13 +247,16 @@ mysql_init_vars() {
 		if [[ -z "${MY_DATADIR}" ]] ; then
 			MY_DATADIR="${MY_LOCALSTATEDIR}"
 			einfo "Using default MY_DATADIR"
+		else
+			# strip leading EPREFIX returned by already installed mysql
+			MY_DATADIR="${MY_DATADIR#${EPREFIX}}"
 		fi
-		elog "MySQL MY_DATADIR is ${MY_DATADIR}"
+		elog "MySQL MY_DATADIR is ${EPREFIX}${MY_DATADIR}"
 
 		if [[ -z "${PREVIOUS_DATADIR}" ]] ; then
-			if [[ -e "${MY_DATADIR}" ]] ; then
+			if [[ -e "${EPREFIX}${MY_DATADIR}" ]] ; then
 				# If you get this and you're wondering about it, see bug #207636
-				elog "MySQL datadir found in ${MY_DATADIR}"
+				elog "MySQL datadir found in ${EPREFIX}${MY_DATADIR}"
 				elog "A new one will not be created."
 				PREVIOUS_DATADIR="yes"
 			else
@@ -272,7 +275,8 @@ mysql_init_vars() {
 				ewarn "MySQL MY_DATADIR has changed"
 				ewarn "from ${MY_DATADIR}"
 				ewarn "to ${new_MY_DATADIR}"
-				MY_DATADIR="${new_MY_DATADIR}"
+				# strip leading EPREFIX returned by already installed mysql
+				MY_DATADIR="${new_MY_DATADIR#${EPREFIX}}"
 			fi
 		fi
 	fi
