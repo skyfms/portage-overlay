@@ -205,14 +205,29 @@ mysql_lib_symlinks() {
 			libnameln=${libname##*/}
 			# loop in version of the library to link it, similar to how
 			# libtool works
-			while [[ ${libnameln:0-3} != '${libsuffix}' ]] && [[ ${maxdots} -lt 6 ]] ; do
+			if [[ ${CHOST} == *-darwin* ]] ; then
+				# macho: libname.x.y.z.dylib
+				local libbasename=${libnameln%%.*}       # libname
+				local libver=${libnameln#${libbasename}} # .x.y.z.dylib
+				libver=${libver%${libsuffix}}            # .x.y.z
+				while [[ -n ${libver} ]] && [[ ${maxdots} -lt 6 ]] ; do
+					libnameln="${libbasename}${libver}${libsuffix}"
+					rm -f "${libnameln}"
+					ln -s "${libname}" "${libnameln}"
+					(( ++maxdots ))
+					libver=${libver%.*}
+				done
+			else
+				# elf: libname.so.x.y.z
+				while [[ ${libnameln:0-3} != '${libsuffix}' ]] && [[ ${maxdots} -lt 6 ]] ; do
+					rm -f "${libnameln}"
+					ln -s "${libname}" "${libnameln}"
+					(( ++maxdots ))
+					libnameln="${libnameln%.*}"
+				done
 				rm -f "${libnameln}"
 				ln -s "${libname}" "${libnameln}"
-				(( ++maxdots ))
-				libnameln="${libnameln%.*}"
-			done
-			rm -f "${libnameln}"
-			ln -s "${libname}" "${libnameln}"
+			fi
 		done
 	done
 
@@ -225,21 +240,21 @@ mysql_lib_symlinks() {
 # Initialize global variables
 # 2005-11-19 <vivo@gentoo.org>
 mysql_init_vars() {
-	MY_SHAREDSTATEDIR=${MY_SHAREDSTATEDIR="/usr/share/mysql"}
-	MY_SYSCONFDIR=${MY_SYSCONFDIR="/etc/mysql"}
-	MY_LOCALSTATEDIR=${MY_LOCALSTATEDIR="/var/lib/mysql"}
-	MY_LOGDIR=${MY_LOGDIR="/var/log/mysql"}
-	MY_INCLUDEDIR=${MY_INCLUDEDIR="/usr/include/mysql"}
-	MY_LIBDIR=${MY_LIBDIR="/usr/$(get_libdir)/mysql"}
+	MY_SHAREDSTATEDIR=${MY_SHAREDSTATEDIR="${EPREFIX}/usr/share/mysql"}
+	MY_SYSCONFDIR=${MY_SYSCONFDIR="${EPREFIX}/etc/mysql"}
+	MY_LOCALSTATEDIR=${MY_LOCALSTATEDIR="${EPREFIX}/var/lib/mysql"}
+	MY_LOGDIR=${MY_LOGDIR="${EPREFIX}/var/log/mysql"}
+	MY_INCLUDEDIR=${MY_INCLUDEDIR="${EPREFIX}/usr/include/mysql"}
+	MY_LIBDIR=${MY_LIBDIR="${EPREFIX}/usr/$(get_libdir)/mysql"}
 
 	if [[ -z "${MY_DATADIR}" ]] ; then
 		MY_DATADIR=""
-		if [[ -f "${EPREFIX}${MY_SYSCONFDIR}/my.cnf" ]] ; then
+		if [[ -f "${MY_SYSCONFDIR}/my.cnf" ]] ; then
 			MY_DATADIR=`"my_print_defaults" mysqld 2>/dev/null \
 				| sed -ne '/datadir/s|^--datadir=||p' \
 				| tail -n1`
 			if [[ -z "${MY_DATADIR}" ]] ; then
-				MY_DATADIR=`grep ^datadir "${EPREFIX}${MY_SYSCONFDIR}/my.cnf" \
+				MY_DATADIR=`grep ^datadir "${MY_SYSCONFDIR}/my.cnf" \
 				| sed -e 's/.*=\s*//' \
 				| tail -n1`
 			fi
@@ -247,16 +262,13 @@ mysql_init_vars() {
 		if [[ -z "${MY_DATADIR}" ]] ; then
 			MY_DATADIR="${MY_LOCALSTATEDIR}"
 			einfo "Using default MY_DATADIR"
-		else
-			# strip leading EPREFIX returned by already installed mysql
-			MY_DATADIR="${MY_DATADIR#${EPREFIX}}"
 		fi
-		elog "MySQL MY_DATADIR is ${EPREFIX}${MY_DATADIR}"
+		elog "MySQL MY_DATADIR is ${MY_DATADIR}"
 
 		if [[ -z "${PREVIOUS_DATADIR}" ]] ; then
-			if [[ -e "${EPREFIX}${MY_DATADIR}" ]] ; then
+			if [[ -e "${MY_DATADIR}" ]] ; then
 				# If you get this and you're wondering about it, see bug #207636
-				elog "MySQL datadir found in ${EPREFIX}${MY_DATADIR}"
+				elog "MySQL datadir found in ${MY_DATADIR}"
 				elog "A new one will not be created."
 				PREVIOUS_DATADIR="yes"
 			else
@@ -275,8 +287,6 @@ mysql_init_vars() {
 				ewarn "MySQL MY_DATADIR has changed"
 				ewarn "from ${MY_DATADIR}"
 				ewarn "to ${new_MY_DATADIR}"
-				# strip leading EPREFIX returned by already installed mysql
-				MY_DATADIR="${new_MY_DATADIR#${EPREFIX}}"
 			fi
 		fi
 	fi
