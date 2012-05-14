@@ -1,0 +1,20 @@
+#!/sbin/runscript
+
+opts="start stop restart"
+export CLASSPATH="$(java-config-2 -p apache-zookeeper):$(java-config-2 -p log4j):${CLASSPATH}";
+
+start() {
+zkServer.sh start > /dev/null
+}
+
+stop() {
+zkServer.sh stop
+}
+
+restart() {
+zkServer.sh restart > /dev/null
+}
+
+status() {
+zkServer.sh status
+}
