@@ -26,7 +26,7 @@ src_prepare() {
 }
 
 src_configure() {
-	econf --enable-shared $(use_without !static-libs nonshared)
+	econf --enable-shared $(use_disable !static-libs nonshared)
 }
 
 src_install() {
