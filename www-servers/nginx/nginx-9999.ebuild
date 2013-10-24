@@ -293,12 +293,6 @@ src_prepare() {
 
 	epatch "${FILESDIR}/${PN}-1.4.1-fix-perl-install-path.patch"
 
-#	# This seems to be hackish way to do things, there must be some better way!
-#	if [[ ${PV} == 9999 ]]; then
-#		echo "S is ${S}, P is ${P}"
-#		cd "${S}/${P}"
-#	fi
-
 	if use syslog; then
 		epatch "${SYSLOG_MODULE_WD}"/syslog_${SYSLOG_MODULE_NGINX_PV}.patch
 	fi
