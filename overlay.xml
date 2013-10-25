@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<repositories version="1.0">
+	<repo priority="50" quality="experimental" status="unofficial">
+		<name>is-overlay</name>
+		<description>Various stuff by SIA Intelligent Systems (SkyFMS.com).</description>
+		<homepage>http://www.skyfms.com</homepage>
+		<owner>
+			<email>root@zini.lv</email>
+		</owner>
+		<source type="git">git://github.com/skyfms/portage-overlay.git</source>
+	</repo>
+</repositories>
