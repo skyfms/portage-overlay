@@ -104,3 +104,10 @@ src_install() {
 	fi
 	keepdir /var/{log,lib}/redis
 }
+
+pkg_postinst() {
+    elog "With this version of Redis Gentoo now supports multiple instances."
+    elog "To enable this you should create a symlink in /etc/init.d/ for each instance"
+    elog "to /etc/init.d/redis and create the matching conf files in /etc/"
+}
+
