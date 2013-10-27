@@ -1,0 +1,103 @@
+# Copyright 1999-2013 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+EAPI=4
+
+inherit eutils
+
+DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP"
+HOMEPAGE="http://www.hhvm.com"
+
+if [[ ${PV} == 9999 ]]; then
+	SRC_URI=""
+	inherit git-2
+	EGIT_REPO_URI="git://github.com/facebook/hhvm.git"
+	EGIT_BRANCH="master"
+else
+	SRC_URI="https://github.com/facebook/hhvm/archive/HHVM-${PV}.tar.gz"
+	S="${WORKDIR}/hhvm-HHVM-${PV}"
+fi
+
+LIBEVENT_P="libevent-1.4.14b-stable"
+
+SRC_URI="${SRC_URI}
+	https://github.com/downloads/libevent/libevent/${LIBEVENT_P}.tar.gz
+"
+
+LICENSE="PHP-3"
+SLOT="0"
+KEYWORDS="~amd64"
+IUSE="debug devel +jemalloc"
+
+RDEPEND="
+	dev-cpp/glog
+	dev-cpp/tbb
+	>=dev-libs/boost-1.37
+	jemalloc? ( dev-libs/jemalloc[stats] )
+	dev-libs/icu
+	=dev-libs/libdwarf-20120410
+	dev-libs/libmcrypt
+	dev-libs/libmemcached
+	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	media-libs/gd[jpeg,png]
+	net-libs/c-client
+	net-misc/curl
+	net-nds/openldap
+	sys-libs/libcap
+	virtual/mysql
+"
+DEPEND="${RDEPEND}
+	dev-util/cmake
+	>=sys-devel/gcc-4.7
+"
+
+src_prepare() {
+	if [[ ${PV} == 9999 ]]; then
+		git submodule init
+		git submodule update
+	fi
+
+	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
+
+	einfo "Building custom libevent"
+	export EPATCH_SOURCE="${S}/hphp/third_party"
+	EPATCH_OPTS="-d ""${WORKDIR}/${LIBEVENT_P}" epatch libevent-1.4.14.fb-changes.diff
+	pushd "${WORKDIR}/${LIBEVENT_P}" > /dev/null
+	./autogen.sh
+	./configure --prefix="${CMAKE_PREFIX_PATH}"
+	emake
+	emake -j1 install
+	popd > /dev/null
+
+	CMAKE_BUILD_TYPE="Release"
+	if use debug; then
+		CMAKE_BUILD_TYPE="Debug"
+	fi
+	export CMAKE_BUILD_TYPE
+}
+
+src_configure() {
+	export HPHP_HOME="${S}"
+	econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+}
+
+src_install() {
+	pushd "${WORKDIR}/${LIBEVENT_P}" > /dev/null
+	emake -j1 install
+	popd > /dev/null
+
+	exeinto "/usr/lib/hhvm/bin"
+	doexe hphp/hhvm/hhvm
+
+	if use devel; then
+		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
+	fi
+
+	dobin "${FILESDIR}/hhvm"
+	newinitd "${FILESDIR}"/hhvm.rc hhvm
+	dodir "/etc/hhvm"
+	insinto /etc/hhvm
+	newins "${FILESDIR}"/config.hdf.dist config.hdf.dist
+}
+

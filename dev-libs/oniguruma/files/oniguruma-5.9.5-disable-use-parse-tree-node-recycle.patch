@@ -1,0 +1,11 @@
+--- onig-5.9.5/regint.h	2010-01-05 15:48:47.000000000 +0200
++++ onig-5.9.5-changed/regint.h	2013-10-25 04:19:03.462798565 +0300
+@@ -66,7 +66,7 @@
+ /* !!! moved to regenc.h. */ /* #define USE_CRNL_AS_LINE_TERMINATOR */
+ 
+ /* internal config */
+-#define USE_PARSE_TREE_NODE_RECYCLE
++/* #define USE_PARSE_TREE_NODE_RECYCLE */
+ #define USE_OP_PUSH_OR_JUMP_EXACT
+ #define USE_QTFR_PEEK_NEXT
+ #define USE_ST_LIBRARY
