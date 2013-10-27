@@ -45,6 +45,7 @@ RDEPEND="
 	net-misc/curl
 	net-nds/openldap
 	sys-libs/libcap
+	sys-libs/libunwind
 	virtual/mysql
 "
 DEPEND="${RDEPEND}
