@@ -17,12 +17,18 @@ SRC_URI="http://www.geocities.jp/kosako3/oniguruma/archive/${MY_P}.tar.gz"
 LICENSE="BSD-2"
 SLOT="0"
 KEYWORDS="~alpha ~amd64 ~arm ~hppa ~ia64 ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~sparc-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos ~x86-solaris"
-IUSE="combination-explosion-check crnl-as-line-terminator static-libs"
+IUSE="combination-explosion-check crnl-as-line-terminator +parse-tree-node-recycle static-libs"
 
 #PATCHES=( "${FILESDIR}"/${P}-makefile.patch )
 DOCS=( AUTHORS HISTORY README{,.ja} doc/{API,FAQ,RE}{,.ja} )
 
 S=${WORKDIR}/${MY_P}
+
+src_prepare() {
+	if ! use parse-tree-node-recycle ; then
+		epatch "${FILESDIR}"/${P}-disable-use-parse-tree-node-recycle.patch
+	fi
+}
 
 src_configure() {
 	local myeconfargs=(
