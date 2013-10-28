@@ -28,7 +28,7 @@ SRC_URI="${SRC_URI}
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug devel +jemalloc"
+IUSE="debug devel +jemalloc xen"
 
 RDEPEND="
 	dev-cpp/glog
@@ -79,8 +79,13 @@ src_prepare() {
 }
 
 src_configure() {
-	export HPHP_HOME="${S}"
-	econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+    export HPHP_HOME="${S}"
+    ADDITIONAL_MAKE_DEFS=""
+    # Needed for Xen PV, see https://github.com/facebook/hhvm/issues/981
+    if use xen; then
+        ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DNO_HARDWARE_COUNTERS=1"
+    fi
+    econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" ${ADDITIONAL_MAKE_DEFS}
 }
 
 src_install() {
