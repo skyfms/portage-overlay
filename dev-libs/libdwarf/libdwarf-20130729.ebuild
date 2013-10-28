@@ -14,7 +14,7 @@ if [[ ${PV} == 99999999 ]]; then
 	SRC_URI=""
 	EGIT_REPO_URI="git://libdwarf.git.sourceforge.net/gitroot/libdwarf/libdwarf"
 else
-	SRC_URI="http://reality.sgiweb.org/davea/${P}.tar.gz"
+	SRC_URI="http://gentoo.skyfms.com/distfiles/${P}.tar.gz"
 fi
 
 LICENSE="GPL-2 LGPL-2"
