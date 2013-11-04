@@ -100,7 +100,8 @@ src_install() {
 	fi
 
 	dobin "${FILESDIR}/hhvm"
-	newinitd "${FILESDIR}"/hhvm.rc hhvm
+	newconfd "${FILESDIR}"/hhvm.confd hhvm
+	newinitd "${FILESDIR}"/hhvm.initd hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
 	newins "${FILESDIR}"/config.hdf.dist config.hdf.dist

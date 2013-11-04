@@ -7,7 +7,6 @@ description="Virtual Machine, Runtime, and JIT for PHP"
 hhvm_config=${hhvm_config:-/etc/hhvm/config.hdf}
 
 hhvm_lib="/usr/lib/hhvm/lib"
-command="/usr/lib/hhvm/bin/hhvm"
 pidfile=${pidfile:-/var/run/hhvm.pid}
 logfile=${logfile:-/var/log/hhvm_server.log}
 
@@ -31,7 +30,7 @@ start() {
 
 	ebegin "Starting HipHop VM"
 	LD_LIBRARY_PATH="${hhvm_lib}" start-stop-daemon --start --background \
-		--exec "${command}" \
+		--exec "${HHVM_BINARY}" \
 		--make-pidfile --pidfile "${pidfile}" \
 		--stdout "${logfile}" \
 		--stderr "${logfile}" \
