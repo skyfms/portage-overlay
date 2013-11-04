@@ -4,11 +4,11 @@
 
 description="Virtual Machine, Runtime, and JIT for PHP"
 
-hhvm_config=${hhvm_config:-/etc/hhvm/config.hdf}
+HHVM_CONFIG="/etc/hhvm/${RC_SVCNAME}.hdf"
 
-hhvm_lib="/usr/lib/hhvm/lib"
-pidfile=${pidfile:-/var/run/hhvm.pid}
-logfile=${logfile:-/var/log/hhvm_server.log}
+HHVM_LIB={$HHVM_LIB:-/usr/lib/hhvm/lib}
+pidfile="/var/run/${RC_SVCNAME}.pid"
+logfile="/var/log/hhvm/${RC_SVCNAME}-server.log"
 
 depend() {
 	need net localmount
@@ -17,9 +17,9 @@ depend() {
 }
 
 checkconfig() {
-	if [ ! -f "${hhvm_config}" ] ; then
-		eerror "Please create ${hhvm_config}"
-		eerror "Sample conf: ${hhvm_config}.dist"
+	if [ ! -f "${HHVM_CONFIG}" ] ; then
+		eerror "Please create ${HHVM_CONFIG}"
+		eerror "Sample conf: /etc/hhvm/config.hdf.dist"
 		return 1
 	fi
 	return 0
@@ -28,19 +28,19 @@ checkconfig() {
 start() {
 	checkconfig || return $?
 
-	ebegin "Starting HipHop VM"
+	ebegin "Starting HipHop VM (${RC_SVCNAME})"
 	LD_LIBRARY_PATH="${hhvm_lib}" start-stop-daemon --start --background \
 		--exec "${HHVM_BINARY}" \
 		--make-pidfile --pidfile "${pidfile}" \
 		--stdout "${logfile}" \
 		--stderr "${logfile}" \
-		--env HPHP_HOME="${hhvm_lib}/" \
-		-- -m server -c "${hhvm_config}"
-	eend $? "Failed to start HipHop VM"
+		--env HPHP_HOME="${HHVM_LIB}/" \
+		-- -m server -c "${HHVM_CONFIG}"
+	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 
 stop() {
-	ebegin "Stopping HipHop VM"
+	ebegin "Stopping HipHop VM (${RC_SVCNAME})"
 	start-stop-daemon --stop --pidfile "${pidfile}"
-	eend $? "Failed to stop HipHop VM"
+	eend $? "Failed to stop HipHop VM (${RC_SVCNAME})"
 }
