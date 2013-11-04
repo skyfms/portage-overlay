@@ -32,7 +32,7 @@ start() {
 	ebegin "Starting HipHop VM"
 	LD_LIBRARY_PATH="${hhvm_lib}" start-stop-daemon --start --background \
 		--exec "${command}" \
-		--pidfile "${pidfile}" \
+		--make-pidfile --pidfile "${pidfile}" \
 		--stdout "${logfile}" \
 		--stderr "${logfile}" \
 		--env HPHP_HOME="${hhvm_lib}/" \
