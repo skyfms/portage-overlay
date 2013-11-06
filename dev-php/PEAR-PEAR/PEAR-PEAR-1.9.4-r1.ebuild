@@ -17,9 +17,9 @@ LICENSE="MIT"
 SLOT="0"
 IUSE=""
 
-DEPEND="|| ( <dev-lang/php-5.3[pcre] >=dev-lang/php-5.3 )
-		dev-lang/php[cli,xml,zlib]
-		>=dev-php/hhvm-2.3.0"
+DEPEND="|| ( || ( ( <dev-lang/php-5.3[pcre] >=dev-lang/php-5.3 )
+		dev-lang/php[cli,xml,zlib] )
+		>=dev-php/hhvm-2.3.0 )"
 
 RDEPEND="${DEPEND}"
 
