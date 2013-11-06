@@ -81,9 +81,13 @@ src_prepare() {
 src_configure() {
 	export HPHP_HOME="${S}"
 	ADDITIONAL_MAKE_DEFS=""
-	# Needed for Xen PV, see https://github.com/facebook/hhvm/issues/981
 	if use xen; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DNO_HARDWARE_COUNTERS=1"
+	else
+        if [ "${RC_SYS}" == "XENU" ]; then
+            eerror "Under XenU, xen USE flag is required! See https://github.com/facebook/hhvm/issues/981"
+            die
+        fi	
 	fi
 	econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" ${ADDITIONAL_MAKE_DEFS}
 }
