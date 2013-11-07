@@ -35,7 +35,7 @@ start() {
 		--stdout "${logfile}" \
 		--stderr "${logfile}" \
 		--env HPHP_HOME="${HHVM_LIB}/" \
-		-- -m server -u hhvm -c "${HHVM_CONFIG}"
+		-- -m server -c "${HHVM_CONFIG}"
 	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 
