@@ -53,6 +53,13 @@ DEPEND="${RDEPEND}
 	>=sys-devel/gcc-4.7
 "
 
+pkg_setup() {
+	ebegin "Creating hhvm user and group"
+	enewgroup hhvm
+	enewuser hhvm -1 -1 "/usr/lib/hhvm" hhvm
+	eend $?
+}
+
 src_prepare() {
 	if [[ ${PV} == 9999 ]]; then
 		git submodule init
