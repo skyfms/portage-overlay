@@ -290,6 +290,7 @@ mysql_init_vars() {
 				ewarn "MySQL MY_DATADIR has changed"
 				ewarn "from ${MY_DATADIR}"
 				ewarn "to ${new_MY_DATADIR}"
+				MY_DATADIR="${new_MY_DATADIR}"
 			fi
 		fi
 	fi
