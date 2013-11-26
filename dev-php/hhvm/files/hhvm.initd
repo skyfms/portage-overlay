@@ -7,8 +7,8 @@ description="Virtual Machine, Runtime, and JIT for PHP"
 HHVM_CONFIG="/etc/hhvm/${RC_SVCNAME}.hdf"
 
 HHVM_LIB={$HHVM_LIB:-/usr/lib/hhvm/lib}
-pidfile="/var/run/${RC_SVCNAME}.pid"
-logfile="/var/log/hhvm/${RC_SVCNAME}-server.log"
+PIDFILE="/var/run/${RC_SVCNAME}.pid"
+LOGFILE="/var/log/hhvm/${RC_SVCNAME}-server.log"
 
 depend() {
 	need net localmount
@@ -29,18 +29,19 @@ start() {
 	checkconfig || return $?
 
 	ebegin "Starting HipHop VM (${RC_SVCNAME})"
-	LD_LIBRARY_PATH="${hhvm_lib}" start-stop-daemon --start --background \
+	LD_LIBRARY_PATH="${HHVM_LIB}" start-stop-daemon --start --background \
 		--exec "${HHVM_BINARY}" \
-		--make-pidfile --pidfile "${pidfile}" \
-		--stdout "${logfile}" \
-		--stderr "${logfile}" \
+		--make-pidfile --pidfile "${PIDFILE}" \
+		--stdout "${LOGFILE}" \
+		--stderr "${LOGFILE}" \
 		--env HPHP_HOME="${HHVM_LIB}/" \
 		-- -m server -c "${HHVM_CONFIG}"
 	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 
 stop() {
+	local stop_timeout=${STOP_TIMEOUT:-15}
 	ebegin "Stopping HipHop VM (${RC_SVCNAME})"
-	start-stop-daemon --stop --pidfile "${pidfile}"
+	start-stop-daemon --stop --pidfile "${PIDFILE}" --retry ${stop_timeout}
 	eend $? "Failed to stop HipHop VM (${RC_SVCNAME})"
 }
