@@ -33,7 +33,7 @@ IUSE="debug devel +jemalloc xen"
 RDEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
-	>=dev-libs/boost-1.37
+	>=dev-libs/boost-1.37[threads]
 	jemalloc? ( dev-libs/jemalloc[stats] )
 	dev-libs/icu
 	=dev-libs/libdwarf-20120410
