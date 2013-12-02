@@ -19,7 +19,7 @@ depend() {
 }
 
 start_pre() {
-	checkpath -d -m 0775 -o ${REDIS_USER}:${REDIS_GROUP} $(dirname ${REDIS_PID})
+	checkpath -d -m 0775 -o ${REDIS_USER}:${REDIS_GROUP} $(dirname ${pidfile})
 }
 
 stop() {
