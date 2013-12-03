@@ -49,7 +49,7 @@ RDEPEND="
 	virtual/mysql
 "
 DEPEND="${RDEPEND}
-	dev-util/cmake
+	>=dev-util/cmake-2.8.5
 	>=sys-devel/gcc-4.7
 "
 
