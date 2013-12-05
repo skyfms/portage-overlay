@@ -1,0 +1,11 @@
+--- eclim_2.3.2/ant/build.gant  2013-09-12 17:54:24.000000000 +0300
++++ eclim_2.3.2-patched/ant/build.gant  2013-12-05 19:38:57.631854123 +0200
+@@ -203,7 +203,6 @@
+ 
+ target(name: 'deploy'){
+   depends('deploy.eclipse', 'deploy.vim')
+-  mkdir(dir: '${user.home}/.eclim/resources/ext')
+ }
+ 
+ target(name: 'deploy.eclipse'){
+
