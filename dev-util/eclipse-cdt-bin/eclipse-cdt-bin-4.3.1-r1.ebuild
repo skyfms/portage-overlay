@@ -29,7 +29,7 @@ src_install() {
 	mv "${S}" "${D}"${ECLIPSE_HOME} || die
 
 	# Create desktop entry
-	newicon icon.xpm eclipse.xpm
-	make_desktop_entry ${ECLIPSE_HOME}/eclipse "Eclipse CDT" eclipse "Development"
+	newicon icon.xpm eclipse-cdt.xpm
+	make_desktop_entry ${ECLIPSE_HOME}/eclipse "Eclipse CDT" eclipse-cdt "Development"
 }
 
