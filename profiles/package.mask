@@ -1,5 +1,0 @@
-# Masked for removal
-=dev-db/redis-2.4.10
-=dev-db/redis-2.6.13-r1
-=dev-db/redis-2.6.16-r1
-
