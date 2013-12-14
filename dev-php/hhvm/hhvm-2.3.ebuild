@@ -14,7 +14,7 @@ EGIT_REPO_URI="git://github.com/facebook/hhvm.git"
 if [[ ${PV} == 9999 ]]; then
 	EGIT_BRANCH="master"
 else
-	EGIT_BTANCH="HHVM-${PV}"
+	EGIT_BRANCH="HHVM-${PV}"
 #	SRC_URI="https://github.com/facebook/hhvm/archive/HHVM-${PV}.tar.gz"
 #	S="${WORKDIR}/hhvm-HHVM-${PV}"
 fi
