@@ -41,6 +41,7 @@ RDEPEND="
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	media-libs/gd[jpeg,png]
+	media-libs/libvpx
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
