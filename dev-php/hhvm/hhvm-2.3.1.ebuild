@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils git-2
+inherit eutils git-2 versionator
 
 DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP"
 HOMEPAGE="http://www.hhvm.com"
@@ -14,7 +14,10 @@ EGIT_REPO_URI="git://github.com/facebook/hhvm.git"
 if [[ ${PV} == 9999 ]]; then
 	EGIT_BRANCH="master"
 else
-	EGIT_BRANCH="HHVM-${PV}"
+	EGIT_BRANCH="HHVM-$(get_version_component_range 1-2 )"
+	if [[ $(get_version_component_range 3 ) != 9999 ]]; then
+		EGIT_COMMIT="HHVM-${PV}"
+	fi
 #	SRC_URI="https://github.com/facebook/hhvm/archive/HHVM-${PV}.tar.gz"
 #	S="${WORKDIR}/hhvm-HHVM-${PV}"
 fi

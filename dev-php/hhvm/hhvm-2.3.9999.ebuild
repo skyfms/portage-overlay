@@ -15,9 +15,9 @@ if [[ ${PV} == 9999 ]]; then
 	EGIT_BRANCH="master"
 else
 	EGIT_BRANCH="HHVM-$(get_version_component_range 1-2 )"
-    if [[ $(get_version_component_range 3 ) != 9999 ]]; then
-        EGIT_COMMIT="HHVM-${PV}"
-    fi
+	if [[ $(get_version_component_range 3 ) != 9999 ]]; then
+		EGIT_COMMIT="HHVM-${PV}"
+	fi
 #	SRC_URI="https://github.com/facebook/hhvm/archive/HHVM-${PV}.tar.gz"
 #	S="${WORKDIR}/hhvm-HHVM-${PV}"
 fi
@@ -43,7 +43,7 @@ RDEPEND="
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
-	media-libs/libvpx
+	media-libs/gd[jpeg,png]
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
