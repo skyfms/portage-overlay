@@ -6,9 +6,11 @@ description="Virtual Machine, Runtime, and JIT for PHP"
 
 HHVM_CONFIG="/etc/hhvm/${RC_SVCNAME}.hdf"
 
-HHVM_LIB={$HHVM_LIB:-/usr/lib/hhvm/lib}
-PIDFILE="/var/run/${RC_SVCNAME}.pid"
-LOGFILE="/var/log/hhvm/${RC_SVCNAME}-server.log"
+HHVM_LIB=/usr/lib/hhvm/lib
+PIDDIR="/var/run/hhvm"
+PIDFILE="${PIDDIR}/${RC_SVCNAME}.pid"
+LOGDIR="/var/log/hhvm"
+LOGFILE="${LOGDIR}/${RC_SVCNAME}-server.log"
 
 depend() {
 	need net localmount
@@ -28,6 +30,9 @@ checkconfig() {
 start() {
 	checkconfig || return $?
 
+	checkpath -d --owner hhvm:hhvm --mode 0755 ${PIDDIR}
+	checkpath -d --owner hhvm:hhvm --mode 0755 ${LOGDIR}
+
 	ebegin "Starting HipHop VM (${RC_SVCNAME})"
 	LD_LIBRARY_PATH="${HHVM_LIB}" start-stop-daemon --start --background \
 		--exec "${HHVM_BINARY}" \
@@ -35,7 +40,7 @@ start() {
 		--stdout "${LOGFILE}" \
 		--stderr "${LOGFILE}" \
 		--env HPHP_HOME="${HHVM_LIB}/" \
-		-- -m server -c "${HHVM_CONFIG}"
+		-- -m server -u hhvm -c "${HHVM_CONFIG}"
 	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 
