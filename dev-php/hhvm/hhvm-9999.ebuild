@@ -31,7 +31,7 @@ SRC_URI="${SRC_URI}
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug devel +jemalloc xen"
+IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen"
 
 RDEPEND="
 	dev-cpp/glog
@@ -43,7 +43,10 @@ RDEPEND="
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
-	media-libs/libvpx
+	freetype? ( media-libs/freetype )
+	jpeg? ( media-libs/libjpeg-turbo )
+	png? ( media-libs/libpng )
+	webp? ( media-libs/libvpx )
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
