@@ -1,0 +1,42 @@
+diff -urN xe-guest-utilities/usr/sbin/xe-linux-distribution xe-guest-utilities-gentoo/usr/sbin/xe-linux-distribution
+--- xe-guest-utilities/usr/sbin/xe-linux-distribution	2012-09-25 13:45:14.000000000 +0300
++++ xe-guest-utilities-gentoo/usr/sbin/xe-linux-distribution	2014-01-07 21:17:06.088066459 +0200
+@@ -254,6 +254,30 @@
+     write_to_output "${distro}" "${major}" "${minor}" "${description}"
+ }
+ 
++identify_gentoo()
++{
++    gentoo_release="$1"
++    
++    if [ ! -e "${gentoo_release}" ] ; then
++        return 1
++    fi
++    
++    distro="gentoo"
++    eval $(cat ${gentoo_release} | awk '{ print "release=" $5 }' )
++    
++    if [ -z "${release}" ] ; then
++        return 1
++    fi
++    
++    eval $(echo $release | awk -F. -- '{ print "major=" $1 ; print "minor=" $2 }' )
++    
++    if [ -z "${major}" -o -z "$minor" ] ; then
++        return 1
++    fi
++
++    write_to_output "${distro}" "${major}" "${minor}" "${description}"
++}
++
+ if [ $# -eq 1 ] ; then
+     exec 1>"$1"
+ fi
+@@ -265,6 +289,7 @@
+     identify_sles   /etc/SuSE-release   && exit 0
+     identify_lsb    lsb_release         && exit 0
+     identify_debian /etc/debian_version && exit 0
++    identify_gentoo /etc/gentoo-release && exit 0
+ 
+     if [ $# -eq 1 ] ; then
+ 	rm -f "$1"
