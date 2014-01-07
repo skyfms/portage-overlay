@@ -1,0 +1,96 @@
+#!/sbin/runscript
+# Copyright (c) 2011 Pandu E Poluan <pandu@poluan.info>
+# Distributed under the terms of the GNU General Public License v2 or newer
+
+description="xe-daemon enables the XenServer hypervisor to interrogate some status of the Gentoo DomU VM"
+description_start="Starts the xe-daemon"
+description_stop="Stops the xe-daemon"
+
+depend() {
+    need localmount
+    after bootmisc
+}
+
+XE_LINUX_DISTRIBUTION=/usr/sbin/xe-linux-distribution
+XE_LINUX_DISTRIBUTION_CACHE=/var/cache/xe-linux-distribution
+XE_DAEMON=/usr/sbin/xe-daemon
+XE_DAEMON_PIDFILE=/var/run/${SVCNAME}.pid
+
+checkxen() {
+    if [ ! -x "${XE_LINUX_DISTRIBUTION}" ] ; then
+        eend 1 "${SVCNAME}: Could not find ${XE_LINUX_DISTRIBUTION}"
+        return 1
+    else
+        return 0
+    fi
+}
+
+checkdom0() {
+    if [ -e /proc/xen/capabilities ] && grep -q control_d /proc/xen/capabilities ; then
+      ewarn 1 "${SVCNAME}: Not necessary to run this in dom0"
+      return 1
+    else
+      return 0
+    fi
+}
+
+mountxenfs() {
+    local XENFS_RSLT=0
+    eindent
+    if [ ! -e /proc/xen/xenbus ] ; then
+        if [ ! -d /proc/xen ] ; then
+            eerror "Could not find /proc/xen directory!"
+            eerror "Need a post 2.6.29-rc1 kernel with CONFIG_XEN_COMPAT_XENFS=y and CONFIG_XENFS=y|m"
+            XENFS_RSLT=1
+        else
+            # This is needed post 2.6.29-rc1 when /proc/xen support was pushed upstream as a xen filesystem
+            if mount -t xenfs none /proc/xen ; then
+                einfo "xenfs mounted on /proc/xen"
+            else
+                eerror "Failed mounting xenfs on /proc/xen!"
+                XENFS_RSLT=1
+            fi
+        fi
+    fi
+    eoutdent
+    return $XENFS_RSLT
+}
+
+start() {
+    checkxen || return 1
+    checkdom0 || return 1
+
+    ebegin "${SVCNAME} starting"
+
+    if mountxenfs ; then
+      :
+    else
+      eend 1 "${SVCNAME} not started!"
+      return 1
+    fi
+
+    eindent
+
+      einfo "Detecting Linux distribution version"
+      ${XE_LINUX_DISTRIBUTION} ${XE_LINUX_DISTRIBUTION_CACHE}
+
+      einfo "Daemonizing"
+      mkdir -p $(dirname ${XE_DAEMON_PIDFILE})
+
+    eoutdent
+
+    start-stop-daemon --start --exec "${XE_DAEMON}" --background \
+        --pidfile "${XE_DAEMON_PIDFILE}" \
+        -- -p ${XE_DAEMON_PIDFILE}
+
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping ${SVCNAME}"
+    start-stop-daemon --stop --exec "/usr/sbin/xe-daemon" --pidfile "${XE_DAEMON_PIDFILE}"
+    eend $?
+}
+
+## End of xe-daemon initscript
+

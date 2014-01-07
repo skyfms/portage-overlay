@@ -1,0 +1,14 @@
+# The parameters here sets how often xe-daemon poll for VM status
+
+# How often the poll should happen
+# Default: once every 60 seconds
+# Active VMs that are nearing its limits should have a more frequent poll, but
+# DO NOT go lower than 10
+#XE_DAEMON_RATE=60
+
+# Do memory poll every N cycles
+# Default: once every 2 cycles
+# Usually you want memory update to happen not more than once every 10 seconds,
+# but not less than once every 2 minutes
+#XE_MEMORY_UPDATE_DIVISOR=2
+
