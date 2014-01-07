@@ -18,8 +18,6 @@ else
     if [[ $(get_version_component_range 3 ) != 9999 ]]; then
         EGIT_COMMIT="HHVM-${PV}"
     fi
-#	SRC_URI="https://github.com/facebook/hhvm/archive/HHVM-${PV}.tar.gz"
-#	S="${WORKDIR}/hhvm-HHVM-${PV}"
 fi
 
 LIBEVENT_P="libevent-1.4.14b-stable"
@@ -34,15 +32,19 @@ KEYWORDS="~amd64"
 IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen"
 
 RDEPEND="
+	sys-process/lsof
+"
+DEPEND="${RDEPEND}
 	dev-cpp/glog
 	dev-cpp/tbb
 	>=dev-libs/boost-1.37
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
-	=dev-libs/libdwarf-20120410
+	dev-libs/libdwarf
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	>=dev-util/cmake-2.8.7
 	freetype? ( media-libs/freetype )
 	jpeg? ( media-libs/libjpeg-turbo )
 	png? ( media-libs/libpng )
@@ -50,14 +52,9 @@ RDEPEND="
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
-	sys-libs/libcap
-	sys-libs/libunwind
-	sys-process/lsof
-	virtual/mysql
-"
-DEPEND="${RDEPEND}
-	>=dev-util/cmake-2.8.7
 	>=sys-devel/gcc-4.7
+	sys-libs/libcap
+	virtual/mysql
 "
 
 pkg_setup() {
@@ -68,11 +65,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-#	if [[ ${PV} == 9999 ]]; then
-		git submodule init
-		git submodule update
-#	fi
-
+	git submodule update --init
+	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	einfo "Building custom libevent"
