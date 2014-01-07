@@ -58,14 +58,14 @@ src_install() {
 	procdirs=( /etc/udev/rules.d /usr )
 	for dir in ${procdirs[@]}; do
 		dodir ${dir} 
-		cp --parents -r * "${D}"$dir
+		cp --parents -r * "${D}"
 	done
 	popd > /dev/null
 
 	einfo "Processing xe-guest-utilities-xenstore"
 	pushd xe-guest-utilities-xenstore > /dev/null
 	dodir /usr
-	cp ./usr/* "${D}"/usr
+	cp --parents -r ./usr/* "${D}"
 	popd > /dev/null
 
 	newconfd "${FILESDIR}"/xe-daemon.confd xe-daemon
