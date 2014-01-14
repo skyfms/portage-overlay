@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils git-2 versionator
+inherit eutils git-2 user versionator
 
 DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP"
 HOMEPAGE="http://www.hhvm.com"

@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils
+inherit eutils user
 
 DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP"
 HOMEPAGE="http://www.hhvm.com"
