@@ -52,7 +52,7 @@ DEPEND="${RDEPEND}
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
-	>=sys-devel/gcc-4.7
+	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
 	sys-libs/libcap
 	virtual/mysql
 "
