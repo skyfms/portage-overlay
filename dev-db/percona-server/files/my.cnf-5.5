@@ -86,10 +86,6 @@ tmpdir 						= @GENTOO_PORTAGE_EPREFIX@/tmp/
 #debug						= d:t:i:o,/tmp/mysqld.trace
 #one-thread
 
-# uncomment the following directives if you are using BDB tables
-#bdb_cache_size				= 4M
-#bdb_max_lock				= 10000
-
 # the following is the InnoDB configuration
 # if you wish to disable innodb instead
 # uncomment just the next line
@@ -145,8 +141,8 @@ write_buffer 				= 2M
 [myisamchk]
 key_buffer_size				= 20M
 sort_buffer_size 			= 20M
-read_buffer 				= 2M
-write_buffer 				= 2M
+read_buffer_size			= 2M
+write_buffer_size			= 2M
 
 [mysqlhotcopy]
 interactive-timeout
