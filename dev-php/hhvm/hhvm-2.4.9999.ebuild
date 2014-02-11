@@ -33,6 +33,7 @@ IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen"
 
 RDEPEND="
 	sys-process/lsof
+	virtual/mta
 "
 DEPEND="${RDEPEND}
 	dev-cpp/glog
