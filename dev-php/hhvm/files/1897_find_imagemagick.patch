@@ -1,0 +1,17 @@
+--- Cmake/FindLibMagickWand.cmake     2014-02-23 21:10:47.679465935 +0100
++++ CMake/FindLibMagickWand.cmake     2014-02-26 15:06:25.486153749 +0100
+@@ -23,12 +23,13 @@
+       wand/MagickWand.h
+     PATHS
+       /usr/include/ImageMagick
++      /usr/include/ImageMagick-6
+       /usr/local/include/ImageMagick
+     ENV CPATH)
+ 
+ find_library (LIBMAGICKWAND_LIBRARIES
+     NAMES
+-      MagickWand
++      MagickWand-6.Q16
+     PATHS
+       /usr/lib
+       /usr/local/lib
