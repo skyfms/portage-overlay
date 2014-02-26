@@ -45,6 +45,7 @@ DEPEND="${RDEPEND}
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
 	freetype? ( media-libs/freetype )
 	jpeg? ( media-libs/libjpeg-turbo )
