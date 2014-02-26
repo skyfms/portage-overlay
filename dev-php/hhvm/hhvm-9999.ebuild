@@ -38,7 +38,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-cpp/glog
 	dev-cpp/tbb
-	>=dev-libs/boost-1.37
+	>=dev-libs/boost-1.49
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
 	dev-libs/libdwarf
