@@ -47,6 +47,7 @@ DEPEND="${RDEPEND}
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
+	media-gfx/imagemagick
 	freetype? ( media-libs/freetype )
 	jpeg? ( media-libs/libjpeg-turbo )
 	png? ( media-libs/libpng )
@@ -67,6 +68,9 @@ pkg_setup() {
 }
 
 src_prepare() {
+	# https://github.com/facebook/hhvm/issues/1897
+	epatch "${FILESDIR}"/1897_find_imagemagick.patch
+
 	git submodule update --init
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
