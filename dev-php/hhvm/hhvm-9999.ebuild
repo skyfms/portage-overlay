@@ -68,9 +68,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# https://github.com/facebook/hhvm/issues/1897
-	epatch "${FILESDIR}"/1897_find_imagemagick.patch
-
 	git submodule update --init
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
