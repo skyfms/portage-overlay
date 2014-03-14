@@ -92,7 +92,7 @@ src_configure() {
     ADDITIONAL_MAKE_DEFS=""
 
     if use xen; then
-        ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DNO_HARDWARE_COUNTERS=1"
+        ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DDISABLE_HARDWARE_COUNTERS=ON"
     else
         if [ "${RC_SYS}" == "XENU" ]; then
             eerror "Under XenU, xen USE flag is required! See https://github.com/facebook/hhvm/issues/981"
