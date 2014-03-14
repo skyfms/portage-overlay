@@ -29,7 +29,7 @@ SRC_URI="${SRC_URI}
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen"
+IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen zend-compat"
 
 RDEPEND="
 	sys-process/lsof
@@ -92,7 +92,8 @@ src_prepare() {
 src_configure() {
     export HPHP_HOME="${S}"
     ADDITIONAL_MAKE_DEFS=""
-    if use xen; then
+    
+	if use xen; then
         ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DNO_HARDWARE_COUNTERS=1"
     else
 		if [ "${RC_SYS}" == "XENU" ]; then
@@ -100,6 +101,11 @@ src_configure() {
 			die
 		fi
 	fi
+
+	if use zend-compat; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=ON"
+	fi
+
     econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" ${ADDITIONAL_MAKE_DEFS}
 }
 
