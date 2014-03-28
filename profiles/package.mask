@@ -1,3 +1,0 @@
-# Don't be too fast, Wait for release :)
-=dev-php/hhvm-3.0.0
-
