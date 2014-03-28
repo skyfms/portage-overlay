@@ -23,7 +23,7 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen zend-compat"
+IUSE="debug devel +freetype imagemagick +jemalloc +jpeg +png webp xen zend-compat"
 
 RDEPEND="
 	sys-process/lsof
@@ -41,7 +41,7 @@ DEPEND="${RDEPEND}
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
-	media-gfx/imagemagick
+	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
 	jpeg? ( media-libs/libjpeg-turbo )
 	png? ( media-libs/libpng )
