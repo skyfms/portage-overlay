@@ -36,6 +36,7 @@ DEPEND="${RDEPEND}
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
 	dev-libs/libdwarf
+	dev-libs/libevent
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
