@@ -1,6 +1,6 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2014 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/www-servers/nginx/nginx-1.4.3.ebuild,v 1.1 2013/10/17 08:06:23 dev-zero Exp $
+# $Header: /var/cvsroot/gentoo-x86/www-servers/nginx/nginx-1.4.7.ebuild,v 1.3 2014/03/29 06:07:06 ago Exp $
 
 EAPI="5"
 
@@ -37,15 +37,15 @@ HTTP_UPLOAD_PROGRESS_MODULE_URI="https://github.com/masterzen/nginx-upload-progr
 HTTP_UPLOAD_PROGRESS_MODULE_WD="${WORKDIR}/nginx-upload-progress-module-${HTTP_UPLOAD_PROGRESS_MODULE_PV}"
 
 # http_headers_more (http://github.com/agentzh/headers-more-nginx-module, BSD license)
-HTTP_HEADERS_MORE_MODULE_PV="0.22"
+HTTP_HEADERS_MORE_MODULE_PV="0.25"
 HTTP_HEADERS_MORE_MODULE_P="ngx_http_headers_more-${HTTP_HEADERS_MORE_MODULE_PV}-r1"
 HTTP_HEADERS_MORE_MODULE_URI="https://github.com/agentzh/headers-more-nginx-module/archive/v${HTTP_HEADERS_MORE_MODULE_PV}.tar.gz"
 HTTP_HEADERS_MORE_MODULE_WD="${WORKDIR}/headers-more-nginx-module-${HTTP_HEADERS_MORE_MODULE_PV}"
 
 # http_push (http://pushmodule.slact.net/, MIT license)
-HTTP_PUSH_MODULE_PV="0.692"
+HTTP_PUSH_MODULE_PV="0.712"
 HTTP_PUSH_MODULE_P="ngx_http_push-${HTTP_PUSH_MODULE_PV}"
-HTTP_PUSH_MODULE_URI="http://pushmodule.slact.net/downloads/nginx_http_push_module-${HTTP_PUSH_MODULE_PV}.tar.gz"
+HTTP_PUSH_MODULE_URI="https://github.com/slact/nginx_http_push_module/archive/v${HTTP_PUSH_MODULE_PV}.tar.gz"
 HTTP_PUSH_MODULE_WD="${WORKDIR}/nginx_http_push_module-${HTTP_PUSH_MODULE_PV}"
 
 # http_cache_purge (http://labs.frickle.com/nginx_ngx_cache_purge/, BSD-2 license)
@@ -61,13 +61,13 @@ HTTP_SLOWFS_CACHE_MODULE_URI="http://labs.frickle.com/files/ngx_slowfs_cache-${H
 HTTP_SLOWFS_CACHE_MODULE_WD="${WORKDIR}/ngx_slowfs_cache-${HTTP_SLOWFS_CACHE_MODULE_PV}"
 
 # http_fancyindex (http://wiki.nginx.org/NgxFancyIndex, BSD license)
-HTTP_FANCYINDEX_MODULE_PV="0.3.2"
+HTTP_FANCYINDEX_MODULE_PV="0.3.3"
 HTTP_FANCYINDEX_MODULE_P="ngx_http_fancyindex-${HTTP_FANCYINDEX_MODULE_PV}"
 HTTP_FANCYINDEX_MODULE_URI="https://github.com/aperezdc/ngx-fancyindex/archive/v${HTTP_FANCYINDEX_MODULE_PV}.tar.gz"
 HTTP_FANCYINDEX_MODULE_WD="${WORKDIR}/ngx-fancyindex-${HTTP_FANCYINDEX_MODULE_PV}"
 
 # http_lua (https://github.com/chaoslawful/lua-nginx-module, BSD license)
-HTTP_LUA_MODULE_PV="0.9.0"
+HTTP_LUA_MODULE_PV="0.9.6"
 HTTP_LUA_MODULE_P="ngx_http_lua-${HTTP_LUA_MODULE_PV}"
 HTTP_LUA_MODULE_URI="https://github.com/chaoslawful/lua-nginx-module/archive/v${HTTP_LUA_MODULE_PV}.tar.gz"
 HTTP_LUA_MODULE_WD="${WORKDIR}/lua-nginx-module-${HTTP_LUA_MODULE_PV}"
@@ -91,38 +91,38 @@ HTTP_METRICS_MODULE_URI="https://github.com/madvertise/ngx_metrics/archive/v${HT
 HTTP_METRICS_MODULE_WD="${WORKDIR}/ngx_metrics-${HTTP_METRICS_MODULE_PV}"
 
 # naxsi-core (https://github.com/nbs-system/naxsi, GPLv2+)
-HTTP_NAXSI_MODULE_PV="0.52-1"
+HTTP_NAXSI_MODULE_PV="0.53-2"
 HTTP_NAXSI_MODULE_P="ngx_http_naxsi-${HTTP_NAXSI_MODULE_PV}"
 HTTP_NAXSI_MODULE_URI="https://github.com/nbs-system/naxsi/archive/${HTTP_NAXSI_MODULE_PV}.tar.gz"
 HTTP_NAXSI_MODULE_WD="${WORKDIR}/naxsi-${HTTP_NAXSI_MODULE_PV}/naxsi_src"
 
 # nginx-rtmp-module (http://github.com/arut/nginx-rtmp-module, BSD license)
-RTMP_MODULE_PV="1.0.5"
+RTMP_MODULE_PV="1.1.3"
 RTMP_MODULE_P="ngx_rtmp-${RTMP_MODULE_PV}"
 RTMP_MODULE_URI="http://github.com/arut/nginx-rtmp-module/archive/v${RTMP_MODULE_PV}.tar.gz"
 RTMP_MODULE_WD="${WORKDIR}/nginx-rtmp-module-${RTMP_MODULE_PV}"
 
 # nginx-dav-ext-module (http://github.com/arut/nginx-dav-ext-module, BSD license)
-HTTP_DAV_EXT_MODULE_PV="0.0.2"
+HTTP_DAV_EXT_MODULE_PV="0.0.3"
 HTTP_DAV_EXT_MODULE_P="ngx_http_dav_ext-${HTTP_DAV_EXT_MODULE_PV}"
 HTTP_DAV_EXT_MODULE_URI="http://github.com/arut/nginx-dav-ext-module/archive/v${HTTP_DAV_EXT_MODULE_PV}.tar.gz"
 HTTP_DAV_EXT_MODULE_WD="${WORKDIR}/nginx-dav-ext-module-${HTTP_DAV_EXT_MODULE_PV}"
 
 # echo-nginx-module (https://github.com/agentzh/echo-nginx-module, BSD license)
-HTTP_ECHO_MODULE_PV="0.48"
+HTTP_ECHO_MODULE_PV="0.52"
 HTTP_ECHO_MODULE_P="ngx_http_echo-${HTTP_ECHO_MODULE_PV}"
 HTTP_ECHO_MODULE_URI="https://github.com/agentzh/echo-nginx-module/archive/v${HTTP_ECHO_MODULE_PV}.tar.gz"
 HTTP_ECHO_MODULE_WD="${WORKDIR}/echo-nginx-module-${HTTP_ECHO_MODULE_PV}"
 
 # mod_security for nginx (https://modsecurity.org/, Apache-2.0)
 # keep the MODULE_P here consistent with upstream to avoid tarball duplication
-HTTP_SECURITY_MODULE_PV="2.7.5"
+HTTP_SECURITY_MODULE_PV="2.7.7"
 HTTP_SECURITY_MODULE_P="modsecurity-apache_${HTTP_SECURITY_MODULE_PV}"
 HTTP_SECURITY_MODULE_URI="https://www.modsecurity.org/tarball/${HTTP_SECURITY_MODULE_PV}/${HTTP_SECURITY_MODULE_P}.tar.gz"
 HTTP_SECURITY_MODULE_WD="${WORKDIR}/${HTTP_SECURITY_MODULE_P}"
 
 # push-stream-module (https://github.com/wandenberg/nginx-push-stream-module, GPL-3)
-HTTP_PUSH_STREAM_MODULE_PV="0.3.5"
+HTTP_PUSH_STREAM_MODULE_PV="0.4.0"
 HTTP_PUSH_STREAM_MODULE_P="ngx_http_push_stream-${HTTP_PUSH_STREAM_MODULE_PV}"
 HTTP_PUSH_STREAM_MODULE_URI="https://github.com/wandenberg/nginx-push-stream-module/archive/${HTTP_PUSH_STREAM_MODULE_PV}.tar.gz"
 HTTP_PUSH_STREAM_MODULE_WD="${WORKDIR}/nginx-push-stream-module-${HTTP_PUSH_STREAM_MODULE_PV}"
@@ -131,18 +131,7 @@ inherit eutils ssl-cert toolchain-funcs perl-module flag-o-matic user systemd ve
 
 DESCRIPTION="Robust, small and high performance http and reverse proxy server"
 HOMEPAGE="http://nginx.org"
-
-if [[ ${PV} != 9999 ]]; then
-	KEYWORDS="~amd64 ~arm ~ppc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
-	SRC_URI="http://nginx.org/download/${P}.tar.gz"
-else
-	KEYWORDS="~amd64 ~arm ~ppc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
-	SRC_URI=""
-	inherit mercurial
-	EHG_REPO_URI="http://hg.nginx.org/nginx"
-fi
-
-SRC_URI="${SRC_URI}
+SRC_URI="http://nginx.org/download/${P}.tar.gz
 	syslog? ( ${SYSLOG_MODULE_URI} -> ${SYSLOG_MODULE_P}.tar.gz )
 	${DEVEL_KIT_MODULE_URI} -> ${DEVEL_KIT_MODULE_P}.tar.gz
 	nginx_modules_http_upload_progress? ( ${HTTP_UPLOAD_PROGRESS_MODULE_URI} -> ${HTTP_UPLOAD_PROGRESS_MODULE_P}.tar.gz )
@@ -167,6 +156,7 @@ LICENSE="BSD-2 BSD SSLeay MIT GPL-2 GPL-2+
 	nginx_modules_http_push_stream? ( GPL-3 )"
 
 SLOT="0"
+KEYWORDS="amd64 ~arm ~ppc x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux"
 
 NGINX_MODULES_STD="access auth_basic autoindex browser charset empty_gif fastcgi
 geo gzip limit_req limit_conn map memcached proxy referer rewrite scgi ssi
@@ -230,7 +220,7 @@ CDEPEND="
 	nginx_modules_http_auth_pam? ( virtual/pam )
 	nginx_modules_http_metrics? ( dev-libs/yajl )
 	nginx_modules_http_dav_ext? ( dev-libs/expat )
-	nginx_modules_http_security? ( >=dev-libs/libxml2-2.7.8 dev-libs/apr-util www-servers/apache )"
+	nginx_modules_http_security? ( >=dev-libs/libxml2-2.7.8 dev-libs/apr-util www-servers/apache dev-lang/lua )"
 RDEPEND="${CDEPEND}"
 DEPEND="${CDEPEND}
 	arm? ( dev-libs/libatomic_ops )
@@ -273,24 +263,7 @@ pkg_setup() {
 	fi
 }
 
-src_unpack() {
-	if [[ ${PV} == 9999 ]]; then
-		mercurial_src_unpack
-		pushd "${WORKDIR}" > /dev/null
-	fi
-	if [ "${A}" != "" ]; then
-		unpack ${A}
-	fi
-	if [[ ${PV} == 9999 ]]; then
-		popd > /dev/null
-	fi
-}
-
 src_prepare() {
-	if [[ ${PV} == 9999 ]]; then
-		cp auto/configure .
-	fi
-
 	epatch "${FILESDIR}/${PN}-1.4.1-fix-perl-install-path.patch"
 
 	if use syslog; then
@@ -302,9 +275,14 @@ src_prepare() {
 	fi
 
 	if use nginx_modules_http_security; then
-		pushd "${HTTP_SECURITY_MODULE_WD}/nginx/modsecurity"
-		epatch "${FILESDIR}/modsecurity-${HTTP_SECURITY_MODULE_PV}-include-paths.patch"
-		popd
+		sed -i \
+			-e 's/apr-1.0/apr-1/' \
+			-e 's/-llua5.1/-llua/' \
+			"${HTTP_SECURITY_MODULE_WD}/nginx/modsecurity/config"
+	fi
+
+	if use nginx_modules_http_lua; then
+		sed -i -e 's/-llua5.1/-llua/' "${HTTP_LUA_MODULE_WD}/config"
 	fi
 
 	find auto/ -type f -print0 | xargs -0 sed -i 's:\&\& make:\&\& \\$(MAKE):' || die
@@ -497,7 +475,10 @@ src_configure() {
 
 	if use nginx_modules_http_security; then
 		cd "${HTTP_SECURITY_MODULE_WD}"
-		./configure --enable-standalone-module || die "configure failed for mod_security"
+		./configure \
+			--enable-standalone-module \
+			$(use_enable pcre-jit) \
+			$(use_with nginx_modules_http_lua lua) || die "configure failed for mod_security"
 	fi
 }
 
@@ -518,12 +499,8 @@ src_install() {
 
 	systemd_newunit "${FILESDIR}"/nginx.service-r1 nginx.service
 
-	if [[ ${PV} != 9999 ]]; then
-		doman man/nginx.8
-		dodoc CHANGES* README
-	else
-		doman docs/man/nginx.8
-	fi
+	doman man/nginx.8
+	dodoc CHANGES* README
 
 	# just keepdir. do not copy the default htdocs files (bug #449136)
 	keepdir /var/www/localhost
@@ -609,7 +586,7 @@ src_install() {
 
 	if use rtmp; then
 		docinto ${RTMP_MODULE_P}
-		dodoc "${RTMP_MODULE_WD}"/{AUTHORS,README.md,TODO,stat.xsl}
+		dodoc "${RTMP_MODULE_WD}"/{AUTHORS,README.md,stat.xsl}
 	fi
 
 	if use nginx_modules_http_dav_ext; then
@@ -619,7 +596,7 @@ src_install() {
 
 	if use nginx_modules_http_echo; then
 		docinto ${HTTP_ECHO_MODULE_P}
-		dodoc "${HTTP_ECHO_MODULE_WD}"/{README,README.markdown,doc/HttpEchoModule.wiki}
+		dodoc "${HTTP_ECHO_MODULE_WD}"/{README.markdown,doc/HttpEchoModule.wiki}
 	fi
 
 	if use nginx_modules_http_security; then
@@ -670,7 +647,7 @@ pkg_postinst() {
 	# If su is not available we display the warning nevertheless since we can't check properly
 	su -s /bin/sh -c 'cd /var/log/nginx/ && ls' nginx >&/dev/null
 	if [ $? -ne 0 ] ; then
-		ewarn "Please make sure that the nginx user or group has"
+		ewarn "Please make sure that the nginx user or group has at least"
 		ewarn "'rx' permissions on /var/log/nginx (default on a fresh install)"
 		ewarn "Otherwise you end up with empty log files after a logrotate."
 	fi
