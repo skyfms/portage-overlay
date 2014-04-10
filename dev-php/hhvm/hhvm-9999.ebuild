@@ -104,10 +104,10 @@ src_install() {
 
 	dobin "${FILESDIR}/hhvm"
 	newconfd "${FILESDIR}"/hhvm.confd hhvm
-	newinitd "${FILESDIR}"/hhvm.initd hhvm
+	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
-	newins "${FILESDIR}"/config.hdf.dist config.hdf.dist
+	newins "${FILESDIR}"/config.hdf.dist-2 config.hdf.dist
 	newins "${FILESDIR}"/php.ini php.ini
 }
 
