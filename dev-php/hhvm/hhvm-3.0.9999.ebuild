@@ -6,7 +6,7 @@ EAPI=4
 
 inherit eutils git-2 user versionator
 
-DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP"
+DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP and Hack"
 HOMEPAGE="http://www.hhvm.com"
 SRC_URI=""
 EGIT_REPO_URI="git://github.com/facebook/hhvm.git"
