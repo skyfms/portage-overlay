@@ -23,7 +23,11 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen zend-compat"
+IUSE="debug devel emacs +freetype hack +jemalloc +jpeg +png vim-plugin webp xen zend-compat"
+REQUIRED_USE="
+	emacs? ( hack )
+	vim-plugin? ( hack )
+"
 
 RDEPEND="
 	sys-process/lsof
@@ -32,6 +36,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-cpp/glog
 	dev-cpp/tbb
+	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
@@ -97,6 +102,20 @@ src_configure() {
 src_install() {
 	exeinto "/usr/lib/hhvm/bin"
 	doexe hphp/hhvm/hhvm
+
+	if use hack; then
+		dobin hphp/hack/bin/hh_client
+		dobin hphp/hack/bin/hh_server
+		dobin hphp/hack/bin/hh_single_type_check
+		dodir "/usr/share/hhvm/hack"
+		cp -a "${S}/hphp/hack/hhi" "${D}/usr/share/hhvm/hack/"
+		if use emacs; then
+			cp -a "${S}/hphp/hack/editor-plugins/emacs" "${D}/usr/share/hhvm/hack/"
+		fi
+		if use vim-plugin; then
+			cp -a "${S}/hphp/hack/editor-plugins/vim" "${D}/usr/share/hhvm/hack/"
+		fi
+	fi
 
 	if use devel; then
 		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
