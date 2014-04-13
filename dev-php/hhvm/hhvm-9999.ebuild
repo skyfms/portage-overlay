@@ -68,7 +68,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	git submodule update --init
+	git submodule update --init --recursive
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
