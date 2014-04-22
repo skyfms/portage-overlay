@@ -32,8 +32,8 @@ KEYWORDS="~amd64"
 IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen zend-compat"
 
 RDEPEND="
+	mail-client/mailx
 	sys-process/lsof
-	virtual/mta
 "
 DEPEND="${RDEPEND}
 	dev-cpp/glog
