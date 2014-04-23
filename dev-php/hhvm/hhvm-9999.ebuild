@@ -30,8 +30,8 @@ REQUIRED_USE="
 "
 
 RDEPEND="
-	mail-client/mailx
 	sys-process/lsof
+	virtual/mailx
 "
 DEPEND="${RDEPEND}
 	dev-cpp/glog
