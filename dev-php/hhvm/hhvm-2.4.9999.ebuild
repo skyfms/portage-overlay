@@ -47,7 +47,6 @@ DEPEND="${RDEPEND}
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	>=dev-util/cmake-2.8.7
 	freetype? ( media-libs/freetype )
-	jpeg? ( media-libs/libjpeg-turbo )
 	png? ( media-libs/libpng )
 	webp? ( media-libs/libvpx )
 	net-libs/c-client[kerberos]
@@ -55,6 +54,7 @@ DEPEND="${RDEPEND}
 	net-nds/openldap
 	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
 	sys-libs/libcap
+	jpeg? ( virtual/jpeg )
 	virtual/mysql
 "
 

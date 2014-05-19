@@ -49,7 +49,6 @@ DEPEND="${RDEPEND}
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
-	jpeg? ( media-libs/libjpeg-turbo )
 	png? ( media-libs/libpng )
 	webp? ( media-libs/libvpx )
 	net-libs/c-client[kerberos]
@@ -57,6 +56,7 @@ DEPEND="${RDEPEND}
 	net-nds/openldap
 	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
 	sys-libs/libcap
+	jpeg? ( virtual/jpeg )
 	virtual/mysql
 "
 

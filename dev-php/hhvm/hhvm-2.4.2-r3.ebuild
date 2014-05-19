@@ -6,7 +6,7 @@ EAPI=4
 
 inherit eutils git-2 user versionator
 
-DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP and Hack"
+DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP"
 HOMEPAGE="http://www.hhvm.com"
 SRC_URI=""
 EGIT_REPO_URI="git://github.com/facebook/hhvm.git"
@@ -20,14 +20,16 @@ else
     fi
 fi
 
+LIBEVENT_P="libevent-1.4.14b-stable"
+
+SRC_URI="${SRC_URI}
+	https://github.com/downloads/libevent/libevent/${LIBEVENT_P}.tar.gz
+"
+
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="debug devel emacs +freetype hack +jemalloc +jpeg +png vim-plugin webp xen zend-compat"
-REQUIRED_USE="
-	emacs? ( hack )
-	vim-plugin? ( hack )
-"
+IUSE="debug devel +freetype +jemalloc +jpeg +png webp xen zend-compat"
 
 RDEPEND="
 	sys-process/lsof
@@ -36,20 +38,15 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	dev-cpp/glog
 	dev-cpp/tbb
-	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
-	>=dev-libs/boost-1.49
+	>=dev-libs/boost-1.37
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
 	dev-libs/libdwarf
-	dev-libs/libevent
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
-	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
-	media-gfx/imagemagick
 	freetype? ( media-libs/freetype )
-	jpeg? ( media-libs/libjpeg-turbo )
 	png? ( media-libs/libpng )
 	webp? ( media-libs/libvpx )
 	net-libs/c-client[kerberos]
@@ -57,6 +54,7 @@ DEPEND="${RDEPEND}
 	net-nds/openldap
 	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
 	sys-libs/libcap
+	jpeg? ( virtual/jpeg )
 	virtual/mysql
 "
 
@@ -72,6 +70,16 @@ src_prepare() {
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
+	einfo "Building custom libevent"
+	export EPATCH_SOURCE="${S}/hphp/third_party"
+	EPATCH_OPTS="-d ""${WORKDIR}/${LIBEVENT_P}" epatch libevent-1.4.14.fb-changes.diff
+	pushd "${WORKDIR}/${LIBEVENT_P}" > /dev/null
+	./autogen.sh
+	./configure --prefix="${CMAKE_PREFIX_PATH}"
+	emake
+	emake -j1 install
+	popd > /dev/null
+
 	CMAKE_BUILD_TYPE="Release"
 	if use debug; then
 		CMAKE_BUILD_TYPE="Debug"
@@ -82,40 +90,30 @@ src_prepare() {
 src_configure() {
     export HPHP_HOME="${S}"
     ADDITIONAL_MAKE_DEFS=""
-    
-	if use xen; then
+
+    if use xen; then
         ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DDISABLE_HARDWARE_COUNTERS=ON"
     else
-		if [ "${RC_SYS}" == "XENU" ]; then
-			eerror "Under XenU, xen USE flag is required! See https://github.com/facebook/hhvm/issues/981"
-			die
-		fi
-	fi
+        if [ "${RC_SYS}" == "XENU" ]; then
+            eerror "Under XenU, xen USE flag is required! See https://github.com/facebook/hhvm/issues/981"
+            die
+        fi
+    fi
 
-	if use zend-compat; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=ON"
-	fi
+    if use zend-compat; then
+        ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=ON"
+    fi
 
     econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" ${ADDITIONAL_MAKE_DEFS}
 }
 
 src_install() {
+	pushd "${WORKDIR}/${LIBEVENT_P}" > /dev/null
+	emake -j1 install
+	popd > /dev/null
+
 	exeinto "/usr/lib/hhvm/bin"
 	doexe hphp/hhvm/hhvm
-
-	if use hack; then
-		dobin hphp/hack/bin/hh_client
-		dobin hphp/hack/bin/hh_server
-		dobin hphp/hack/bin/hh_single_type_check
-		dodir "/usr/share/hhvm/hack"
-		cp -a "${S}/hphp/hack/hhi" "${D}/usr/share/hhvm/hack/"
-		if use emacs; then
-			cp -a "${S}/hphp/hack/editor-plugins/emacs" "${D}/usr/share/hhvm/hack/"
-		fi
-		if use vim-plugin; then
-			cp -a "${S}/hphp/hack/editor-plugins/vim" "${D}/usr/share/hhvm/hack/"
-		fi
-	fi
 
 	if use devel; then
 		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
@@ -123,10 +121,10 @@ src_install() {
 
 	dobin "${FILESDIR}/hhvm"
 	newconfd "${FILESDIR}"/hhvm.confd hhvm
-	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
+	newinitd "${FILESDIR}"/hhvm.initd hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
-	newins "${FILESDIR}"/config.hdf.dist-2 config.hdf.dist
+	newins "${FILESDIR}"/config.hdf.dist config.hdf.dist
 	newins "${FILESDIR}"/php.ini php.ini
 }
 
