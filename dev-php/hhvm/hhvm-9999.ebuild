@@ -34,6 +34,7 @@ RDEPEND="
 	virtual/mailx
 "
 DEPEND="${RDEPEND}
+	dev-db/sqlite
 	dev-cpp/glog
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
