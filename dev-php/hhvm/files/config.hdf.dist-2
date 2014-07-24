@@ -5,7 +5,6 @@ Log {
     Level = Warning
     AlwaysLogUnhandledExceptions = true
     Header = true
-    InjectedStackTrace = true
     NativeStackTrace = false
     RuntimeErrorReportingLevel = 8183
     HeaderMangle = 1
@@ -23,7 +22,6 @@ Log {
 
 Debug {
     FullBacktrace = true
-    ServerStackTrace = true
     ServerErrorMessage = false
     TranslateSource = true
 
