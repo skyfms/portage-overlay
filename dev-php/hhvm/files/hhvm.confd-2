@@ -1,0 +1,6 @@
+
+HHVM_BINARY="/usr/local/bin/hhvm"
+
+# How long (in seconds) should we wait for shutdown?
+STOP_TIMEOUT=15
+

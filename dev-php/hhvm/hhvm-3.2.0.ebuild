@@ -34,6 +34,7 @@ RDEPEND="
 	virtual/mailx
 "
 DEPEND="${RDEPEND}
+	dev-db/sqlite
 	dev-cpp/glog
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
@@ -55,7 +56,7 @@ DEPEND="${RDEPEND}
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
-	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
+	>=sys-devel/gcc-4.8
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
@@ -109,8 +110,10 @@ src_configure() {
 }
 
 src_install() {
+	emake DESTDIR="${D}" install
+
 	exeinto "/usr/lib/hhvm/bin"
-	doexe hphp/hhvm/hhvm
+	#doexe hphp/hhvm/hhvm
 
 	if use hack; then
 		dobin hphp/hack/bin/hh_client
@@ -130,8 +133,8 @@ src_install() {
 		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
 	fi
 
-	dobin "${FILESDIR}/hhvm"
-	newconfd "${FILESDIR}"/hhvm.confd hhvm
+	#dobin "${FILESDIR}/hhvm"
+	newconfd "${FILESDIR}"/hhvm.confd-2 hhvm
 	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
