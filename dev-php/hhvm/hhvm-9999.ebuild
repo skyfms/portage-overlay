@@ -23,7 +23,7 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire debug devel emacs +freetype hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+IUSE="cotire debug devel emacs +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
@@ -39,6 +39,7 @@ DEPEND="${RDEPEND}
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
+	gmp? ( dev-libs/gmp )
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
 	jsonc? ( dev-libs/json-c )
