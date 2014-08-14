@@ -1,0 +1,20 @@
+diff --git a/hphp/runtime/ext/session/ext_session.cpp b/hphp/runtime/ext/session/ext_session.cpp
+index c60cc43..1efe41a 100644
+--- a/hphp/runtime/ext/session/ext_session.cpp
++++ b/hphp/runtime/ext/session/ext_session.cpp
+@@ -402,6 +402,7 @@ bool SystemlibSessionModule::open(const char *save_path,
+                              nullptr, 2, args);
+ 
+   if (ret.isBoolean() && ret.toBoolean()) {
++    PS(mod_data) = true;
+     return true;
+   }
+ 
+@@ -413,6 +414,7 @@ bool SystemlibSessionModule::close() {
+   auto obj = s_obj->getObject();
+   if (!obj) {
+     // close() can be called twice in some circumstances
++    PS(mod_data) = true;
+     return true;
+   }
+

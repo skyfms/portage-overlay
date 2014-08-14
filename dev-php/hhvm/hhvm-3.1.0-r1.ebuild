@@ -78,6 +78,8 @@ src_prepare() {
 		CMAKE_BUILD_TYPE="Debug"
 	fi
 	export CMAKE_BUILD_TYPE
+
+	epatch "${FILESDIR}/hhvm-3.1.0-session.patch"
 }
 
 src_configure() {
