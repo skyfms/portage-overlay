@@ -30,7 +30,8 @@ REQUIRED_USE="
 "
 
 DEPEND="
-	<dev-db/sqlite-3.8
+	>=dev-db/sqlite-3
+	!=dev-db/sqlite-3.8*
 	dev-cpp/glog
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
