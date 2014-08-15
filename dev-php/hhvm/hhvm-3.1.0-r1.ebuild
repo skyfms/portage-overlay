@@ -29,11 +29,7 @@ REQUIRED_USE="
 	vim-plugin? ( hack )
 "
 
-RDEPEND="
-	sys-process/lsof
-	virtual/mailx
-"
-DEPEND="${RDEPEND}
+DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
@@ -59,6 +55,11 @@ DEPEND="${RDEPEND}
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
+"
+RDEPEND="
+	${DEPEND}
+	sys-process/lsof
+	virtual/mailx
 "
 
 pkg_setup() {

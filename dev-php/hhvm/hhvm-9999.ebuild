@@ -23,18 +23,14 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire debug devel emacs +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+IUSE="cotire dbase debug devel emacs +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
 "
 
-RDEPEND="
-	sys-process/lsof
-	virtual/mailx
-"
-DEPEND="${RDEPEND}
-	dev-db/sqlite
+DEPEND="
+	<dev-db/sqlite-3.8
 	dev-cpp/glog
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
@@ -61,6 +57,14 @@ DEPEND="${RDEPEND}
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
+"
+RDEPEND="
+	${DEPEND}
+	sys-process/lsof
+	virtual/mailx
+"
+PDEPEND="
+	dbase? ( dev-php/hhvm-ext_dbase )
 "
 
 pkg_setup() {
