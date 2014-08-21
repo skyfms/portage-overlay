@@ -54,6 +54,7 @@ DEPEND="
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
+	sys-devel/binutils[static_libs]
 	>=sys-devel/gcc-4.8
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
