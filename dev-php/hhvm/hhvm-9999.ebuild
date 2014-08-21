@@ -30,9 +30,9 @@ REQUIRED_USE="
 "
 
 DEPEND="
-	|| ( =dev-db/sqlite-3.7* >=dev-db/sqlite-3.8.6 )
 	dev-cpp/glog
 	dev-cpp/tbb
+	|| ( =dev-db/sqlite-3.7* >=dev-db/sqlite-3.8.6 )
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
 	gmp? ( dev-libs/gmp )
@@ -53,7 +53,7 @@ DEPEND="
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
-	sys-devel/binutils[static_libs]
+	sys-devel/binutils[static-libs]
 	>=sys-devel/gcc-4.8
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
