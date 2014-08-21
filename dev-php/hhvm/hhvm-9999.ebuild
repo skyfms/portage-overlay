@@ -85,10 +85,6 @@ src_prepare() {
 		CMAKE_BUILD_TYPE="Debug"
 	fi
 	export CMAKE_BUILD_TYPE
-
-	if use freetype; then
-		epatch "${FILESDIR}/hhvm-3.3-freetype.patch"
-	fi
 }
 
 src_configure() {
