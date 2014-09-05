@@ -158,7 +158,7 @@ if [[ -z ${SERVER_URI} ]]; then
 		PERCONA_RC=$(get_version_component_range 6 ${PV})
 		if [[ "$MIRROR_PV" == "5.6" && (( $(get_version_component_range 3 ${PV}) < 17 )) ]]; then
 			# We don't support rc's here
-			SERVER_URI="http://www.percona.com/redir/downloads/${PERCONA_PN}-${MIRROR_PV}/${PERCONA_PN}-${MY_PV}-rel${PERCONA_RELEASE}/source/tarball/${PERCONA_PN}-${MY_PV}-rel${PERCONA_RELEASE}.tar.gz"
+			SERVER_URI="http://www.percona.com/redir/downloads/${PERCONA_PN}-${MIRROR_PV}/${PERCONA_PN}-${MY_PV}-rel${PERCONA_RELEASE}/source/${PERCONA_PN}-${MY_PV}-rel${PERCONA_RELEASE}.tar.gz"
 		else
 			SERVER_URI="http://www.percona.com/redir/downloads/${PERCONA_PN}-${MIRROR_PV}/${PERCONA_PN}-${MY_PV}-${PERCONA_RC}${PERCONA_RELEASE}/source/tarball/${PERCONA_PN}-${MY_PV}-${PERCONA_RC}${PERCONA_RELEASE}.tar.gz"
 		fi
