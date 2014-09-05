@@ -156,9 +156,19 @@ if [[ -z ${SERVER_URI} ]]; then
 		MY_PV=$(get_version_component_range 1-3 ${PV})
 		PERCONA_RELEASE=$(get_version_component_range 4-5 ${PV})
 		PERCONA_RC=$(get_version_component_range 6 ${PV})
-		SERVER_URI="http://www.percona.com/redir/downloads/${PERCONA_PN}-${MIRROR_PV}/${PERCONA_PN}-${MY_PV}-${PERCONA_RC}${PERCONA_RELEASE}/source/tarball/${PN}-${MY_PV}-${PERCONA_RC}${PERCONA_RELEASE}.tar.gz"
+		if [[ "$MIRROR_PV" == "5.6" && (( $(get_version_component_range 3 ${PV}) < 17 )) ]]; then
+			# We don't support rc's here
+			SERVER_URI="http://www.percona.com/redir/downloads/${PERCONA_PN}-${MIRROR_PV}/${PERCONA_PN}-${MY_PV}-rel${PERCONA_RELEASE}/source/tarball/${PERCONA_PN}-${MY_PV}-rel${PERCONA_RELEASE}.tar.gz"
+		else
+			SERVER_URI="http://www.percona.com/redir/downloads/${PERCONA_PN}-${MIRROR_PV}/${PERCONA_PN}-${MY_PV}-${PERCONA_RC}${PERCONA_RELEASE}/source/tarball/${PERCONA_PN}-${MY_PV}-${PERCONA_RC}${PERCONA_RELEASE}.tar.gz"
+		fi
+# For 5.5		
 #		http://www.percona.com/redir/downloads/Percona-Server-5.5/LATEST/source/tarball/Percona-Server-5.5.30-30.2.tar.gz
+# For versions starting with 5.6.17
 #		http://www.percona.com/redir/downloads/Percona-Server-5.6/Percona-Server-5.6.13-rc60.5/source/tarball/Percona-Server-5.6.13-rc60.5.tar.gz
+# For versions before 5.6.17
+#		http://www.percona.com/redir/downloads/Percona-Server-5.6/Percona-Server-5.6.15-rel63.0/source/Percona-Server-5.6.15-rel63.0.tar.gz
+#		http://www.percona.com/redir/downloads/Percona-Server-5.6/Percona-Server-5.6.13-rc60.6/source/Percona-Server-5.6.13-rc60.6.tar.gz
 	else
 		if [[ "${PN}" == "mysql-cluster" ]] ; then
 			URI_DIR="MySQL-Cluster"
