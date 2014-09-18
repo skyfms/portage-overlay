@@ -1,0 +1,13 @@
+diff --git a/hphp/system/php/redis/RedisSessionModule.php b/hphp/system/php/redis/RedisSessionModule.php
+index 5f2e34b..0716d67 100644
+--- a/hphp/system/php/redis/RedisSessionModule.php
++++ b/hphp/system/php/redis/RedisSessionModule.php
+@@ -70,7 +70,7 @@ class RedisSessionModule implements SessionHandlerInterface {
+         $args['weight'] = 1;
+       }
+ 
+-      if ($url['scheme'] == 'file') {
++      if (isset($url['scheme']) && ($url['scheme'] == 'file')) {
+         $args['host'] = "unix://{$url['path']}";
+         $args['port'] = null;
+       } else {

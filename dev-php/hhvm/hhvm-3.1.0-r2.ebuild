@@ -81,6 +81,7 @@ src_prepare() {
 	export CMAKE_BUILD_TYPE
 
 	epatch "${FILESDIR}/hhvm-3.1.0-session.patch"
+	epatch "${FILESDIR}/hhvm-3.1.0-redis-session.patch"
 }
 
 src_configure() {
