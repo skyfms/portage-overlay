@@ -32,7 +32,6 @@ REQUIRED_USE="
 DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
-	|| ( =dev-db/sqlite-3.7* >=dev-db/sqlite-3.8.6 )
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
 	gmp? ( dev-libs/gmp )
