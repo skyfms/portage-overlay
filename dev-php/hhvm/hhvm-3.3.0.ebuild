@@ -23,18 +23,19 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug devel emacs +freetype hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+IUSE="cotire dbase debug devel emacs +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
 "
 
 DEPEND="
-	|| ( =dev-db/sqlite-3.7* >=dev-db/sqlite-3.8.6 )
 	dev-cpp/glog
 	dev-cpp/tbb
+	|| ( =dev-db/sqlite-3.7* >=dev-db/sqlite-3.8.6 )
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
+	gmp? ( dev-libs/gmp )
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
 	jsonc? ( dev-libs/json-c )
@@ -52,6 +53,7 @@ DEPEND="
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
+	sys-devel/binutils[static-libs]
 	>=sys-devel/gcc-4.8
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
@@ -83,8 +85,6 @@ src_prepare() {
 		CMAKE_BUILD_TYPE="Debug"
 	fi
 	export CMAKE_BUILD_TYPE
-
-	epatch "${FILESDIR}/hhvm-3.1.0-redis-session.patch"
 }
 
 src_configure() {
