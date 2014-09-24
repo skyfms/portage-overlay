@@ -22,15 +22,14 @@ fi
 
 LICENSE="PHP-3"
 SLOT="0"
-KEYWORDS="~amd64"
-IUSE="cotire dbase debug devel emacs +freetype hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+KEYWORDS="amd64"
+IUSE="cotire debug devel emacs +freetype hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
 "
 
 DEPEND="
-	|| ( =dev-db/sqlite-3.7* >=dev-db/sqlite-3.8.6 )
 	dev-cpp/glog
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
@@ -52,7 +51,7 @@ DEPEND="
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
-	>=sys-devel/gcc-4.8
+	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
@@ -61,9 +60,6 @@ RDEPEND="
 	${DEPEND}
 	sys-process/lsof
 	virtual/mailx
-"
-PDEPEND="
-	dbase? ( dev-php/hhvm-ext_dbase )
 "
 
 pkg_setup() {
@@ -84,6 +80,7 @@ src_prepare() {
 	fi
 	export CMAKE_BUILD_TYPE
 
+	epatch "${FILESDIR}/hhvm-3.1.0-session.patch"
 	epatch "${FILESDIR}/hhvm-3.1.0-redis-session.patch"
 }
 
@@ -116,10 +113,8 @@ src_configure() {
 }
 
 src_install() {
-	emake DESTDIR="${D}" install
-
 	exeinto "/usr/lib/hhvm/bin"
-	#doexe hphp/hhvm/hhvm
+	doexe hphp/hhvm/hhvm
 
 	if use hack; then
 		dobin hphp/hack/bin/hh_client
@@ -139,12 +134,15 @@ src_install() {
 		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
 	fi
 
-	#dobin "${FILESDIR}/hhvm"
-	newconfd "${FILESDIR}"/hhvm.confd-2 hhvm
+	dobin "${FILESDIR}/hhvm"
+	newconfd "${FILESDIR}"/hhvm.confd hhvm
 	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
 	newins "${FILESDIR}"/config.hdf.dist-2 config.hdf.dist
 	newins "${FILESDIR}"/php.ini php.ini
+
+	insinto /etc/logrotate.d
+	newins "${FILESDIR}"/hhvm.logrotate hhvm
 }
 

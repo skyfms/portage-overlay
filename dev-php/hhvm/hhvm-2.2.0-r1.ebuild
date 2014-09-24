@@ -117,5 +117,8 @@ src_install() {
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
 	newins "${FILESDIR}"/config.hdf.dist config.hdf.dist
+
+	insinto /etc/logrotate.d
+	newins "${FILESDIR}"/hhvm.logrotate hhvm
 }
 

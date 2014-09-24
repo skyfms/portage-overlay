@@ -145,5 +145,8 @@ src_install() {
 	insinto /etc/hhvm
 	newins "${FILESDIR}"/config.hdf.dist-2 config.hdf.dist
 	newins "${FILESDIR}"/php.ini php.ini
+
+	insinto /etc/logrotate.d
+	newins "${FILESDIR}"/hhvm.logrotate hhvm
 }
 
