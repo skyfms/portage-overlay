@@ -23,7 +23,7 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug devel emacs +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+IUSE="cotire dbase debug devel emacs +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
@@ -92,6 +92,10 @@ src_configure() {
 
 	if use cotire; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
+	fi
+
+	if use hardened; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
 	fi
 
 	if use jsonc; then
