@@ -23,7 +23,7 @@ fi
 LICENSE="PHP-3"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug devel emacs +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+IUSE="cotire dbase debug devel emacs +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen +zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
@@ -111,8 +111,8 @@ src_configure() {
 		fi
 	fi
 
-	if use zend-compat; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=ON"
+	if ! use zend-compat; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=OFF"
 	fi
 
     econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" ${ADDITIONAL_MAKE_DEFS}
