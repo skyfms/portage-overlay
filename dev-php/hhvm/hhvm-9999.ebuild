@@ -34,6 +34,7 @@ DEPEND="
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
+	dev-libs/cyrus-sasl:2
 	gmp? ( dev-libs/gmp )
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
@@ -53,7 +54,7 @@ DEPEND="
 	net-misc/curl
 	net-nds/openldap
 	sys-devel/binutils[static-libs]
-	>=sys-devel/gcc-4.8
+	>=sys-devel/gcc-4.8[-hardened]
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
