@@ -31,7 +31,7 @@ hhvm-ext-source_src_compile() {
 
 # @FUNCTION: hhvm-ext-source_src_install
 hhvm-ext-source_src_install() {
-	EXT_DIR="/usr/local/lib/hphp/extensions/"
+	EXT_DIR="/usr/local/lib/hhvm/extensions/"
 
 	exeinto "${EXT_DIR}"
 	doexe "${HHVM_EXT_NAME}.so" || die "Unable to install extension"
