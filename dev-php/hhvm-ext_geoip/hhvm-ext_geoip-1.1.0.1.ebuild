@@ -6,16 +6,11 @@ EAPI=5
 
 HHVM_EXT_NAME="geoip"
 
-inherit hhvm-ext-source git-2
+inherit hhvm-ext-source
 
 DESCRIPTION="GeoIP extension for HipHop VM"
-HOMEPAGE="https://github.com/skyfms/hhvm-ext_geoip"
-SRC_URI=""
-EGIT_REPO_URI="git://github.com/skyfms/hhvm-ext_geoip.git"
-EGIT_BRANCH="master"
-if [[ ${PV} != 9999 ]]; then
-	EGIT_COMMIT="${PV}"
-fi
+HOMEPAGE="https://github.com/vipsoft/hhvm-ext-geoip"
+SRC_URI="https://github.com/vipsoft/hhvm-ext-geoip/archive/${PV}.tar.gz"
 
 LICENSE="PHP-3"
 SLOT="0"
