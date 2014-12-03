@@ -18,7 +18,7 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
-	dev-libs/geoip[city]
+	dev-libs/geoip
 "
 RDEPEND="${DEPEND}"
 
