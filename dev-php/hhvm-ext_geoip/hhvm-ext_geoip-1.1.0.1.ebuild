@@ -22,3 +22,5 @@ DEPEND="
 "
 RDEPEND="${DEPEND}"
 
+S="${WORKDIR}/hhvm-ext-geoip-${PV}"
+
