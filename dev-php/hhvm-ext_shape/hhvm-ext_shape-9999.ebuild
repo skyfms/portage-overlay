@@ -8,7 +8,7 @@ HHVM_EXT_NAME="shp"
 
 inherit hhvm-ext-source git-2
 
-DESCRIPTION="dBase database file access functions for HHVM"
+DESCRIPTION="libshape wrapper for HHVM"
 HOMEPAGE="https://github.com/skyfms/hhvm-ext_shape"
 SRC_URI=""
 EGIT_REPO_URI="git://github.com/skyfms/hhvm-ext_shape.git"
