@@ -25,7 +25,7 @@ SRC_URI="${SRC_URI}
 	https://github.com/downloads/libevent/libevent/${LIBEVENT_P}.tar.gz
 "
 
-LICENSE="PHP-3"
+LICENSE="JSON PHP-3 ZEND-2"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="debug devel +jemalloc xen"

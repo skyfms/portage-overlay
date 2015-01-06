@@ -20,7 +20,7 @@ else
     fi
 fi
 
-LICENSE="PHP-3"
+LICENSE="JSON PHP-3 ZEND-2"
 SLOT="0"
 KEYWORDS="amd64"
 IUSE="cotire debug devel emacs +freetype hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
