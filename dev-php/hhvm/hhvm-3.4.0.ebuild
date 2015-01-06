@@ -20,7 +20,11 @@ else
     fi
 fi
 
-LICENSE="PHP-3 ZEND-2"
+LICENSE="
+	!jsonc? ( JSON )
+	PHP-3
+	ZEND-2
+"
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="cotire dbase debug devel emacs +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen +zend-compat"
@@ -28,10 +32,6 @@ REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
 "
-
-if ! use jsonc; then
-    LICENSE="JSON ${LICENSE}"
-fi
 
 DEPEND="
 	dev-cpp/glog
