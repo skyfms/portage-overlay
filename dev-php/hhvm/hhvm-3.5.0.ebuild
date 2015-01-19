@@ -20,10 +20,14 @@ else
     fi
 fi
 
-LICENSE="JSON PHP-3 ZEND-2"
+LICENSE="
+    !jsonc? ( JSON )
+    PHP-3
+    ZEND-2
+"
 SLOT="0"
-KEYWORDS="amd64"
-IUSE="cotire debug devel emacs +freetype hack imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen zend-compat"
+KEYWORDS="~amd64"
+IUSE="cotire dbase debug devel emacs +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen +zend-compat"
 REQUIRED_USE="
 	emacs? ( hack )
 	vim-plugin? ( hack )
@@ -34,6 +38,8 @@ DEPEND="
 	dev-cpp/tbb
 	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
 	>=dev-libs/boost-1.49
+	dev-libs/cyrus-sasl:2
+	gmp? ( dev-libs/gmp )
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
 	jsonc? ( dev-libs/json-c )
@@ -51,7 +57,8 @@ DEPEND="
 	net-libs/c-client[kerberos]
 	net-misc/curl
 	net-nds/openldap
-	|| ( >=sys-devel/gcc-4.7 >=sys-devel/clang-3.4 )
+	sys-devel/binutils[static-libs]
+	>=sys-devel/gcc-4.8[-hardened]
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
@@ -60,6 +67,9 @@ RDEPEND="
 	${DEPEND}
 	sys-process/lsof
 	virtual/mailx
+"
+PDEPEND="
+	dbase? ( dev-php/hhvm-ext_dbase )
 "
 
 pkg_setup() {
@@ -79,9 +89,6 @@ src_prepare() {
 		CMAKE_BUILD_TYPE="Debug"
 	fi
 	export CMAKE_BUILD_TYPE
-
-	epatch "${FILESDIR}/hhvm-3.1.0-session.patch"
-	epatch "${FILESDIR}/hhvm-3.1.0-redis-session.patch"
 }
 
 src_configure() {
@@ -90,6 +97,10 @@ src_configure() {
 
 	if use cotire; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
+	fi
+
+	if use hardened; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
 	fi
 
 	if use jsonc; then
@@ -105,16 +116,18 @@ src_configure() {
 		fi
 	fi
 
-	if use zend-compat; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=ON"
+	if ! use zend-compat; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=OFF"
 	fi
 
     econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" ${ADDITIONAL_MAKE_DEFS}
 }
 
 src_install() {
+	emake DESTDIR="${D}" install
+
 	exeinto "/usr/lib/hhvm/bin"
-	doexe hphp/hhvm/hhvm
+	#doexe hphp/hhvm/hhvm
 
 	if use hack; then
 		dobin hphp/hack/bin/hh_client
@@ -134,8 +147,8 @@ src_install() {
 		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
 	fi
 
-	dobin "${FILESDIR}/hhvm"
-	newconfd "${FILESDIR}"/hhvm.confd hhvm
+	#dobin "${FILESDIR}/hhvm"
+	newconfd "${FILESDIR}"/hhvm.confd-2 hhvm
 	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
