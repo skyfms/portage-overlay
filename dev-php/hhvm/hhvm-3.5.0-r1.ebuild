@@ -129,6 +129,6 @@ src_install() {
 	insinto /etc/logrotate.d
 	newins "${FILESDIR}"/hhvm.logrotate hhvm
 
-	dodir "usr/lib/hhvm/extensions"
+	dodir "/usr/local/lib/hhvm/extensions"
 }
 
