@@ -27,11 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug devel emacs +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png vim-plugin webp xen +zend-compat"
-REQUIRED_USE="
-	emacs? ( hack )
-	vim-plugin? ( hack )
-"
+IUSE="cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png webp xen +zend-compat"
 
 DEPEND="
 	dev-cpp/glog
@@ -67,9 +63,6 @@ RDEPEND="
 	${DEPEND}
 	sys-process/lsof
 	virtual/mailx
-"
-PDEPEND="
-	dbase? ( dev-php/hhvm-ext_dbase )
 "
 
 pkg_setup() {
@@ -126,28 +119,6 @@ src_configure() {
 src_install() {
 	emake DESTDIR="${D}" install
 
-	exeinto "/usr/lib/hhvm/bin"
-	#doexe hphp/hhvm/hhvm
-
-	if use hack; then
-		dobin hphp/hack/bin/hh_client
-		dobin hphp/hack/bin/hh_server
-		dobin hphp/hack/bin/hh_single_type_check
-		dodir "/usr/share/hhvm/hack"
-		cp -a "${S}/hphp/hack/hhi" "${D}/usr/share/hhvm/hack/"
-		if use emacs; then
-			cp -a "${S}/hphp/hack/editor-plugins/emacs" "${D}/usr/share/hhvm/hack/"
-		fi
-		if use vim-plugin; then
-			cp -a "${S}/hphp/hack/editor-plugins/vim" "${D}/usr/share/hhvm/hack/"
-		fi
-	fi
-
-	if use devel; then
-		cp -a "${S}/hphp/test" "${D}/usr/lib/hhvm/"
-	fi
-
-	#dobin "${FILESDIR}/hhvm"
 	newconfd "${FILESDIR}"/hhvm.confd-2 hhvm
 	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
 	dodir "/etc/hhvm"
@@ -157,5 +128,7 @@ src_install() {
 
 	insinto /etc/logrotate.d
 	newins "${FILESDIR}"/hhvm.logrotate hhvm
+
+	dodir "usr/lib/hhvm/extensions"
 }
 
