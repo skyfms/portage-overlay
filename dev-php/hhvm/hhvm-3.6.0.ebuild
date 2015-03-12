@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc mcrouter +png webp xen +zend-compat"
+IUSE="+async_mysql cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
 
 DEPEND="
 	dev-cpp/glog
@@ -88,6 +88,10 @@ src_configure() {
     export HPHP_HOME="${S}"
     ADDITIONAL_MAKE_DEFS=""
 
+	if ! use async_mysql; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ASYNC_MYSQL=OFF"
+	fi
+
 	if use cotire; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
 	fi
@@ -100,8 +104,8 @@ src_configure() {
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DUSE_JSONC=ON"
 	fi
 
-	if use mcrouter; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_MCROUTER=ON"
+	if ! use mcrouter; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_MCROUTER=OFF"
 	fi
 
 	if use xen; then
