@@ -31,7 +31,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/mosquitto-link.patch
+	epatch "${FILESDIR}"/"${P}"-link.patch
 
 	# Must not call ldconfig on install
 	# install(CODE "EXEC_PROGRAM(/sbin/ldconfig)")
