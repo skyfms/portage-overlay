@@ -23,14 +23,18 @@ RESTRICT="mirror"
 IUSE="-jmx"
 
 COMMON_DEP="
-        >=dev-java/log4j-1.2.15[jmx?]"
+	>=dev-java/slf4j-api-1.6.1
+	>=dev-java/slf4j-log4j12-1.6.1
+"
 
-RDEPEND=" >=virtual/jre-1.6
-  >=dev-java/jline-0.9.94
-  ${COMMON_DEP}"
+RDEPEND="
+	>=virtual/jre-1.6
+	>=dev-java/jline-0.9.94
+	${COMMON_DEP}"
 
-DEPEND=">=virtual/jdk-1.6
-  ${COMMON_DEP}"
+DEPEND="
+	>=virtual/jdk-1.6
+	${COMMON_DEP}"
 
 S="${WORKDIR}/${MY_P}"
 
@@ -49,7 +53,8 @@ src_prepare() {
 
 	# Link the jars we need for build into the tree
 	cd "${S}/src/java/lib"
-	java-pkg_jar-from log4j
+	java-pkg_jar-from slf4j-api
+	java-pkg_jar-from slf4j-log4j12
 	java-pkg_jar-from jline
 }
 
