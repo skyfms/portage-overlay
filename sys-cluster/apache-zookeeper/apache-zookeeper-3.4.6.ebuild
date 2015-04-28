@@ -55,6 +55,7 @@ src_prepare() {
 	cd "${S}/src/java/lib"
 	java-pkg_jar-from slf4j-api
 	java-pkg_jar-from slf4j-log4j12
+	java-pkg_jar-from log4j
 	java-pkg_jar-from jline
 }
 
