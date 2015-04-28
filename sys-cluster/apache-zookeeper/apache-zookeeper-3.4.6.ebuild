@@ -20,9 +20,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 #RESTRICT="mirror binchecks"
 RESTRICT="mirror"
-IUSE="-jmx"
+IUSE=""
 
 COMMON_DEP="
+	dev-java/log4j[jmx]
+	dev-java/netty-buffer
 	>=dev-java/slf4j-api-1.6.1
 	>=dev-java/slf4j-log4j12-1.6.1
 "
@@ -57,6 +59,7 @@ src_prepare() {
 	java-pkg_jar-from slf4j-log4j12
 	java-pkg_jar-from log4j
 	java-pkg_jar-from jline
+	java-pkg_jar-from netty-buffer
 }
 
 src_install() {
