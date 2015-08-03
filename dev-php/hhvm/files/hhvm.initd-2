@@ -11,6 +11,8 @@ PIDDIR="/var/run/hhvm"
 PIDFILE="${PIDDIR}/${RC_SVCNAME}.pid"
 LOGDIR="/var/log/hhvm"
 LOGFILE="${LOGDIR}/${RC_SVCNAME}-server.log"
+HHVM_STOP_TIMEOUT=${HHVM_STOP_TIMEOUT:-15}
+HHVM_UMASK=${HHVM_UMASK:-$(umask)}
 
 depend() {
 	need net localmount
@@ -40,13 +42,13 @@ start() {
 		--stdout "${LOGFILE}" \
 		--stderr "${LOGFILE}" \
 		--env HPHP_HOME="${HHVM_LIB}/" \
+        --umask "${HHVM_UMASK}" \
 		-- -m daemon -u hhvm -c "${HHVM_CONFIG}"
 	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 
 stop() {
-	local stop_timeout=${STOP_TIMEOUT:-15}
 	ebegin "Stopping HipHop VM (${RC_SVCNAME})"
-	start-stop-daemon --stop --pidfile "${PIDFILE}" --retry ${stop_timeout}
+	start-stop-daemon --stop --pidfile "${PIDFILE}" --retry "${HHVM_STOP_TIMEOUT}"
 	eend $? "Failed to stop HipHop VM (${RC_SVCNAME})"
 }

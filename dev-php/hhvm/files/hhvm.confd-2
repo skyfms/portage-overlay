@@ -2,5 +2,8 @@
 HHVM_BINARY="/usr/local/bin/hhvm"
 
 # How long (in seconds) should we wait for shutdown?
-STOP_TIMEOUT=15
+HHVM_STOP_TIMEOUT=15
+
+# Change default umask, if needed.
+#HHVM_UMASK=0022
 
