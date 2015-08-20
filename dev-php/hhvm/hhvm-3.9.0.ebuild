@@ -27,12 +27,12 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
+IUSE="+async_mysql cotire dbase debug +freetype gmp hardened imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
 
 DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
-	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
+	>=dev-lang/ocaml-4.01[ocamlopt] 
 	mcrouter? ( >=dev-libs/boost-1.49[context(+)] ) !mcrouter? ( >=dev-libs/boost-1.49 )
 	dev-libs/cyrus-sasl:2
 	gmp? ( dev-libs/gmp )
