@@ -34,7 +34,7 @@ DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
 	>=dev-lang/ocaml-4.01[ocamlopt] 
-	mcrouter? ( >=dev-libs/boost-1.49[context(+)] ) !mcrouter? ( >=dev-libs/boost-1.49 )
+	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
