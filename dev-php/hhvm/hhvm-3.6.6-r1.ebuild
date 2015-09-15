@@ -27,16 +27,14 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp hardened imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
+IUSE="+async_mysql cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
 
 DEPEND="
-	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
-	>=dev-lang/ocaml-4.01[ocamlopt] 
-	>=dev-libs/boost-1.51[context(+)]
+	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
+	mcrouter? ( >=dev-libs/boost-1.49[context(+)] ) !mcrouter? ( >=dev-libs/boost-1.49 )
 	dev-libs/cyrus-sasl:2
-	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
@@ -45,9 +43,7 @@ DEPEND="
 	dev-libs/libevent
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
-	dev-libs/libzip
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
-	dev-libs/libpcre[jit]
 	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
@@ -132,10 +128,10 @@ src_install() {
 	emake DESTDIR="${D}" install
 
 	newconfd "${FILESDIR}"/hhvm.confd-2 hhvm
-	newinitd "${FILESDIR}"/hhvm.initd-2 hhvm
+	newinitd "${FILESDIR}"/hhvm.initd-3 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
-	newins "${FILESDIR}"/config.hdf.dist-2 config.hdf.dist
+	newins "${FILESDIR}"/hhvm.ini hhvm.ini
 	newins "${FILESDIR}"/php.ini php.ini
 
 	insinto /etc/logrotate.d

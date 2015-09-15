@@ -4,7 +4,7 @@
 
 description="Virtual Machine, Runtime, and JIT for PHP"
 
-HHVM_CONFIG="/etc/hhvm/${RC_SVCNAME}.hdf"
+HHVM_CONFIG="/etc/hhvm/${RC_SVCNAME}.ini"
 
 HHVM_LIB=/usr/lib/hhvm/lib
 PIDDIR="/var/run/hhvm"
@@ -23,7 +23,7 @@ depend() {
 checkconfig() {
 	if [ ! -f "${HHVM_CONFIG}" ] ; then
 		eerror "Please create ${HHVM_CONFIG}"
-		eerror "Sample conf: /etc/hhvm/config.hdf.dist"
+		eerror "Sample conf: /etc/hhvm/hhvm.ini"
 		return 1
 	fi
 	return 0
