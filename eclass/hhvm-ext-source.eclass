@@ -36,10 +36,7 @@ hhvm-ext-source_src_install() {
 	exeinto "${EXT_DIR}"
 	doexe "${HHVM_EXT_NAME}.so" || die "Unable to install extension"
 
-	elog "To enable the extension, you need to have the following section in your HHVM config file:"
-	elog "    DynamicExtensionPath = ${EXT_DIR}"
-	elog "    DynamicExtensions {"
-	elog "        * = ${HHVM_EXT_NAME}.so"
-	elog "    }"
+	elog "To enable the extension, you need to have the following line in your HHVM config file:"
+	elog "    hhvm.dynamic_extensions[${HHVM_EXT_NAME}] = ${HHVM_EXT_NAME}.so"
 }
 
