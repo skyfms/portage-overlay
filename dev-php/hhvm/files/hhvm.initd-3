@@ -43,7 +43,7 @@ start() {
 		--stderr "${LOGFILE}" \
 		--env HPHP_HOME="${HHVM_LIB}/" \
         --umask "${HHVM_UMASK}" \
-		-- -m daemon -u hhvm -c "${HHVM_CONFIG}"
+		-- ${HHVM_ADDITIONAL_ARGS} -m daemon -u hhvm -c "${HHVM_CONFIG}"
 	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 

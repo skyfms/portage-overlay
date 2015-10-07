@@ -1,6 +1,9 @@
 
 HHVM_BINARY="/usr/local/bin/hhvm"
 
+# Additional command line arguments, if needed.
+#HHVM_ADDITIONAL_ARGS="-vEval.PerfPidMap=0"
+
 # How long (in seconds) should we wait for shutdown?
 HHVM_STOP_TIMEOUT=15
 
