@@ -7,9 +7,9 @@ EAPI=5
 inherit eutils
 
 DESCRIPTION="Tools for PHP developers creating Web applications, including PHP Development Tools (PDT), Web Tools Platform, Mylyn and others."
-HOMEPAGE="http://www.eclipse.org/cdt/"
-SRC_URI="amd64? ( http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/SR2/eclipse-php-helios-SR2-linux-gtk-x86_64.tar.gz )
-	x86? ( http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/SR2/eclipse-php-helios-SR2-linux-gtk.tar.gz )"
+HOMEPAGE="http://www.eclipse.org/pdt/"
+SRC_URI="amd64? ( https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/mars/1/eclipse-php-mars-1-linux-gtk-x86_64.tar.gz&mirror_id=1 -> ${P}-x86_64.tar.gz )
+	x86? ( https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/mars/1/eclipse-php-mars-1-linux-gtk.tar.gz&mirror_id=1 -> ${P}.tar.gz )"
 
 S=${WORKDIR}/eclipse
 
