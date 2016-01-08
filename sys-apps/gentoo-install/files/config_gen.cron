@@ -1,0 +1,5 @@
+#!/bin/bash
+CONFIG_OUT=/etc/inc.config.sh
+/opt/gentoo-install/config_gen.sh $CONFIG_OUT > /dev/null || exit 1
+eval "`grep USE_KERNEL_CONFIG $CONFIG_OUT`" && cp $USE_KERNEL_CONFIG /etc/kernel_config
+chmod 600 $CONFIG_OUT /etc/kernel_config
