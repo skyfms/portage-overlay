@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp hardened imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
+IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
 
 DEPEND="
 	app-arch/lz4
@@ -100,9 +100,9 @@ src_configure() {
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
 	fi
 
-	if use hardened; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
-	fi
+#	if use hardened; then
+#		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
+#	fi
 
 	if use jsonc; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DUSE_JSONC=ON"

@@ -27,14 +27,16 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png webp xen +zend-compat"
+IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
 
 DEPEND="
+	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
-	hack? ( >=dev-lang/ocaml-3.12[ocamlopt] )
-	>=dev-libs/boost-1.49
+	>=dev-lang/ocaml-4.01[ocamlopt] 
+	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
+	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
 	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
 	dev-libs/icu
@@ -43,7 +45,9 @@ DEPEND="
 	dev-libs/libevent
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
+	dev-libs/libzip
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	dev-libs/libpcre[jit]
 	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
@@ -74,9 +78,7 @@ pkg_setup() {
 
 src_prepare() {
 	git submodule update --init --recursive
-
-	epatch "${FILESDIR}/hhvm-3.5.0-extension.patch"
-
+	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"
@@ -90,16 +92,24 @@ src_configure() {
     export HPHP_HOME="${S}"
     ADDITIONAL_MAKE_DEFS=""
 
+	if ! use async_mysql; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ASYNC_MYSQL=OFF"
+	fi
+
 	if use cotire; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
 	fi
 
-	if use hardened; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
-	fi
+#	if use hardened; then
+#		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
+#	fi
 
 	if use jsonc; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DUSE_JSONC=ON"
+	fi
+
+	if ! use mcrouter; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_MCROUTER=OFF"
 	fi
 
 	if use xen; then
