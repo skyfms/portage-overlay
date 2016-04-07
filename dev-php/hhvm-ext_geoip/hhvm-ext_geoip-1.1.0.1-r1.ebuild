@@ -19,6 +19,7 @@ IUSE=""
 
 DEPEND="
 	dev-libs/geoip
+	<dev-php/hhvm-3.6.0
 "
 RDEPEND="${DEPEND}"
 
