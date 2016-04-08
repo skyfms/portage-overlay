@@ -6,7 +6,7 @@ EAPI=5
 
 HHVM_EXT_NAME="geoip"
 
-inherit hhvm-ext-source
+inherit hhvm-ext-source eutils
 
 DESCRIPTION="GeoIP extension for HipHop VM"
 HOMEPAGE="https://github.com/vipsoft/hhvm-ext-geoip"
@@ -19,9 +19,14 @@ IUSE=""
 
 DEPEND="
 	dev-libs/geoip
-	<dev-php/hhvm-3.6.0
 "
 RDEPEND="${DEPEND}"
 
 S="${WORKDIR}/hhvm-ext-geoip-${PV}"
 
+src_prepare() {
+	if has_version ">=dev-php/hhvm-3.6.0"; then
+		epatch "${FILESDIR}/hhvm-3.6.0.patch"
+	fi
+	hhvm-ext-source_src_prepare
+}

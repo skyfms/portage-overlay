@@ -1,0 +1,23 @@
+From ccdcf69fa0bd62fdd6ce18471306bcf64c27dd8e Mon Sep 17 00:00:00 2001
+From: Anthon Pang <anthon.pang@gmail.com>
+Date: Mon, 23 Mar 2015 01:51:23 +0000
+Subject: [PATCH] Update for hhvm > 3.6.0
+
+---
+ ext_geoip.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/ext_geoip.cpp b/ext_geoip.cpp
+index 69cf1f1..bce43ff 100644
+--- a/ext_geoip.cpp
++++ b/ext_geoip.cpp
+@@ -18,7 +18,8 @@
+    +----------------------------------------------------------------------+
+ */
+ 
+-#include "hphp/runtime/base/base-includes.h"
++#include "hphp/runtime/ext/extension.h"
++#include "hphp/util/lock.h"
+ #include <cinttypes>
+ #include <GeoIP.h>
+ #include <GeoIPCity.h>
