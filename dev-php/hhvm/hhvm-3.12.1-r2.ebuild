@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat"
+IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat cpu_flags_x86_avx2"
 
 DEPEND="
 	app-arch/lz4
@@ -99,6 +99,10 @@ src_configure() {
 	if use cotire; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
 	fi
+
+    if use cpu_flags_x86_avx2; then
+        ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_AVX2=ON"
+    fi
 
 #	if use hardened; then
 #		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
