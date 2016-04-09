@@ -20,7 +20,6 @@ KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
-	>=dev-php/hhvm-3.10.0
 	sci-libs/shapelib
 "
 RDEPEND="${DEPEND}"
