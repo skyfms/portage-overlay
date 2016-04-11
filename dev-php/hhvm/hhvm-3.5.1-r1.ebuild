@@ -131,7 +131,7 @@ src_install() {
 	newinitd "${FILESDIR}"/hhvm.initd-3 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
-	newins "${FILESDIR}"/config.hdf.dist-2 config.hdf.dist
+	newins "${FILESDIR}"/hhvm.ini hhvm.ini
 	newins "${FILESDIR}"/php.ini php.ini
 
 	insinto /etc/logrotate.d
