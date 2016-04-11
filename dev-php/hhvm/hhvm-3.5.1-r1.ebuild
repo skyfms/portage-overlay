@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="cotire dbase debug +freetype gmp hack hardened imagemagick +jemalloc +jpeg jsonc +png webp xen +zend-compat cpu_flags_x86_avx2"
+IUSE="cotire dbase debug +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png webp xen +zend-compat cpu_flags_x86_avx2"
 
 DEPEND="
 	dev-cpp/glog
