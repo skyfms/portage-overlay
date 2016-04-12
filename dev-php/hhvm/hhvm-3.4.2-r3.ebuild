@@ -26,8 +26,8 @@ LICENSE="
     ZEND-2
 "
 SLOT="0"
-KEYWORDS="~amd64"
-IUSE="cotire dbase debug +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png webp xen +zend-compat cpu_flags_x86_avx2"
+KEYWORDS="amd64"
+IUSE="cotire debug +freetype gmp hack imagemagick +jemalloc +jpeg jsonc +png webp xen +zend-compat"
 
 DEPEND="
 	dev-cpp/glog
@@ -75,6 +75,8 @@ pkg_setup() {
 src_prepare() {
 	git submodule update --init --recursive
 
+	epatch "${FILESDIR}/hhvm-3.4-zend-pack-max.patch"
+
 	cd third-party
 	epatch "${FILESDIR}/hhvm-system-tzdata.patch"
 	cd ..
@@ -95,14 +97,6 @@ src_configure() {
 	if use cotire; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_COTIRE=ON"
 	fi
-
-	if use cpu_flags_x86_avx2; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_AVX2=ON"
-	fi
-
-#	if use hardened; then
-#		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
-#	fi
 
 	if use jsonc; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DUSE_JSONC=ON"
