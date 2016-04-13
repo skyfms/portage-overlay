@@ -23,7 +23,10 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="
+	dev-libs/icu
+	${DEPEND}
+"
 
 src_prepare() {
 	git submodule update --init --recursive
