@@ -3,7 +3,7 @@
 	<repo priority="50" quality="experimental" status="unofficial">
 		<name>is-overlay</name>
 		<description>Various stuff by SIA Intelligent Systems (SkyFMS.com).</description>
-		<homepage>http://www.skyfms.com</homepage>
+		<homepage>https://www.skyfms.com</homepage>
 		<owner>
 			<email>root@zini.lv</email>
 		</owner>
