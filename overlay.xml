@@ -9,9 +9,4 @@
 		</owner>
 		<source type="git">git://github.com/skyfms/portage-overlay.git</source>
 	</repo>
-	<repo priority="100" quality="experimental" status="unofficial">
-		<name>gentoo-opencl</name>
-		<description>Gentoo open source OpenCL</description>
-		<source type="git">git://github.com/skyfms/gentoo-opencl.git</source>
-	</repo>
 </repositories>
