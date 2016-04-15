@@ -81,6 +81,8 @@ src_prepare() {
 	epatch "${FILESDIR}/hhvm-system-tzdata.patch"
 	cd ..
 
+	epatch "${FILESDIR}/hhvm-3.4-timelib_builtin_db-race-condition.patch"
+
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"
