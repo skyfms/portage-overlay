@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=MikroTik WinBox
+Exec=winbox
+Icon=wine
+Type=Application
+Categories=System;
