@@ -43,8 +43,10 @@ DEPEND="
 	dev-libs/libevent
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
-	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	dev-libs/libpcre[jit]
 	dev-libs/libxslt
+	dev-libs/libzip
+	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
@@ -79,6 +81,7 @@ src_prepare() {
 
 	cd third-party
 	epatch "${FILESDIR}/hhvm-system-tzdata.patch"
+	epatch "${FILESDIR}/hhvm-3.4-libpcre.patch"
 	cd ..
 
 	epatch "${FILESDIR}/hhvm-3.4-timelib_builtin_db-race-condition.patch"
