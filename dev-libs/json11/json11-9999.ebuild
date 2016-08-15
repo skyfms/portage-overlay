@@ -17,8 +17,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
+CMAKE_MIN_VERSION="3.2.0"
+
 DEPEND="
-	>=dev-util/cmake-3.2
 	>=sys-devel/gcc-4.7
 "
 RDEPEND="${DEPEND}"

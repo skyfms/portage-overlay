@@ -15,9 +15,10 @@ SLOT="0"
 KEYWORDS="amd64"
 IUSE=""
 
+CMAKE_MIN_VERSION="3.0.0"
+
 DEPEND="
 	>=dev-libs/boost-1.54
-	>=dev-util/cmake-3.0
 	>=sys-devel/gcc-4.7
 "
 RDEPEND="${DEPEND}"
