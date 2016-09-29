@@ -77,7 +77,7 @@
  		chmod +x $@
  
  check:		check_character_set check_white_space check_links check_sorted \
--		  check_tables check_web
+-		  check_tables check_tzs check_web
 +		  check_tables
  
  check_character_set: $(ENCHILADA)

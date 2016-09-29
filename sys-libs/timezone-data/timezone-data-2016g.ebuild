@@ -23,7 +23,7 @@ RDEPEND="!sys-libs/glibc[vanilla(+)]"
 S=${WORKDIR}
 
 src_prepare() {
-	epatch "${FILESDIR}"/${PN}-2016a-makefile.patch
+	epatch "${FILESDIR}"/${PN}-2016g-makefile.patch
 	tc-is-cross-compiler && cp -pR "${S}" "${S}"-native
 }
 
