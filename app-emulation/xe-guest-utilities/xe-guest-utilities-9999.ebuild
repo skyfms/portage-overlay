@@ -49,7 +49,11 @@ src_unpack() {
 		popd > /dev/null
 	done
 
-	epatch "${FILESDIR}/xe-linux-distribution.patch" 
+	if grep -qs boot2docker "${S}/xe-guest-utilities/usr/sbin/xe-linux-distribution"; then
+		epatch "${FILESDIR}/xe-linux-distribution-2.patch"
+	else
+		epatch "${FILESDIR}/xe-linux-distribution.patch" 
+	fi
 }
 
 src_install() {
