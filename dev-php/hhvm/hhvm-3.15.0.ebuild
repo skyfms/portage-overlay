@@ -33,6 +33,7 @@ DEPEND="
 	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
+	dev-db/postgresql
 	>=dev-lang/ocaml-4.01[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
