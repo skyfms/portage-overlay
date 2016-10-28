@@ -1,0 +1,24 @@
+From efb70bd97c53a1932791d822de724524d8ae19f2 Mon Sep 17 00:00:00 2001
+From: Kristaps Kaupe <kristaps.k@intelligentsystems.lv>
+Date: Fri, 28 Oct 2016 18:20:44 +0300
+Subject: [PATCH] Fix building on Gentoo Linux
+
+Gentoo stores libpq-fe.h in /usr/include not /usr/include/postgresql.
+Check for pg_config.h instead.
+---
+ CMake/HHVMExtensionConfig.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMake/HHVMExtensionConfig.cmake b/CMake/HHVMExtensionConfig.cmake
+index 35a71b4..2524ce5 100644
+--- a/CMake/HHVMExtensionConfig.cmake
++++ b/CMake/HHVMExtensionConfig.cmake
+@@ -952,7 +952,7 @@ function (HHVM_EXTENSION_INTERNAL_HANDLE_LIBRARY_DEPENDENCY extensionID dependen
+       HHVM_EXTENSION_INTERNAL_ADD_LINK_LIBRARIES(${MYSQL_CLIENT_LIBS})
+     endif()
+   elseif (${libraryName} STREQUAL "pgsql")
+-    FIND_PATH(PGSQL_INCLUDE_DIR NAMES libpq-fe.h
++    FIND_PATH(PGSQL_INCLUDE_DIR NAMES pg_config.h
+       PATHS
+         /usr/include
+         /usr/include/postgresql
