@@ -14,9 +14,14 @@ EXPORT_FUNCTIONS src_prepare src_compile src_install
 # The extension name. This must be set, otherwise the eclass dies.
 [[ -z "${HHVM_EXT_NAME}" ]] && die "No module name specified for the hhvm-ext-source eclass"
 
+# @ECLASS-VARIABLE: HHVM_MIN_VERSION
+# @DESCRIPTION:
+# Specify the minimum required HHVM version.
+: ${HHVM_MIN_VERSION:=3.2.0}
+
 DEPEND="
 	${DEPEND}
-	>=dev-php/hhvm-3.2.0
+	>=dev-php/hhvm-${HHVM_MIN_VERSION}
 "
 
 # @FUNCTION: hhvm-ext-source_src_prepare
