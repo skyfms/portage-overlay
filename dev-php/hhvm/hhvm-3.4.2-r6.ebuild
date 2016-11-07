@@ -57,6 +57,7 @@ DEPEND="
 	net-nds/openldap
 	sys-devel/binutils[static-libs]
 	>=sys-devel/gcc-4.8[-hardened]
+	sys-libs/binutils-libs[static-libs]
 	sys-libs/libcap
 	jpeg? ( virtual/jpeg )
 	virtual/mysql
