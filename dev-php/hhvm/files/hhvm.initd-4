@@ -1,10 +1,11 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 # Copyright 1999-2013 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-description="Virtual Machine, Runtime, and JIT for PHP"
+description="A virtual machine designed for executing programs written in Hack and PHP."
 
-HHVM_CONFIG="/etc/hhvm/${RC_SVCNAME}.ini"
+HHVM_CONFIG_INI="/etc/hhvm/${RC_SVCNAME}.ini"
+HHVM_CONFIG_HDF="/etc/hhvm/${RC_SVCNAME}.hdf"
 
 HHVM_LIB=/usr/lib/hhvm/lib
 PIDDIR="/var/run/hhvm"
@@ -21,10 +22,14 @@ depend() {
 }
 
 checkconfig() {
-	if [ ! -f "${HHVM_CONFIG}" ] ; then
-		eerror "Please create ${HHVM_CONFIG}"
+	if [ ! -f "${HHVM_CONFIG_INI}" ]; then
+		eerror "Please create ${HHVM_CONFIG_INI}"
 		eerror "Sample conf: /etc/hhvm/hhvm.ini"
 		return 1
+	fi
+	# Most people can go on without HDF nowadays.
+	if [ ! -f "${HHVM_CONFIG_HDF}" ]; then
+		touch "${HHVM_CONFIG_HDF}"
 	fi
 	return 0
 }
@@ -42,8 +47,8 @@ start() {
 		--stdout "${LOGFILE}" \
 		--stderr "${LOGFILE}" \
 		--env HPHP_HOME="${HHVM_LIB}/" \
-        --umask "${HHVM_UMASK}" \
-		-- ${HHVM_ADDITIONAL_ARGS} -m daemon -u hhvm -c "${HHVM_CONFIG}"
+		--umask "${HHVM_UMASK}" \
+		-- ${HHVM_ADDITIONAL_ARGS} -m daemon -u hhvm -c "${HHVM_CONFIG_INI}" -c "${HHVM_CONFIG_HDF}"
 	eend $? "Failed to start HipHop VM (${RC_SVCNAME})"
 }
 

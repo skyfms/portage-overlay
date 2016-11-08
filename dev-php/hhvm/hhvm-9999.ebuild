@@ -137,7 +137,7 @@ src_install() {
 	emake DESTDIR="${D}" install
 
 	newconfd "${FILESDIR}"/hhvm.confd-2 hhvm
-	newinitd "${FILESDIR}"/hhvm.initd-3 hhvm
+	newinitd "${FILESDIR}"/hhvm.initd-4 hhvm
 	dodir "/etc/hhvm"
 	insinto /etc/hhvm
 	newins "${FILESDIR}"/hhvm.ini hhvm.ini
