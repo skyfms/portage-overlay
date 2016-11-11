@@ -28,5 +28,6 @@ src_prepare() {
 	if has_version ">=dev-php/hhvm-3.6.0"; then
 		epatch "${FILESDIR}/hhvm-3.6.0.patch"
 	fi
+	epatch "${FILESDIR}/hhvm-ext_geoip-1.1.0-null_variant.patch"
 	hhvm-ext-source_src_prepare
 }
