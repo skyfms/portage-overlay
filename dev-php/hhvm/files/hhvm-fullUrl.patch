@@ -1,0 +1,99 @@
+diff --git a/hphp/runtime/server/http-request-handler.cpp b/hphp/runtime/server/http-request-handler.cpp
+index 4b5c3f4..8369e8e 100644
+--- a/hphp/runtime/server/http-request-handler.cpp
++++ b/hphp/runtime/server/http-request-handler.cpp
+@@ -180,8 +180,7 @@ void HttpRequestHandler::handleRequest(Transport *transport) {
+     }
+   }
+ 
+-  ServerStats::StartRequest(transport->getCommand().c_str(),
+-                            transport->getRemoteHost(),
++  ServerStats::StartRequest(transport,
+                             vhost->getName().c_str());
+ 
+   // resolve source root
+diff --git a/hphp/runtime/server/server-stats.cpp b/hphp/runtime/server/server-stats.cpp
+index 9bb01d2..72f0bf4 100644
+--- a/hphp/runtime/server/server-stats.cpp
++++ b/hphp/runtime/server/server-stats.cpp
+@@ -327,10 +327,10 @@ void ServerStats::LogBytes(int64_t bytes) {
+   }
+ }
+ 
+-void ServerStats::StartRequest(const char *url, const char *clientIP,
++void ServerStats::StartRequest(Transport* transport,
+                                const char *vhost) {
+   if (RuntimeOption::EnableStats && RuntimeOption::EnableWebStats) {
+-    ServerStats::s_logger->startRequest(url, clientIP, vhost);
++    ServerStats::s_logger->startRequest(transport, vhost);
+   }
+ }
+ 
+@@ -623,6 +623,7 @@ void ServerStats::ReportStatus(std::string &output, Writer::Format format) {
+       w->writeEntry("ioduration", gettime_diff_us(ts.m_ioStart, now));
+     }
+     w->writeEntry("mode", mode);
++    w->writeEntry("full url", ts.m_fullUrl);
+     w->writeEntry("url", ts.m_url);
+     w->writeEntry("client", ts.m_clientIP);
+     w->writeEntry("vhost", ts.m_vhost);
+@@ -812,7 +813,7 @@ static void safe_copy(char *dest, const char *src, int max) {
+   memcpy(dest, src, len > max ? max : len);
+ }
+ 
+-void ServerStats::startRequest(const char *url, const char *clientIP,
++void ServerStats::startRequest(Transport* transport,
+                                const char *vhost) {
+   ++m_threadStatus.m_requestCount;
+ 
+@@ -823,7 +824,12 @@ void ServerStats::startRequest(const char *url, const char *clientIP,
+   m_threadStatus.m_ioStatuses.clear();
+ 
+   *m_threadStatus.m_ioLogicalName = 0;
++  auto full_url = transport->getServerObject();
++  safe_copy(m_threadStatus.m_fullUrl, full_url,
++            sizeof(m_threadStatus.m_fullUrl));
++  auto url = transport->getCommand().c_str();
+   safe_copy(m_threadStatus.m_url, url, sizeof(m_threadStatus.m_url));
++  auto clientIP = transport->getRemoteHost();
+   safe_copy(m_threadStatus.m_clientIP, clientIP,
+             sizeof(m_threadStatus.m_clientIP));
+   safe_copy(m_threadStatus.m_vhost, vhost, sizeof(m_threadStatus.m_vhost));
+diff --git a/hphp/runtime/server/server-stats.h b/hphp/runtime/server/server-stats.h
+index bdc4174..e171644 100644
+--- a/hphp/runtime/server/server-stats.h
++++ b/hphp/runtime/server/server-stats.h
+@@ -33,6 +33,7 @@
+ #include "hphp/runtime/base/types.h"
+ #include "hphp/runtime/base/execution-profiler.h"
+ #include "hphp/runtime/server/writer.h"
++#include "hphp/runtime/server/transport.h"
+ 
+ namespace HPHP {
+ ///////////////////////////////////////////////////////////////////////////////
+@@ -62,7 +63,7 @@ public:
+ 
+   // thread status functions
+   static void LogBytes(int64_t bytes);
+-  static void StartRequest(const char *url, const char *clientIP,
++  static void StartRequest(Transport* transport,
+                            const char *vhost);
+   static void SetThreadMode(ThreadMode mode);
+   static void ReportStatus(std::string &out, Writer::Format format);
+@@ -151,7 +152,7 @@ private:
+    * Live status, instead of historical statistics.
+    */
+   void logBytes(int64_t bytes);
+-  void startRequest(const char *url, const char *clientIP, const char *vhost);
++  void startRequest(Transport* transport, const char *vhost);
+   void setThreadMode(ThreadMode mode);
+ 
+   void setThreadIOStatusAddress(const char *name);
+@@ -196,6 +197,7 @@ private:
+     char m_ioName[512];
+     char m_ioLogicalName[512];
+     char m_ioAddr[512];
++    char m_fullUrl[1024];
+     char m_url[1024];
+     char m_clientIP[256];
+     char m_vhost[256];

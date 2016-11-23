@@ -86,6 +86,7 @@ src_prepare() {
 	cd ..
 
 	epatch "${FILESDIR}/hhvm-3.4-timelib_builtin_db-race-condition.patch"
+	epatch "${FILESDIR}/hhvm-fullUrl.patch"
 
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
