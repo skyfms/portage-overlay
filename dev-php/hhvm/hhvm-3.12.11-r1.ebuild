@@ -78,7 +78,9 @@ pkg_setup() {
 
 src_prepare() {
 	git submodule update --init --recursive
-	
+
+	epatch "${FILESDIR}/hhvm-fullUrl.patch"
+
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"
