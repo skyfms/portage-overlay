@@ -6,7 +6,7 @@ EAPI=5
 
 DESCRIPTION="Some useful scripts for HHVM"
 HOMEPAGE="https://github.com/skyfms/gentoo-hhvm-scripts"
-SRC_URI="http://gentoo.skyfms.com/distfiles/${P}.tar.gz"
+SRC_URI="https://github.com/skyfms/gentoo-hhvm-scripts/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
