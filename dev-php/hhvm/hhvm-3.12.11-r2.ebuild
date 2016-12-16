@@ -85,7 +85,7 @@ src_prepare() {
 
 	CMAKE_BUILD_TYPE="Release"
 	if use debug; then
-		CMAKE_BUILD_TYPE="Debug"
+		CMAKE_BUILD_TYPE="RelWithDebInfo"
 	fi
 	export CMAKE_BUILD_TYPE
 }
@@ -95,7 +95,7 @@ src_configure() {
     ADDITIONAL_MAKE_DEFS=""
 
 	if ! use async_mysql; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ASYNC_MYSQL=OFF"
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ASYNC_MYSQL=OFF -DENABLE_EXTENSION_ASYNC_MYSQL=OFF"
 	fi
 
 	if use cotire; then
@@ -109,6 +109,10 @@ src_configure() {
 #	if use hardened; then
 #		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
 #	fi
+
+	if ! use imagemagick; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_IMAGICK=OFF"
+	fi
 
 	if use jsonc; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DUSE_JSONC=ON"
