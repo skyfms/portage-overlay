@@ -15,7 +15,7 @@ EGIT_BRANCH="master"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="pic"
+IUSE=""
 
 CMAKE_MIN_VERSION="3.2.0"
 
@@ -25,10 +25,6 @@ DEPEND="
 RDEPEND="${DEPEND}"
 
 src_prepare() {
-	# Remove if/when https://github.com/dropbox/json11/pull/76 is merged.
-	if use pic; then
-		epatch "${FILESDIR}/json11-fpic.patch"
-	fi
 	cmake-utils_src_prepare
 }
 
