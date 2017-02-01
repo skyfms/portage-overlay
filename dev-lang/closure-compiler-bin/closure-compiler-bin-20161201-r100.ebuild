@@ -6,9 +6,9 @@ EAPI="4"
 
 inherit java-pkg-2
 
-DESCRIPTION="JavaScript optimizing compiler"
-HOMEPAGE="http://code.google.com/p/closure-compiler/"
-SRC_URI="http://closure-compiler.googlecode.com/files/compiler-${PV}.tar.gz -> ${P}.tar.gz"
+DESCRIPTION="A JavaScript checker and optimizer."
+HOMEPAGE="https://github.com/google/closure-compiler"
+SRC_URI="https://github.com/google/closure-compiler/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="0"
