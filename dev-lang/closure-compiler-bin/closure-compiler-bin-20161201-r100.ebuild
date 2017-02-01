@@ -21,12 +21,12 @@ S=${WORKDIR}
 
 src_install() {
 	java-pkg_jarinto /opt/${PN}-${SLOT}/lib
-	java-pkg_newjar compiler.jar ${PN}.jar
+	java-pkg_newjar closure-compiler-v${PV}.jar ${PN}.jar
 	java-pkg_dolauncher \
 		${PN%-bin} \
 		--jar /opt/${PN}-${SLOT}/lib/${PN}.jar \
 		-into /opt
-	dodoc README
+	dodoc README.md
 
 	dodir /usr/bin
 	dosym /opt/bin/closure-compiler /usr/bin/closure-compiler
