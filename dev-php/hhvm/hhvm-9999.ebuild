@@ -34,7 +34,7 @@ DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
 	dev-db/postgresql
-	>=dev-lang/ocaml-4.01[ocamlopt] 
+	>=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
@@ -50,6 +50,7 @@ DEPEND="
 	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	dev-libs/libpcre[jit]
 	dev-libs/libxslt
+	dev-ml/ocamlbuild
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
