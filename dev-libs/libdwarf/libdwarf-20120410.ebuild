@@ -22,7 +22,9 @@ SLOT="0"
 KEYWORDS="amd64 ~x86"
 IUSE="+static-libs"
 
-DEPEND=""
+DEPEND="
+	virtual/libelf
+"
 RDEPEND="${DEPEND}"
 
 if [[ ${PV} == 9999 ]]; then
