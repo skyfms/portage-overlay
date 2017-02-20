@@ -34,7 +34,7 @@ DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
 	dev-db/postgresql
-	>=dev-lang/ocaml-4.03[ocamlopt]
+	>=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
@@ -80,8 +80,6 @@ pkg_setup() {
 
 src_prepare() {
 	git submodule update --init --recursive
-
-	epatch "${FILESDIR}/7449.patch"
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
@@ -111,6 +109,10 @@ src_configure() {
 #	if use hardened; then
 #		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSP=ON"
 #	fi
+
+	if ! use imagemagick; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_IMAGICK=OFF"
+	fi
 
 	if use jsonc; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DUSE_JSONC=ON"
