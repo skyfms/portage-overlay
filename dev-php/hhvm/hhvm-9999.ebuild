@@ -36,7 +36,7 @@ IUSE="
 	+password pdo +phar +posix postgres +random readline scrypt
 	server +session sharedmem snappy soap +spl +sqlite sysvipc ssl
 	+thread thrift unicode watchman wddx webp xdebug xen xhprof
-	+xml xmlreader xmlwriteri xslt +zend-compat zip zlib
+	+xml xmlreader xmlwriter xslt +zend-compat zip zlib
 	cpu_flags_x86_avx2
 "
 
