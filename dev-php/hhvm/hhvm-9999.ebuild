@@ -188,6 +188,15 @@ src_prepare() {
 		CMAKE_BUILD_TYPE="Debug"
 	fi
 	export CMAKE_BUILD_TYPE
+
+	if ! use async_mysql; then
+		cd third-party/squangle
+		ln -s src/squangle/mysql_client/ mysql_client
+		ln -s src/squangle/logger/ logger
+		ln -s src/squangle/base/ base
+		cd ../..
+		ln -s third-party/re2/src/re2 re2
+	fi
 }
 
 src_configure() {
