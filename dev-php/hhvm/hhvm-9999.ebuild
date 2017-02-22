@@ -85,7 +85,7 @@ DEPEND="
 		dev-libs/gmp
 	)
 	hotprofiler? (
-		dev-libs/zlib
+		sys-libs/zlib
 	)
 	iconv? (
 		virtual/libiconv
@@ -125,7 +125,7 @@ DEPEND="
 	memcached? (
 		dev-libs/bareos-fastlzlib
 		>=dev-libs/libmemcached-0.39
-		dev-libs/zlib
+		sys-libs/zlib
 	)
 	odbc? (
 		dev-db/unixODBC
@@ -152,7 +152,7 @@ DEPEND="
 		dev-libs/libxslt
 	)
 	zlib? (
-		dev-libs/zlib
+		sys-libs/zlib
 	)
 "
 RDEPEND="
