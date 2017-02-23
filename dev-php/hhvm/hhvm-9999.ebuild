@@ -30,7 +30,7 @@ KEYWORDS="~amd64"
 IUSE="
 	apache2 +async_mysql bcmath bzip2 cotire crypt +ctype curl 
 	debug domdocument enum factparse fb +filter +freetype
-	fribidi +gd gmp +hash hotprofiler +iconv imagemagick imap
+	fribidi +gd gmp +hash +iconv imagemagick imap
 	intl +jemalloc +jpeg jsonc ldap libedit libressl lz4 +mail mailparse
 	mcrouter memcache memcached +mysql mysqli objprof odbc +png
 	+password pdo +phar +posix postgres +random readline scrypt
@@ -65,6 +65,7 @@ DEPEND="
 	sys-devel/binutils[static-libs]
 	>=sys-devel/gcc-4.8[-hardened]
 	sys-libs/libcap
+	sys-libs/zlib
 	!async_mysql? (
 		virtual/mysql
 	)
@@ -83,9 +84,6 @@ DEPEND="
 	)
 	gmp? (
 		dev-libs/gmp
-	)
-	hotprofiler? (
-		sys-libs/zlib
 	)
 	iconv? (
 		virtual/libiconv
@@ -125,7 +123,6 @@ DEPEND="
 	memcached? (
 		dev-libs/bareos-fastlzlib
 		>=dev-libs/libmemcached-0.39
-		sys-libs/zlib
 	)
 	odbc? (
 		dev-db/unixODBC
@@ -150,9 +147,6 @@ DEPEND="
 	)
 	xslt? (
 		dev-libs/libxslt
-	)
-	zlib? (
-		sys-libs/zlib
 	)
 "
 RDEPEND="
@@ -281,10 +275,6 @@ src_configure() {
 
 	if ! use hash; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_HASH=OFF"
-	fi
-
-	if ! use hotprofiler; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_HOTPROFILER=OFF"
 	fi
 
 	if ! use iconv; then
