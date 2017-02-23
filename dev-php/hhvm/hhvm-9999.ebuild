@@ -30,7 +30,7 @@ KEYWORDS="~amd64"
 IUSE="
 	apache2 +async_mysql bcmath bzip2 cotire crypt +ctype curl 
 	debug domdocument enum factparse fb +filter +freetype
-	fribidi +gd gmp +hash hotprofiler +iconv icu imagemagick imap
+	fribidi +gd gmp +hash hotprofiler +iconv imagemagick imap
 	intl +jemalloc +jpeg jsonc ldap libedit libressl lz4 +mail mailparse
 	mcrouter memcache memcached +mysql mysqli objprof odbc +png
 	+password pdo +phar +posix postgres +random readline scrypt
@@ -289,10 +289,6 @@ src_configure() {
 
 	if ! use iconv; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_ICONV=OFF"
-	fi
-
-	if ! use icu; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_ICU=OFF"
 	fi
 
 	if ! use imagemagick; then
