@@ -26,7 +26,7 @@ LICENSE="
     ZEND-2
 "
 SLOT="0"
-KEYWORDS="~amd64"
+KEYWORDS="amd64"
 IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat cpu_flags_x86_avx2"
 
 DEPEND="
