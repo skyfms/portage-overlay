@@ -33,7 +33,7 @@ DEPEND="
 	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
-	>=dev-lang/ocaml-4.03[ocamlopt] 
+	<=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
 	<=dev-libs/boost-1.60[context]
 	dev-libs/cyrus-sasl:2
