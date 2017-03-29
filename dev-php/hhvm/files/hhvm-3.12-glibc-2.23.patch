@@ -1,0 +1,43 @@
+diff --git a/hphp/runtime/base/tv-helpers.cpp b/hphp/runtime/base/tv-helpers.cpp
+index 4e01e81..a2399cb 100644
+--- a/hphp/runtime/base/tv-helpers.cpp
++++ b/hphp/runtime/base/tv-helpers.cpp
+@@ -673,7 +673,7 @@ bool tvCoerceParamToInt64InPlace(TypedValue* tv) {
+   if (RuntimeOption::PHP7_ScalarTypes && tv->m_type == KindOfDouble) {
+     if (tv->m_data.dbl < std::numeric_limits<int64_t>::min()) return false;
+     if (tv->m_data.dbl > std::numeric_limits<int64_t>::max()) return false;
+-    if (isnan(tv->m_data.dbl)) return false;
++    if (std::isnan(tv->m_data.dbl)) return false;
+   }
+   tvCastToInt64InPlace(tv);
+   return true;
+diff --git a/hphp/runtime/base/zend-printf.cpp b/hphp/runtime/base/zend-printf.cpp
+index a008f3a..044d19f 100644
+--- a/hphp/runtime/base/zend-printf.cpp
++++ b/hphp/runtime/base/zend-printf.cpp
+@@ -44,9 +44,9 @@
+ 
+ #ifdef __CYGWIN__
+ #include <cmath>
++#endif
+ #define isinf std::isinf
+ #define isnan std::isnan
+-#endif
+ 
+ namespace HPHP {
+ 
+diff --git a/hphp/runtime/ext/std/ext_std_math.cpp b/hphp/runtime/ext/std/ext_std_math.cpp
+index 7bb7390..69e32ef 100644
+--- a/hphp/runtime/ext/std/ext_std_math.cpp
++++ b/hphp/runtime/ext/std/ext_std_math.cpp
+@@ -188,8 +188,8 @@ Variant HHVM_FUNCTION(abs, const Variant& number) {
+ }
+ 
+ bool HHVM_FUNCTION(is_finite, double val) { return finite(val);}
+-bool HHVM_FUNCTION(is_infinite, double val) { return isinf(val);}
+-bool HHVM_FUNCTION(is_nan, double val) { return isnan(val);}
++bool HHVM_FUNCTION(is_infinite, double val) { return std::isinf(val);}
++bool HHVM_FUNCTION(is_nan, double val) { return std::isnan(val);}
+ 
+ Variant HHVM_FUNCTION(ceil, const Variant& number) {
+   int64_t ival;
