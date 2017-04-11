@@ -35,7 +35,7 @@ DEPEND="
 	dev-cpp/tbb
 	<=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
-	<=dev-libs/boost-1.60[context]
+	<=dev-libs/boost-1.60.0[context]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
