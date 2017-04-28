@@ -1,4 +1,4 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 # $Header: /var/cvsroot/gentoo-x86/dev-db/redis/files/redis.initd-2,v 1.1 2013/05/06 08:45:00 djc Exp $
 
 REDIS_DIR=/var/lib/${RC_SVCNAME}

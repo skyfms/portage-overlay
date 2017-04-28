@@ -1,4 +1,4 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 # $Header: /var/cvsroot/gentoo-x86/dev-db/redis/files/redis.initd,v 1.4 2012/02/04 21:17:55 swegener Exp $
 
 REDIS_EXEC=/usr/sbin/redis-server

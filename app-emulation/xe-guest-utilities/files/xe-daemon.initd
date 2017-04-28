@@ -1,4 +1,4 @@
-#!/sbin/runscript
+#!/sbin/openrc-run
 # Copyright (c) 2011 Pandu E Poluan <pandu@poluan.info>
 # Distributed under the terms of the GNU General Public License v2 or newer
 
