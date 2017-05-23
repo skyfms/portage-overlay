@@ -18,8 +18,13 @@ KEYWORDS="alpha amd64 ~arm hppa ~ia64 ppc ppc64 sparc x86 ~x86-fbsd ~ppc-macos ~
 IUSE="setup"
 
 RDEPEND="
-	dev-lang/php[crypt,ctype,filter,json,session,unicode]
 	|| (
+		dev-php/hhvm[crypt(+),ctype(+),filter(+),session(+),unicode(+)]
+		dev-lang/php[crypt,ctype,filter,json,session,unicode]
+	)
+	|| (
+		dev-php/hhvm[mysqli(+)]
+		dev-php/hhvm[mysql(+)]
 		dev-lang/php[mysqli]
 		dev-lang/php[mysql]
 	)
