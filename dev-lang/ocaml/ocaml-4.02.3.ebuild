@@ -11,7 +11,7 @@ MY_P="${P/_/+}"
 DESCRIPTION="Fast modern type-inferring functional programming language descended from the ML family"
 HOMEPAGE="http://www.ocaml.org/"
 SRC_URI="http://caml.inria.fr/pub/distrib/ocaml-$(get_version_component_range 1-2)/${MY_P}.tar.xz
-	mirror://gentoo/${PN}-patches-${PATCHLEVEL}.tar.bz2"
+	http://gentoo.skyfms.com/distfiles/${PN}-patches-${PATCHLEVEL}.tar.bz2"
 
 LICENSE="QPL-1.0 LGPL-2"
 # Everytime ocaml is updated to a new version, everything ocaml must be rebuilt,
