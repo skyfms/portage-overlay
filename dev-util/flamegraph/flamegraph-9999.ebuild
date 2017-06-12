@@ -23,6 +23,16 @@ RDEPEND="${DEPEND}"
 src_install() {
 	insinto "/opt/FlameGraph"
 	doins -r *
-	fperms 755 /opt/FlameGraph/*.pl
+	fperms 755 "${ROOT}/opt/FlameGraph/flamegraph.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-perf.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-pmc.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-stap.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-instruments.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-vtune.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-ljp.awk"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-jstack.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-gdb.pl"
+	fperms 755 "${ROOT}/opt/FlameGraph/stackcollapse-go.pl"
 }
 
