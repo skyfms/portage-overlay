@@ -20,6 +20,8 @@ REQUIRED_USE="
 "
 
 DEPEND="
+	app-arch/bzip2
+	c++11? ( >=sys-devel/gcc-4.8.1 )
 	boost? ( >=dev-libs/boost-1.34.1[threads] )
 	openmp? ( >=sys-devel/gcc-4.2[openmp] )
 "
@@ -37,4 +39,10 @@ src_configure() {
 	)
 
 	cmake-utils_src_configure
+}
+
+src_install() {
+	cmake-utils_src_install
+
+	dosym /usr/lib/libstxxl_gentoo.a /usr/lib/libstxxl.a
 }
