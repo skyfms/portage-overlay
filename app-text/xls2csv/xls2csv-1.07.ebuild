@@ -18,7 +18,10 @@ IUSE=""
 DEPEND="
 	dev-lang/perl
 "
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	dev-perl/Spreadsheet-ParseExcel
+"
 
 PERL_MODULE_DEPEND="
 	Locale::Recode
