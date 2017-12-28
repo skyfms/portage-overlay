@@ -1,5 +1,6 @@
 
 HHVM_BINARY="/usr/local/bin/hhvm"
+HHVM_LOGDIR="/var/log/hhvm"
 
 # Additional command line arguments, if needed.
 #HHVM_ADDITIONAL_ARGS="-vEval.PerfPidMap=0"
