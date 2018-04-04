@@ -26,16 +26,16 @@ LICENSE="
     ZEND-2
 "
 SLOT="0"
-KEYWORDS="amd64"
+KEYWORDS="~amd64"
 IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter +png webp xen +zend-compat cpu_flags_x86_avx2"
 
 DEPEND="
 	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
-	<=dev-lang/ocaml-4.03[ocamlopt] 
+	dev-db/postgresql
+	>=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
-	<=dev-libs/boost-1.60.0[context]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
@@ -47,9 +47,10 @@ DEPEND="
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	dev-libs/libzip
-	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	dev-libs/libpcre[jit]
 	dev-libs/libxslt
+	dev-ml/ocamlbuild
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
@@ -80,14 +81,13 @@ pkg_setup() {
 src_prepare() {
 	git submodule update --init --recursive
 
-	epatch "${FILESDIR}/hhvm-fullUrl.patch"
-	epatch "${FILESDIR}/hhvm-3.12-glibc-2.23.patch"
-
+	epatch "${FILESDIR}/7449.patch"
+	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"
 	if use debug; then
-		CMAKE_BUILD_TYPE="RelWithDebInfo"
+		CMAKE_BUILD_TYPE="Debug"
 	fi
 	export CMAKE_BUILD_TYPE
 }
@@ -97,7 +97,7 @@ src_configure() {
     ADDITIONAL_MAKE_DEFS=""
 
 	if ! use async_mysql; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ASYNC_MYSQL=OFF -DENABLE_EXTENSION_ASYNC_MYSQL=OFF"
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ASYNC_MYSQL=OFF"
 	fi
 
 	if use cotire; then
