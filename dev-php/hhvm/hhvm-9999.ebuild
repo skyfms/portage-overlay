@@ -98,7 +98,7 @@ DEPEND="
 		virtual/libintl
 	)
 	jemalloc? (
-		>=dev-libs/jemalloc-3.0.0[-hardened,stats]
+		>=dev-libs/jemalloc-3.0.0[-hardened(-),stats]
 	)
 	jpeg? (
 		virtual/jpeg
