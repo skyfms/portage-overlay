@@ -39,7 +39,7 @@ DEPEND="
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
-	jemalloc? ( >=dev-libs/jemalloc-3.0.0[stats] )
+	jemalloc? ( >=dev-libs/jemalloc-3.0.0[-hardened,stats] )
 	dev-libs/icu
 	jsonc? ( dev-libs/json-c )
 	dev-libs/libdwarf
