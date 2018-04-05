@@ -82,6 +82,7 @@ src_prepare() {
 
 	epatch "${FILESDIR}/hhvm-fullUrl.patch"
 	epatch "${FILESDIR}/hhvm-3.12-glibc-2.23.patch"
+	epatch "${FILESDIR}/hhvm-3.12-gcc6.patch"
 
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
