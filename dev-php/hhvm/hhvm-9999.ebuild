@@ -44,7 +44,6 @@ DEPEND="
 	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
-	>=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
@@ -58,7 +57,6 @@ DEPEND="
 	dev-libs/libxml2
 	dev-libs/libxslt
 	=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
-	dev-ml/ocamlbuild
 	>=dev-util/cmake-2.8.7
 	net-misc/curl
 	net-nds/openldap
