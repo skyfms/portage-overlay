@@ -32,7 +32,7 @@ IUSE="
 	debug domdocument enum factparse fb +filter +freetype
 	fribidi +gd gmp +hash +iconv imagemagick imap
 	intl +jemalloc +jpeg jsonc ldap libedit libressl lz4 +mail mailparse
-	mcrouter memcache memcached +mysql mysqli objprof odbc +png
+	mcrouter memcache memcached +mysql mysqli numa objprof odbc +png
 	+password pdo +phar +posix postgres +random readline scrypt
 	server +session sharedmem snappy soap +spl +sqlite sysvipc ssl
 	+thread thrift unicode watchman wddx webp xdebug xen xhprof
@@ -123,6 +123,9 @@ DEPEND="
 	memcached? (
 		dev-libs/bareos-fastlzlib
 		>=dev-libs/libmemcached-0.39
+	)
+	numa? (
+		sys-process/numactl
 	)
 	odbc? (
 		dev-db/unixODBC
