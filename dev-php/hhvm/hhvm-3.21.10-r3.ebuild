@@ -81,6 +81,9 @@ src_prepare() {
 	git submodule update --init --recursive
 
 	epatch "${FILESDIR}/7449.patch"
+	if ! use async_mysql; then
+		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
+	fi
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
