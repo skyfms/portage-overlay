@@ -16,7 +16,7 @@ KEYWORDS="amd64"
 IUSE=""
 
 DEPEND=""
-RDEPEND="app-emulation/wine"
+RDEPEND="virtual/wine"
 
 src_unpack() {
 	mkdir -p ${S}
