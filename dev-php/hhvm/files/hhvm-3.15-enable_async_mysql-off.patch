@@ -1,0 +1,165 @@
+From 584dd26bd8fcfb46cc4a83841709633a79390f97 Mon Sep 17 00:00:00 2001
+From: Weibing Wang <wangweibing@baidu.com>
+Date: Mon, 24 Jul 2017 13:00:36 +0800
+Subject: [PATCH] fix mysql extension compile error with
+ -DENABLE_ASYNC_MYSQL=OFF
+
+---
+ hphp/runtime/ext/mysql/mysql_common.cpp | 32 ++++++++++++++++++++++++++------
+ hphp/runtime/ext/mysql/mysql_common.h   | 12 +++++++++---
+ 2 files changed, 35 insertions(+), 9 deletions(-)
+
+diff --git a/hphp/runtime/ext/mysql/mysql_common.cpp b/hphp/runtime/ext/mysql/mysql_common.cpp
+index e4f438f63b5..ed04f1a29b2 100644
+--- a/hphp/runtime/ext/mysql/mysql_common.cpp
++++ b/hphp/runtime/ext/mysql/mysql_common.cpp
+@@ -42,6 +42,7 @@
+ #include "hphp/runtime/base/socket.h"
+ #include "hphp/runtime/base/tv-refcount.h"
+ #include "hphp/runtime/vm/jit/translator-inline.h"
++#include "hphp/runtime/vm/native-data.h"
+ 
+ #include "hphp/runtime/ext/mysql/ext_mysql.h"
+ #include "hphp/runtime/ext/mysql/mysql_stats.h"
+@@ -49,12 +50,16 @@
+ #include "hphp/runtime/ext/std/ext_std_network.h"
+ #include "hphp/runtime/server/server-stats.h"
+ 
++#ifdef ENABLE_ASYNC_MYSQL
+ #include "hphp/runtime/ext/async_mysql/ext_async_mysql.h"
+-#include "hphp/runtime/vm/native-data.h"
++#endif
++
+ 
+ namespace HPHP {
+ 
++#ifdef ENABLE_ASYNC_MYSQL
+ using facebook::common::mysql_client::SSLOptionsProviderBase;
++#endif
+ 
+ const StaticString s_mysqli_result("mysqli_result");
+ 
+@@ -608,12 +613,14 @@ Variant php_mysql_do_connect_with_ssl(
+     int query_timeout_ms,
+     const Array* conn_attrs /* = nullptr */,
+     const Variant& sslContextProvider /* = null */) {
++#ifdef ENABLE_ASYNC_MYSQL
+   std::shared_ptr<SSLOptionsProviderBase> ssl_provider;
+   if (!sslContextProvider.isNull()) {
+     auto* obj =
+         Native::data<HPHP::MySSLContextProvider>(sslContextProvider.toObject());
+     ssl_provider = obj->getSSLProvider();
+   }
++#endif
+ 
+   return php_mysql_do_connect_on_link(
+       nullptr,
+@@ -626,10 +633,14 @@ Variant php_mysql_do_connect_with_ssl(
+       false,
+       connect_timeout_ms,
+       query_timeout_ms,
+-      conn_attrs,
+-      ssl_provider);
++      conn_attrs
++#ifdef ENABLE_ASYNC_MYSQL
++      , ssl_provider
++#endif
++  );
+ }
+ 
++#ifdef ENABLE_ASYNC_MYSQL
+ static void mysql_set_ssl_options(
+     std::shared_ptr<MySQL> mySQL,
+     std::shared_ptr<SSLOptionsProviderBase> ssl_provider) {
+@@ -638,6 +649,7 @@ static void mysql_set_ssl_options(
+   }
+   ssl_provider->setMysqlSSLOptions(mySQL->get());
+ }
++#endif
+ 
+ static void mysql_set_conn_attr(MYSQL* mysql, const String& key,
+                                 const String& value) {
+@@ -679,7 +691,7 @@ static void mysql_set_conn_attrs(
+   }
+ }
+ 
+-
++#ifdef ENABLE_ASYNC_MYSQL
+ static void mysql_store_ssl_session(
+     std::shared_ptr<MySQL> mySQL,
+     std::shared_ptr<SSLOptionsProviderBase> ssl_provider) {
+@@ -688,6 +700,7 @@ static void mysql_store_ssl_session(
+   }
+   ssl_provider->storeMysqlSSLSession(mySQL->get());
+ }
++#endif
+ 
+ Variant php_mysql_do_connect_on_link(
+     std::shared_ptr<MySQL> mySQL,
+@@ -700,8 +713,11 @@ Variant php_mysql_do_connect_on_link(
+     bool async,
+     int connect_timeout_ms,
+     int query_timeout_ms,
+-    const Array *conn_attrs,
+-    std::shared_ptr<SSLOptionsProviderBase> ssl_provider) {
++    const Array *conn_attrs
++#ifdef ENABLE_ASYNC_MYSQL
++    , std::shared_ptr<SSLOptionsProviderBase> ssl_provider
++#endif
++) {
+   if (connect_timeout_ms < 0) {
+     connect_timeout_ms = mysqlExtension::ConnectTimeout;
+   }
+@@ -765,8 +781,10 @@ Variant php_mysql_do_connect_on_link(
+     mysql_set_conn_attrs(mySQL, conn_attrs);
+   }
+ 
++#ifdef ENABLE_ASYNC_MYSQL
+   // set SSL Options
+   mysql_set_ssl_options(mySQL, ssl_provider);
++#endif
+ 
+   if (mySQL->getState() == MySQLState::INITED) {
+     if (async) {
+@@ -801,8 +819,10 @@ Variant php_mysql_do_connect_on_link(
+     }
+   }
+ 
++#ifdef ENABLE_ASYNC_MYSQL
+   // store SSL Session
+   mysql_store_ssl_session(mySQL, ssl_provider);
++#endif
+ 
+   if (savePersistent) {
+     MySQL::SetPersistent(
+diff --git a/hphp/runtime/ext/mysql/mysql_common.h b/hphp/runtime/ext/mysql/mysql_common.h
+index 8183a6e1b67..ca47b80aee2 100644
+--- a/hphp/runtime/ext/mysql/mysql_common.h
++++ b/hphp/runtime/ext/mysql/mysql_common.h
+@@ -28,7 +28,10 @@
+ #include "hphp/runtime/base/req-containers.h"
+ #include "hphp/runtime/base/request-event-handler.h"
+ #include "hphp/runtime/ext/extension.h"
++
++#ifdef ENABLE_ASYNC_MYSQL
+ #include "squangle/mysql_client/SSLOptionsProviderBase.h"
++#endif
+ 
+ #ifdef PHP_MYSQL_UNIX_SOCK_ADDR
+ #ifdef MYSQL_UNIX_ADDR
+@@ -451,9 +454,12 @@ Variant php_mysql_do_connect_on_link(
+     bool async,
+     int connect_timeout_ms,
+     int query_timeout_ms,
+-    const Array* conn_attrs = nullptr,
+-    std::shared_ptr<facebook::common::mysql_client::SSLOptionsProviderBase>
+-        ssl_opts = nullptr);
++    const Array* conn_attrs = nullptr
++#ifdef ENABLE_ASYNC_MYSQL
++    , std::shared_ptr<facebook::common::mysql_client::SSLOptionsProviderBase>
++        ssl_opts = nullptr
++#endif
++);
+ 
+ Variant php_mysql_do_connect(
+     const String& server,

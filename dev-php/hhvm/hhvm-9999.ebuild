@@ -32,7 +32,7 @@ IUSE="
 	debug domdocument enum factparse fb +filter +freetype
 	fribidi +gd gmp +hash +iconv imagemagick imap
 	intl +jemalloc +jpeg jsonc ldap libedit libressl lz4 +mail mailparse
-	mcrouter memcache memcached +mysql mysqli objprof odbc +png
+	mcrouter memcache memcached +mysql mysqli numa objprof odbc +png
 	+password pdo +phar +posix postgres +random readline scrypt
 	server +session sharedmem snappy soap +spl +sqlite sysvipc ssl
 	+thread thrift unicode watchman wddx webp xdebug xen xhprof
@@ -44,7 +44,6 @@ DEPEND="
 	app-arch/lz4
 	dev-cpp/glog
 	dev-cpp/tbb
-	>=dev-lang/ocaml-4.03[ocamlopt] 
 	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
@@ -57,8 +56,7 @@ DEPEND="
 	dev-libs/libpcre[jit]
 	dev-libs/libxml2
 	dev-libs/libxslt
-	>=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
-	dev-ml/ocamlbuild
+	=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
 	>=dev-util/cmake-2.8.7
 	net-misc/curl
 	net-nds/openldap
@@ -98,7 +96,7 @@ DEPEND="
 		virtual/libintl
 	)
 	jemalloc? (
-		>=dev-libs/jemalloc-3.0.0[stats]
+		>=dev-libs/jemalloc-3.0.0[-hardened(-),stats]
 	)
 	jpeg? (
 		virtual/jpeg
@@ -123,6 +121,9 @@ DEPEND="
 	memcached? (
 		dev-libs/bareos-fastlzlib
 		>=dev-libs/libmemcached-0.39
+	)
+	numa? (
+		sys-process/numactl
 	)
 	odbc? (
 		dev-db/unixODBC
@@ -174,6 +175,9 @@ src_prepare() {
 	git submodule update --init --recursive
 
 	epatch "${FILESDIR}/7449.patch"
+	if ! use async_mysql; then
+		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
+	fi
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 

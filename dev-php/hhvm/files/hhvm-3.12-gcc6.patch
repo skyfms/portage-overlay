@@ -1,0 +1,12 @@
+diff --git a/hphp/runtime/vm/bytecode.h b/hphp/runtime/vm/bytecode.h
+index ddc7b69..edf807c 100644
+--- a/hphp/runtime/vm/bytecode.h
++++ b/hphp/runtime/vm/bytecode.h
+@@ -123,7 +123,7 @@ private:
+   static void* allocMem(unsigned nargs);
+
+ private:
+-  TypedValue m_extraArgs[];
++  TypedValue m_extraArgs[0];
+ };
+
