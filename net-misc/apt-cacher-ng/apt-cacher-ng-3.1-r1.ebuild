@@ -54,6 +54,10 @@ pkg_setup() {
 	enewuser ${PN} -1 -1 -1 ${PN}
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/expire-caller.patch"
+}
+
 src_configure(){
 	mycmakeargs=( "-DCMAKE_INSTALL_PREFIX=/usr" )
 	if use fuse; then

@@ -1,0 +1,11 @@
+--- apt-cacher-ng-3.1/scripts/expire-caller.pl  2017-11-05 21:54:13.000000000 +0200
++++ apt-cacher-ng-3.1-r1/scripts/expire-caller.pl       2018-08-22 17:12:09.454224893 +0300
+@@ -1,7 +1,7 @@
+ #!/usr/bin/perl
+ #
+ 
+-print STDERR "WARNING: this script is considered deprecated. It may still work but could print incorrect results!\n"
++print STDERR "WARNING: this script is considered deprecated. It may still work but could print incorrect results!\n";
+ 
+ use strict;
+ use Socket;
