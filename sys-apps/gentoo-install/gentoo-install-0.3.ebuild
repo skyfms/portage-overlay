@@ -28,14 +28,14 @@ RDEPEND="${DEPEND}"
 
 install_cron_file() {
 	exeinto /etc/cron.daily
-	newexe "${FILESDIR}"/config_gen.cron config_gen
+	newexe "${FILESDIR}"/config-gen.cron config-gen
 }
 
 src_install() {
 	dodir /opt/gentoo-install
 	exeinto /opt/gentoo-install
-	doexe gentoo_install.sh
-	doexe config_gen.sh
+	doexe gentoo-install.sh
+	doexe config-gen.sh
 	insinto /opt/gentoo-install
 	doins inc.config.sh
 	doins chroot-part.sh
