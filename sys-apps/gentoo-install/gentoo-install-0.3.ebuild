@@ -28,7 +28,7 @@ RDEPEND="${DEPEND}"
 
 install_cron_file() {
 	exeinto /etc/cron.daily
-	newexe "${FILESDIR}"/config-gen.cron config-gen
+	newexe config-gen.cron config-gen
 }
 
 src_install() {
