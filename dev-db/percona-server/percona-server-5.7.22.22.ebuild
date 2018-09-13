@@ -32,6 +32,7 @@ DEPEND="${COMMON_DEPEND}
 	>=app-arch/lz4-0_p131:=
 	net-libs/libtirpc
 	>=dev-libs/protobuf-2.5.0:=
+	net-libs/rpcsvc-proto
 	cjk? ( app-text/mecab )
 	test? (
 		$(python_gen_any_dep 'dev-python/mysql-python[${PYTHON_USEDEP}]')
