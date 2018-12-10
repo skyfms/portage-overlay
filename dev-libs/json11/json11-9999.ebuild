@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit cmake-utils git-2
+inherit cmake-utils
 
 DESCRIPTION="A tiny JSON library for C++11"
 HOMEPAGE="https://github.com/dropbox/json11"
@@ -12,6 +12,7 @@ HOMEPAGE="https://github.com/dropbox/json11"
 if [[ ${PV} != 9999 ]]; then
 	SRC_URI="https://github.com/dropbox/json11/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 else
+	inherit git-2
 	SRC_URI=""
 	EGIT_REPO_URI="git://github.com/dropbox/json11.git"
 	EGIT_BRANCH="master"
