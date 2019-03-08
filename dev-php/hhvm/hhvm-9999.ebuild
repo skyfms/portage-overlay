@@ -56,7 +56,7 @@ DEPEND="
 	dev-libs/libpcre[jit]
 	dev-libs/libxml2
 	dev-libs/libxslt
-	=dev-libs/oniguruma-5.9.5[-parse-tree-node-recycle]
+	=dev-libs/oniguruma-5.9.6[-parse-tree-node-recycle]
 	>=dev-util/cmake-2.8.7
 	net-misc/curl
 	net-nds/openldap

@@ -12,7 +12,7 @@ MY_P=onig-${PV}
 
 DESCRIPTION="a regular expression library for different character encodings"
 HOMEPAGE="http://www.geocities.jp/kosako3/oniguruma"
-SRC_URI="http://www.geocities.jp/kosako3/oniguruma/archive/${MY_P}.tar.gz"
+SRC_URI="https://github.com/kkos/oniguruma/releases/download/v${PV}/${MY_P}.tar.gz"
 
 LICENSE="BSD-2"
 SLOT="0"
@@ -26,7 +26,7 @@ S=${WORKDIR}/${MY_P}
 
 src_prepare() {
 	if ! use parse-tree-node-recycle ; then
-		epatch "${FILESDIR}"/${P}-disable-use-parse-tree-node-recycle.patch
+		epatch "${FILESDIR}"/oniguruma-5.9.5-disable-use-parse-tree-node-recycle.patch
 	fi
 }
 
