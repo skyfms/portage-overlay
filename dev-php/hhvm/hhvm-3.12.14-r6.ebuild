@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils git-2 user versionator
+inherit eutils git-r3 user versionator
 
 DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP and Hack"
 HOMEPAGE="http://www.hhvm.com"
@@ -80,8 +80,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	git submodule update --init --recursive
-
 	epatch "${FILESDIR}/hhvm-fullUrl.patch"
 	epatch "${FILESDIR}/hhvm-3.12-glibc-2.23.patch"
 	epatch "${FILESDIR}/hhvm-3.12-gcc6.patch"

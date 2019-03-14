@@ -4,7 +4,7 @@
 
 EAPI=5
 
-inherit git-2
+inherit git-r3
 
 DESCRIPTION="Convert HTML to PDF using Webkit (QtWebKit)"
 HOMEPAGE="http://wkhtmltopdf.org/"
@@ -30,10 +30,6 @@ RDEPEND="
 	dev-libs/icu
 	${DEPEND}
 "
-
-src_prepare() {
-	git submodule update --init --recursive
-}
 
 src_compile() {
 	cd ${WORKDIR}/${P}

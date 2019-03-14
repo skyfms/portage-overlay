@@ -4,7 +4,7 @@
 
 EAPI=4
 
-inherit eutils git-2 user versionator
+inherit eutils git-r3 user versionator
 
 DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP and Hack"
 HOMEPAGE="http://www.hhvm.com"
@@ -172,8 +172,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	git submodule update --init --recursive
-
 	epatch "${FILESDIR}/7449.patch"
 	if ! use async_mysql; then
 		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
