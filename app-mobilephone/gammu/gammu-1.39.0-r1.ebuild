@@ -82,3 +82,9 @@ src_configure() {
 src_test() {
 	LD_LIBRARY_PATH="${WORKDIR}/${PN}_build/common" cmake-utils_src_test
 }
+
+src_install() {
+	cmake-utils_src_install
+	insinto /etc/logrotate.d
+	newins "${FILESDIR}"/logrotate gammu
+}

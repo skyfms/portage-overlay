@@ -1,0 +1,5 @@
+/var/log/smsdlog {
+	weekly
+	missingok
+	compress
+}
