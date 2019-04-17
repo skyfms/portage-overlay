@@ -1,0 +1,28 @@
+From b506902af2b7c53de6d6c92491c2086472292004 Mon Sep 17 00:00:00 2001
+From: Fred Emmott <fe@fb.com>
+Date: Fri, 3 Nov 2017 08:47:05 -0700
+Subject: [PATCH] remove xlocale.h include from hhvm
+
+Summary: Breaks GCC6+
+
+Reviewed By: Orvid
+
+Differential Revision: D6227148
+
+fbshipit-source-id: 36791c96ed0f99b693e1d402199b45a58a8019ab
+---
+ hphp/util/locale-portability.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/hphp/util/locale-portability.h b/hphp/util/locale-portability.h
+index 1cec9381f16..db3237b94ee 100644
+--- a/hphp/util/locale-portability.h
++++ b/hphp/util/locale-portability.h
+@@ -31,7 +31,6 @@ typedef _locale_t locale_t;
+ inline locale_t _current_locale() { return _get_current_locale(); }
+ #else
+ #include <langinfo.h>
+-#include <xlocale.h>
+ #endif
+ 
+ #endif

@@ -1,0 +1,138 @@
+From 675728548e8dcb971031cb04899b22056791d905 Mon Sep 17 00:00:00 2001
+From: Victor Zverovich <viz@fb.com>
+Date: Fri, 24 Aug 2018 12:51:46 -0700
+Subject: [PATCH] Update icu in fbcode
+
+Reviewed By: pixelb
+
+Differential Revision: D9491839
+
+fbshipit-source-id: 888bb73acca1aeac7113425577cf90c6fd0f19de
+---
+ hphp/runtime/ext/icu/CodePointBreakIterator.h   | 10 +++++-----
+ hphp/runtime/ext/icu/ext_icu_break_iterator.cpp |  5 ++++-
+ hphp/runtime/ext/icu/ext_icu_date_fmt.cpp       |  2 +-
+ hphp/runtime/ext/icu/ext_icu_iterator.h         |  2 +-
+ hphp/runtime/ext/icu/ext_icu_msg_fmt.cpp        |  2 ++
+ hphp/runtime/ext/icu/ext_icu_rsrc_bundle.cpp    |  2 +-
+ 6 files changed, 14 insertions(+), 9 deletions(-)
+
+diff --git a/hphp/runtime/ext/icu/CodePointBreakIterator.h b/hphp/runtime/ext/icu/CodePointBreakIterator.h
+index a04afdb3dda..e015cbf7f8b 100644
+--- a/hphp/runtime/ext/icu/CodePointBreakIterator.h
++++ b/hphp/runtime/ext/icu/CodePointBreakIterator.h
+@@ -51,11 +51,11 @@ struct CodePointBreakIterator : icu::BreakIterator {
+     return new CodePointBreakIterator(*this);
+   }
+ 
+-  CharacterIterator& getText(void) const override {
++  icu::CharacterIterator& getText(void) const override {
+     if (!m_charIter) {
+       // this method is deprecated anyway; setup bogus iterator
+       static const UChar c = 0;
+-      m_charIter = new UCharCharacterIterator(&c, 0);
++      m_charIter = new icu::UCharCharacterIterator(&c, 0);
+     }
+     return *m_charIter;
+   }
+@@ -64,7 +64,7 @@ struct CodePointBreakIterator : icu::BreakIterator {
+     return utext_clone(fillIn, m_text, false, true, &status);
+   }
+ 
+-  void setText(const UnicodeString &text) override {
++  void setText(const icu::UnicodeString &text) override {
+     UErrorCode error = U_ZERO_ERROR;
+     m_text = utext_openConstUnicodeString(m_text, &text, &error);
+     clearCurrentCharIter();
+@@ -78,7 +78,7 @@ struct CodePointBreakIterator : icu::BreakIterator {
+     clearCurrentCharIter();
+   }
+ 
+-  void adoptText(CharacterIterator* it) override {
++  void adoptText(icu::CharacterIterator* it) override {
+     clearCurrentCharIter();
+     UErrorCode error = U_ZERO_ERROR;
+     m_charIter = it;
+@@ -157,7 +157,7 @@ struct CodePointBreakIterator : icu::BreakIterator {
+  private:
+   UText  *m_text{nullptr};
+   UChar32 m_lastCodePoint{U_SENTINEL};
+-  mutable CharacterIterator *m_charIter{nullptr};
++  mutable icu::CharacterIterator *m_charIter{nullptr};
+ 
+   inline void clearCurrentCharIter() {
+     if (m_charIter) {
+diff --git a/hphp/runtime/ext/icu/ext_icu_break_iterator.cpp b/hphp/runtime/ext/icu/ext_icu_break_iterator.cpp
+index c631557c6ec..4a4511b5386 100644
+--- a/hphp/runtime/ext/icu/ext_icu_break_iterator.cpp
++++ b/hphp/runtime/ext/icu/ext_icu_break_iterator.cpp
+@@ -1,5 +1,8 @@
+ #include "hphp/runtime/ext/icu/ext_icu_break_iterator.h"
+ 
++using icu::BreakIterator;
++using icu::RuleBasedBreakIterator;
++
+ namespace HPHP { namespace Intl {
+ 
+ const StaticString
+@@ -23,7 +26,7 @@ inline Object ibi_create(const char *funcname,
+                                                      UErrorCode&),
+                          const String& locale) {
+   UErrorCode error = U_ZERO_ERROR;
+-  auto bi = func(Locale::createFromName(locale.c_str()), error);
++  auto bi = func(icu::Locale::createFromName(locale.c_str()), error);
+   if (U_FAILURE(error)) {
+     s_intl_error->setError(error, "%s: error creating BreakIterator", funcname);
+     return Object();
+diff --git a/hphp/runtime/ext/icu/ext_icu_date_fmt.cpp b/hphp/runtime/ext/icu/ext_icu_date_fmt.cpp
+index 66090865c10..02d6ce4a7af 100644
+--- a/hphp/runtime/ext/icu/ext_icu_date_fmt.cpp
++++ b/hphp/runtime/ext/icu/ext_icu_date_fmt.cpp
+@@ -289,7 +289,7 @@ static int64_t HHVM_METHOD(IntlDateFormatter, getTimeType) {
+ 
+ static String HHVM_METHOD(IntlDateFormatter, getTimeZoneId) {
+   DATFMT_GET(data, this_, 0);
+-  UnicodeString id;
++  icu::UnicodeString id;
+   data->datefmtObject()->getTimeZone().getID(id);
+   UErrorCode error = U_ZERO_ERROR;
+   String ret(u8(id, error));
+diff --git a/hphp/runtime/ext/icu/ext_icu_iterator.h b/hphp/runtime/ext/icu/ext_icu_iterator.h
+index b4beda180c0..cdbe055a910 100644
+--- a/hphp/runtime/ext/icu/ext_icu_iterator.h
++++ b/hphp/runtime/ext/icu/ext_icu_iterator.h
+@@ -115,7 +115,7 @@ struct BugStringCharEnumeration : icu::StringEnumeration {
+     return uenum_count(uenum, &status);
+   }
+ 
+-  const UnicodeString* snext(UErrorCode& status) override {
++  const icu::UnicodeString* snext(UErrorCode& status) override {
+     int32_t length;
+     const UChar* str = uenum_unext(uenum, &length, &status);
+     if (str == 0 || U_FAILURE(status)) {
+diff --git a/hphp/runtime/ext/icu/ext_icu_msg_fmt.cpp b/hphp/runtime/ext/icu/ext_icu_msg_fmt.cpp
+index d5e1d7662bc..23994f5f7d3 100644
+--- a/hphp/runtime/ext/icu/ext_icu_msg_fmt.cpp
++++ b/hphp/runtime/ext/icu/ext_icu_msg_fmt.cpp
+@@ -35,6 +35,8 @@ class MessageFormatAdapter {
+ };
+ U_NAMESPACE_END
+ 
++using icu::MessageFormatAdapter;
++
+ namespace HPHP { namespace Intl {
+ //////////////////////////////////////////////////////////////////////////////
+ // Internal resource data
+diff --git a/hphp/runtime/ext/icu/ext_icu_rsrc_bundle.cpp b/hphp/runtime/ext/icu/ext_icu_rsrc_bundle.cpp
+index f51219b0c5a..7821f2d3ae0 100644
+--- a/hphp/runtime/ext/icu/ext_icu_rsrc_bundle.cpp
++++ b/hphp/runtime/ext/icu/ext_icu_rsrc_bundle.cpp
+@@ -74,7 +74,7 @@ static void HHVM_METHOD(ResourceBundle, __construct, const Variant& localeName,
+     raise_warning("Bundle name too long");
+     bundle = String{};
+   }
+-  auto const locale = Locale::createFromName(
++  auto const locale = icu::Locale::createFromName(
+     localeOrDefault(localeName.toString()).c_str()
+   );
+   auto data = Native::data<ResourceBundle>(this_);

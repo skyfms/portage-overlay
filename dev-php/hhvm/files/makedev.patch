@@ -1,0 +1,14 @@
+diff --git a/hphp/runtime/ext/posix/ext_posix.cpp b/hphp/runtime/ext/posix/ext_posix.cpp
+index fa73c1c7b33..d0f8040217e 100644
+--- a/hphp/runtime/ext/posix/ext_posix.cpp
++++ b/hphp/runtime/ext/posix/ext_posix.cpp
+@@ -27,6 +27,9 @@
+ #ifdef __FreeBSD__
+ #include <sys/param.h>
+ #endif
++#ifdef __linux__
++#include <sys/sysmacros.h>
++#endif
+ #include <unistd.h>
+ #include <pwd.h>
+ 

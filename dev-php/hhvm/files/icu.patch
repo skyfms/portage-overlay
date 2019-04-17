@@ -1,0 +1,32 @@
+From 99f81dc9361b834324a511abc367632909e7b049 Mon Sep 17 00:00:00 2001
+From: thedjnK <spam@helper3000.net>
+Date: Fri, 26 May 2017 10:28:48 -0700
+Subject: [PATCH] Add missing unicode include in icu.h
+
+Summary:
+Fix for missing include in icu.h as referenced in https://github.com/facebook/hhvm/issues/7843
+Closes https://github.com/facebook/hhvm/pull/7856
+
+Reviewed By: mofarrell
+
+Differential Revision: D5131706
+
+Pulled By: Orvid
+
+fbshipit-source-id: 426d253f579cf6ae851a634eb3d312e761a03a85
+---
+ hphp/runtime/ext/icu/icu.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hphp/runtime/ext/icu/icu.h b/hphp/runtime/ext/icu/icu.h
+index 0999cf463ff..4beb728df17 100644
+--- a/hphp/runtime/ext/icu/icu.h
++++ b/hphp/runtime/ext/icu/icu.h
+@@ -21,6 +21,7 @@
+ #include "hphp/runtime/vm/native-data.h"
+ #include <unicode/utypes.h>
+ #include <unicode/ucnv.h>
++#include <unicode/unistr.h>
+ #include <unicode/ustring.h>
+ #include "hphp/runtime/base/request-event-handler.h"
+ #include "hphp/runtime/base/request-local.h"
