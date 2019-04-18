@@ -82,6 +82,8 @@ src_prepare() {
 	if ! use async_mysql; then
 		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
 	fi
+
+	eapply_user
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 

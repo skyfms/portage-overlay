@@ -83,6 +83,8 @@ src_prepare() {
 		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
 	fi
 	
+	eapply_user
+
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"

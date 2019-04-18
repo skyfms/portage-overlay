@@ -88,6 +88,8 @@ src_prepare() {
 	epatch "${FILESDIR}/hhvm-3.12-icu2.patch"
 	epatch "${FILESDIR}/hhvm-3.12-makedev.patch"
 
+	eapply_user
+
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"

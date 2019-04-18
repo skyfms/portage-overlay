@@ -79,6 +79,8 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
+
+	eapply_user
 	
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 

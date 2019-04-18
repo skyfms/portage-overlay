@@ -26,6 +26,7 @@ DEPEND="
 
 # @FUNCTION: hhvm-ext-source_src_prepare
 hhvm-ext-source_src_prepare() {
+	default_src_prepare
 	hphpize
 }
 
