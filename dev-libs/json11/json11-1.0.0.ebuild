@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 inherit cmake-utils
 
@@ -12,9 +12,9 @@ HOMEPAGE="https://github.com/dropbox/json11"
 if [[ ${PV} != 9999 ]]; then
 	SRC_URI="https://github.com/dropbox/json11/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 else
-	inherit git-2
+	inherit git-r3
 	SRC_URI=""
-	EGIT_REPO_URI="git://github.com/dropbox/json11.git"
+	EGIT_REPO_URI="https://github.com/dropbox/json11.git"
 	EGIT_BRANCH="master"
 fi
 

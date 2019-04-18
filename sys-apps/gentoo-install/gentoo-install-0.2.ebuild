@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
 DESCRIPTION="Gentoo Linux install process automatization."
 HOMEPAGE="https://github.com/kristapsk/gentoo-install"
@@ -11,8 +11,8 @@ if [[ ${PV} != 9999 ]]; then
 	SRC_URI="https://github.com/kristapsk/gentoo-install/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 else
 	SRC_URI=""
-	inherit git-2
-	EGIT_REPO_URI="git://github.com/kristapsk/gentoo-install.git"
+	inherit git-r3
+	EGIT_REPO_URI="https://github.com/kristapsk/gentoo-install.git"
 	EGIT_BRANCH="master"
 fi
 

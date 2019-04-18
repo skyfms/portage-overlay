@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
-inherit git-2
+inherit git-r3
 
 DESCRIPTION="Stack trace visualizer"
 HOMEPAGE="http://www.brendangregg.com/flamegraphs.html"
 SRC_URI=""
-EGIT_REPO_URI="git://github.com/brendangregg/FlameGraph"
+EGIT_REPO_URI="https://github.com/brendangregg/FlameGraph"
 EGIT_BRANCH="master"
 
 LICENSE="CDDL"

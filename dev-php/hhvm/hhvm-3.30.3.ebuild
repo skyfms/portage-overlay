@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=4
+EAPI=6
 
 inherit eutils git-r3 user versionator
 
 DESCRIPTION="Virtual Machine, Runtime, and JIT for PHP and Hack"
 HOMEPAGE="http://www.hhvm.com"
 SRC_URI=""
-EGIT_REPO_URI="git://github.com/facebook/hhvm.git"
+EGIT_REPO_URI="https://github.com/facebook/hhvm.git"
 
 if [[ ${PV} == 9999 ]]; then
 	EGIT_BRANCH="master"

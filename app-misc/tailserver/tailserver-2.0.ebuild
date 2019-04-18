@@ -2,14 +2,14 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=5
+EAPI=6
 
-inherit git-2
+inherit git-r3
 
 DESCRIPTION="Achieve tee <file> tail <file> without the overhead of writing to <file>."
-HOMEPAGE="http://github.com/edgarsi/tailserver"
+HOMEPAGE="https://github.com/edgarsi/tailserver"
 SRC_URI=""
-EGIT_REPO_URI="git://github.com/edgarsi/tailserver.git"
+EGIT_REPO_URI="https://github.com/edgarsi/tailserver.git"
 EGIT_BRANCH="master"
 
 if [[ ${PV} != 9999 ]]; then

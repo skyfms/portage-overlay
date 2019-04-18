@@ -9,7 +9,7 @@ inherit git-r3
 DESCRIPTION="Convert HTML to PDF using Webkit (QtWebKit)"
 HOMEPAGE="http://wkhtmltopdf.org/"
 SRC_URI=""
-EGIT_REPO_URI="git://github.com/wkhtmltopdf/wkhtmltopdf.git"
+EGIT_REPO_URI="https://github.com/wkhtmltopdf/wkhtmltopdf.git"
 
 if [[ ${PV} == 9999 ]]; then
 	EGIT_BRANCH="master"
