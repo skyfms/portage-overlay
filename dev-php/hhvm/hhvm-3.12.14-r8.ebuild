@@ -83,10 +83,10 @@ src_prepare() {
 	epatch "${FILESDIR}/hhvm-fullUrl.patch"
 	epatch "${FILESDIR}/hhvm-3.12-glibc-2.23.patch"
 	epatch "${FILESDIR}/hhvm-3.12-gcc6.patch"
-	epatch "${FILESDIR}/xlocale.patch"
-	epatch "${FILESDIR}/icu.patch"
-	epatch "${FILESDIR}/icu2.patch"
-	epatch "${FILESDIR}/makedev.patch"
+	epatch "${FILESDIR}/hhvm-3.12-xlocale.patch"
+	epatch "${FILESDIR}/hhvm-3.12-icu.patch"
+	epatch "${FILESDIR}/hhvm-3.12-icu2.patch"
+	epatch "${FILESDIR}/hhvm-3.12-makedev.patch"
 
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
