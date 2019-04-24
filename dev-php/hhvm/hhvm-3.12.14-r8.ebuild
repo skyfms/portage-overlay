@@ -60,7 +60,6 @@ DEPEND="
 	net-nds/openldap
 	sys-devel/binutils[static-libs]
 	>=sys-devel/gcc-4.8[-hardened]
-	<sys-devel/gcc-6[-hardened]
 	sys-libs/libcap
 	numa? ( sys-process/numactl )
 	jpeg? ( virtual/jpeg )
