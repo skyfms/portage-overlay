@@ -1,6 +1,0 @@
-# Redis user.
-REDIS_USER="redis"
-
-# Redis group.
-REDIS_GROUP="redis"
-
