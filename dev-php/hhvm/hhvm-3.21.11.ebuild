@@ -79,6 +79,7 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
+	epatch "${FILESDIR}/hhvm-3.12-xlocale.patch"
 	if ! use async_mysql; then
 		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
 	fi
