@@ -79,9 +79,15 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
-
-	eapply_user
+	epatch "${FILESDIR}/hhvm-3.12-xlocale.patch"
+	epatch "${FILESDIR}/hhvm-3.21-makedev.patch"
+	if ! use async_mysql; then
+		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
+	fi
+	epatch "${FILESDIR}/gd-overflow.patch"
 	
+	eapply_user
+
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"
