@@ -80,6 +80,7 @@ pkg_setup() {
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
 	epatch "${FILESDIR}/gd-overflow.patch"
+	epatch "${FILESDIR}/string_number_format.patch"
 
 	eapply_user
 	
