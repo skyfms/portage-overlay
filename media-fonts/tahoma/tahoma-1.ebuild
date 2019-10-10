@@ -15,10 +15,11 @@ S=${WORKDIR}
 FONT_S=${WORKDIR}
 FONT_SUFFIX="ttf"
 FONTDIR="/usr/share/fonts/tahoma"
+MYDISTDIR="/var/cache/distfiles"
 
 src_unpack() {
-	ls ${DISTDIR}/tahoma.ttf >/dev/null || die "Get tahoma.ttf and tahomabd.ttf and put them in ${DISTDIR}"
-	ls ${DISTDIR}/tahomabd.ttf >/dev/null || die "Get tahoma.ttf and tahomabd.ttf and put them in ${DISTDIR}"
-	cp ${DISTDIR}/tahoma.ttf ${DISTDIR}/tahomabd.ttf ${S}
+	ls ${MYDISTDIR}/tahoma.ttf >/dev/null || die "Get tahoma.ttf and tahomabd.ttf and put them in ${MYDISTDIR}"
+	ls ${MYDISTDIR}/tahomabd.ttf >/dev/null || die "Get tahoma.ttf and tahomabd.ttf and put them in ${MYDISTDIR}"
+	cp ${MYDISTDIR}/tahoma.ttf ${MYDISTDIR}/tahomabd.ttf ${S}
 
 }
