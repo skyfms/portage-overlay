@@ -10,7 +10,7 @@ inherit libtool multilib-minimal python-any-r1
 
 DESCRIPTION="Google's C++ mocking framework"
 HOMEPAGE="https://github.com/google/googlemock"
-SRC_URI="https://gentoo.zini.lv/${P}.zip"
+SRC_URI="https://gentoo.zini.lv/distfiles/${P}.zip"
 
 LICENSE="BSD"
 SLOT="0"
