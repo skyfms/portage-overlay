@@ -29,6 +29,8 @@ DEPEND="${CDEPEND}
 	doc? ( app-arch/unzip )
 "
 RDEPEND="${CDEPEND}
+	acct-user/firebird
+	acct-group/firebird
 	xinetd? ( virtual/inetd )
 	!sys-cluster/ganglia
 "
@@ -41,11 +43,6 @@ PATCHES=(
 )
 
 S="${WORKDIR}/${MY_P}"
-
-pkg_setup() {
-	enewgroup firebird 450
-	enewuser firebird 450 /bin/sh /usr/$(get_libdir)/firebird firebird
-}
 
 check_sed() {
 	MSG="sed of $3, required $2 line(s) modified $1"
