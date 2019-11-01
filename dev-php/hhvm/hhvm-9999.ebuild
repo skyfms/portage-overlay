@@ -152,6 +152,8 @@ DEPEND="
 "
 RDEPEND="
 	${DEPEND}
+	acct-group/hhvm
+	acct-user/hhvm
 	sys-process/lsof
 	virtual/mailx
 "
@@ -163,13 +165,6 @@ REQUIRED_USE="
 	readline? ( !libedit )
 	webp? ( gd )
 "
-
-pkg_setup() {
-    ebegin "Creating hhvm user and group"
-    enewgroup hhvm
-    enewuser hhvm -1 -1 "/usr/lib/hhvm" hhvm
-    eend $?
-}
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
