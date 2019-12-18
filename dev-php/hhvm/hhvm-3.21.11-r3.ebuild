@@ -34,11 +34,12 @@ DEPEND="
 	dev-cpp/glog
 	dev-cpp/tbb
 	dev-db/postgresql
+	>=dev-lang/ocaml-4.04
 	>=dev-libs/boost-1.51[context(+)]
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
-	jemalloc? ( >=dev-libs/jemalloc-3.0.0[-hardened(-),stats] )
+	jemalloc? ( >=dev-libs/jemalloc-5.0.0[-hardened(-),stats] )
 	dev-libs/icu
 	jsonc? ( dev-libs/json-c )
 	dev-libs/libdwarf
@@ -49,6 +50,7 @@ DEPEND="
 	=dev-libs/oniguruma-5.9.6[-parse-tree-node-recycle]
 	dev-libs/libpcre[jit]
 	dev-libs/libxslt
+	dev-ml/ocamlbuild
 	>=dev-util/cmake-2.8.7
 	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
@@ -74,12 +76,16 @@ RDEPEND="
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
+	epatch "${FILESDIR}/hhvm-3.12-xlocale.patch"
+	epatch "${FILESDIR}/hhvm-3.21-makedev.patch"
 	if ! use async_mysql; then
 		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
 	fi
-
-	eapply_user
+	epatch "${FILESDIR}/gd-overflow.patch"
+	epatch "${FILESDIR}/hhvm-3.12-string_number_format.patch"
 	
+	eapply_user
+
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"

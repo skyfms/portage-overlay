@@ -38,7 +38,7 @@ DEPEND="
 	dev-libs/cyrus-sasl:2
 	dev-libs/double-conversion
 	gmp? ( dev-libs/gmp )
-	jemalloc? ( >=dev-libs/jemalloc-3.0.0[-hardened(-),stats] )
+	jemalloc? ( >=dev-libs/jemalloc-5.0.0[-hardened(-),stats] )
 	dev-libs/icu
 	jsonc? ( dev-libs/json-c )
 	dev-libs/libdwarf
@@ -74,8 +74,9 @@ RDEPEND="
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
-	epatch "${FILESDIR}/gd-overflow.patch"
-	epatch "${FILESDIR}/string_number_format.patch"
+	if ! use async_mysql; then
+		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
+	fi
 
 	eapply_user
 	
