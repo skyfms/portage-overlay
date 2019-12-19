@@ -2,10 +2,11 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header:$
 
+EAPI=5
 inherit font
 
 DESCRIPTION="Microsoft's Tahoma font"
-HOMEPAGE="http://microsoft.com"
+HOMEPAGE="https://microsoft.com"
 SRC_URI=""
 LICENSE="MSttfEULA"
 SLOT="0"
@@ -21,5 +22,4 @@ src_unpack() {
 	ls ${MYDISTDIR}/tahoma.ttf >/dev/null || die "Get tahoma.ttf and tahomabd.ttf and put them in ${MYDISTDIR}"
 	ls ${MYDISTDIR}/tahomabd.ttf >/dev/null || die "Get tahoma.ttf and tahomabd.ttf and put them in ${MYDISTDIR}"
 	cp ${MYDISTDIR}/tahoma.ttf ${MYDISTDIR}/tahomabd.ttf ${S}
-
 }
