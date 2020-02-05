@@ -75,9 +75,6 @@ RDEPEND="
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
-	if ! use async_mysql; then
-		epatch "${FILESDIR}/hhvm-3.15-enable_async_mysql-off.patch"
-	fi
 
 	eapply_user
 	
