@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter numa +png webp xen +zend-compat cpu_flags_x86_avx2"
+IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter numa +png postgres webp xen +zend-compat cpu_flags_x86_avx2"
 
 DEPEND="
 	app-arch/lz4
@@ -53,6 +53,7 @@ DEPEND="
 	imagemagick? ( media-gfx/imagemagick )
 	freetype? ( media-libs/freetype )
 	png? ( media-libs/libpng )
+	postgres? ( dev-db/postgresql )
 	webp? ( media-libs/libvpx )
 	net-libs/c-client[kerberos]
 	net-misc/curl
@@ -119,6 +120,10 @@ src_configure() {
 
 	if ! use mcrouter; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_MCROUTER=OFF"
+	fi
+
+	if ! use postgres; then
+		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_EXTENSION_PGSQL=OFF"
 	fi
 
 	if use xen; then
