@@ -103,7 +103,7 @@ src_configure() {
         ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_AVX2=ON"
     fi
 
-	if use cpu_flags_sse4_2; then
+	if use cpu_flags_x86_sse4_2; then
 		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_SSE4_2=ON"
 	fi
 
