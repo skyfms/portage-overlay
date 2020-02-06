@@ -75,6 +75,7 @@ RDEPEND="
 
 src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
+	epatch "${FILESDIR}/hhvm-3.27-include-third-party.patch"
 
 	eapply_user
 	
