@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI="4"
+EAPI=6
 
 inherit flag-o-matic
 
@@ -10,7 +10,7 @@ DESCRIPTION="Library to deal with DWARF Debugging Information Format"
 HOMEPAGE="http://reality.sgiweb.org/davea/dwarf.html"
 
 if [[ ${PV} == 99999999 ]]; then
-	inherit git-2
+	inherit git-r3
 	SRC_URI=""
 	EGIT_REPO_URI="git://libdwarf.git.sourceforge.net/gitroot/libdwarf/libdwarf"
 else
