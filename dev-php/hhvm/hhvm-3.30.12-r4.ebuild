@@ -77,6 +77,7 @@ src_prepare() {
 	epatch "${FILESDIR}/7449.patch"
 	epatch "${FILESDIR}/hhvm-3.27-include-third-party.patch"
 	epatch "${FILESDIR}/hhvm-gentoo-latomic.patch"
+	epatch "${FILESDIR}/vm-unit-util-isspace.patch"
 
 	eapply_user
 	

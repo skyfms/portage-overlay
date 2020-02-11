@@ -1,0 +1,13 @@
+diff --git a/hphp/runtime/vm/unit-util.h b/hphp/runtime/vm/unit-util.h
+index 66e1106acb..a91457ba30 100644
+--- a/hphp/runtime/vm/unit-util.h
++++ b/hphp/runtime/vm/unit-util.h
+@@ -125,7 +125,7 @@ inline std::string mangleReifiedGenericsName(const ArrayData* tsList) {
+       assertx(isArrayLikeType(v.m_type));
+       auto str =
+         TypeStructure::toStringForDisplay(ArrNR(v.m_data.parr)).toCppString();
+-      str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
++      str.erase(remove_if(str.begin(), str.end(), (int(*)(int))std::isspace), str.end());
+       l.emplace_back(str);
+     }
+   );
