@@ -35,6 +35,7 @@ fi
 
 src_prepare() {
 	append-cflags -fPIC || die
+	eapply_user
 }
 
 src_configure() {
