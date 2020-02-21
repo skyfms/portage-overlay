@@ -1,0 +1,40 @@
+From 8858f6da5480df0e861b64f7ca362b8224d29de7 Mon Sep 17 00:00:00 2001
+From: Mark Williams <mwilliams@fb.com>
+Date: Mon, 6 May 2019 14:17:06 -0700
+Subject: [PATCH] Workaround a gcc9.1 bug in hhbbc
+
+Reviewed By: mxw
+
+Differential Revision: D15218304
+
+fbshipit-source-id: 7cae6ee8b4bbbf13a438485e8a1f4c24aac66e94
+---
+ hphp/hhbbc/bc.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/hphp/hhbbc/bc.h b/hphp/hhbbc/bc.h
+index 08e3daf478e..b432f5f32f2 100644
+--- a/hphp/hhbbc/bc.h
++++ b/hphp/hhbbc/bc.h
+@@ -263,6 +263,9 @@ struct hasher_impl {
+ template<typename T, typename S>
+ struct hash_operand { const T& val; S type; };
+ 
++// this template isn't really needed. its a workaround for T44007494
++template<typename S> struct hash_operand<void*, S> { void* const val; S type; };
++
+ /*
+  * Hash T using H::operator() if it is compatible, else fall back to
+  * hasher_impl (e.g., if H := hasher_default).
+@@ -310,6 +313,11 @@ struct eq_default {};
+ template<typename T, typename S>
+ struct eq_operand { const T& l; const T& r; S type; };
+ 
++// this template isn't really needed. its a workaround for T44007494
++template<typename S> struct eq_operand<void*, S> {
++  void* const l; void* const r; S type;
++};
++
+ /*
+  * Compare two values, using E::operator() if it exists, else the default
+  * operator==.

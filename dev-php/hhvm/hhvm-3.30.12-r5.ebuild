@@ -79,6 +79,7 @@ src_prepare() {
 	epatch "${FILESDIR}/hhvm-gentoo-latomic.patch"
 	epatch "${FILESDIR}/vm-unit-util-isspace.patch"
 	epatch "${FILESDIR}/folly-boost-crc.patch"
+	epatch "${FILESDIR}/hhbbc-gcc9.1.patch"
 
 	eapply_user
 	
