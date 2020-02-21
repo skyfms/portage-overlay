@@ -78,6 +78,7 @@ src_prepare() {
 	epatch "${FILESDIR}/hhvm-3.27-include-third-party.patch"
 	epatch "${FILESDIR}/hhvm-gentoo-latomic.patch"
 	epatch "${FILESDIR}/vm-unit-util-isspace.patch"
+	epatch "${FILESDIR}/folly-boost-crc.patch"
 
 	eapply_user
 	

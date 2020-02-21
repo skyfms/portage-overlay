@@ -1,0 +1,14 @@
+diff --git a/third-party/folly/src/folly/hash/Checksum.cpp b/third-party/folly/src/folly/hash/Checksum.cpp
+index 9b65ce44c..5ce4ad384 100644
+--- a/third-party/folly/src/folly/hash/Checksum.cpp
++++ b/third-party/folly/src/folly/hash/Checksum.cpp
+@@ -15,7 +15,9 @@
+  */
+ 
+ #include <folly/hash/Checksum.h>
++#define not !
+ #include <boost/crc.hpp>
++#undef not
+ #include <folly/CpuId.h>
+ #include <folly/hash/detail/ChecksumDetail.h>
+ #include <algorithm>
