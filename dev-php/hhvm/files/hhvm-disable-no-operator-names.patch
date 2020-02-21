@@ -1,0 +1,12 @@
+diff --git a/CMake/HPHPCompiler.cmake b/CMake/HPHPCompiler.cmake
+index bd7e628c9c..e4047fcb47 100644
+--- a/CMake/HPHPCompiler.cmake
++++ b/CMake/HPHPCompiler.cmake
+@@ -68,7 +68,6 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_ID} STREQU
+   list(APPEND GENERAL_CXX_OPTIONS
+     "std=gnu++1y"
+     "fno-omit-frame-pointer"
+-    "fno-operator-names"
+     "Wall"
+     "Woverloaded-virtual"
+     "Werror=format-security"
