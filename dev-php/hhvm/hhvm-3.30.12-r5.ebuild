@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter numa +png postgres webp xen +zend-compat cpu_flags_x86_sse4_2"
+IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter numa +png postgres webp xen cpu_flags_x86_sse4_2"
 
 DEPEND="
 	app-arch/lz4
@@ -133,10 +133,6 @@ src_configure() {
 			eerror "Under XenU, xen USE flag is required! See https://github.com/facebook/hhvm/issues/981"
 			die
 		fi
-	fi
-
-	if ! use zend-compat; then
-		ADDITIONAL_MAKE_DEFS="${ADDITIONAL_MAKE_DEFS} -DENABLE_ZEND_COMPAT=OFF"
 	fi
 
     econf -DCMAKE_BUILD_TYPE="${CMAKE_BUILD_TYPE}" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON ${ADDITIONAL_MAKE_DEFS}
