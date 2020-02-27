@@ -46,7 +46,7 @@ DEPEND="
 	dev-libs/libmcrypt
 	dev-libs/libmemcached
 	dev-libs/libzip
-	=dev-libs/oniguruma-5.9.6[-parse-tree-node-recycle]
+	|| ( =dev-libs/oniguruma-5.9.6[-parse-tree-node-recycle] >=dev-libs/oniguruma-6 )
 	dev-libs/libpcre[jit]
 	dev-libs/libxslt
 	>=dev-util/cmake-2.8.7
