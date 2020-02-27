@@ -80,6 +80,8 @@ src_prepare() {
 	epatch "${FILESDIR}/vm-unit-util-isspace.patch"
 	epatch "${FILESDIR}/folly-boost-crc.patch"
 	epatch "${FILESDIR}/hhbbc-gcc9.1.patch"
+	epatch "${FILESDIR}/hhvm-3.30-JSON_parser-1.patch"
+	epatch "${FILESDIR}/hhvm-3.30-JSON_parser-2.patch"
 
 	eapply_user
 	

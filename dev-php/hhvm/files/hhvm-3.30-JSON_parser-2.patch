@@ -1,0 +1,45 @@
+From 3dd0ac0b9a8bcbbe96a4934ab4e63dbaf678f661 Mon Sep 17 00:00:00 2001
+From: Mark Williams <mwilliams@fb.com>
+Date: Tue, 28 Jan 2020 16:31:57 -0800
+Subject: [PATCH] Fix a buffer-overrun in SimpleParser
+
+Summary: In the failure case, we might have already consumed the entire string.
+
+Reviewed By: binliu19, ottoni
+
+Differential Revision: D19610775
+---
+ hphp/runtime/ext/json/JSON_parser.cpp           | 2 +-
+ hphp/test/slow/ext_json/decode_crash.php        | 1 +
+ hphp/test/slow/ext_json/decode_crash.php.expect | 1 +
+ 3 files changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hphp/runtime/ext/json/JSON_parser.cpp b/hphp/runtime/ext/json/JSON_parser.cpp
+index e0c336232f5..6fcfc2d154b 100644
+--- a/hphp/runtime/ext/json/JSON_parser.cpp
++++ b/hphp/runtime/ext/json/JSON_parser.cpp
+@@ -341,7 +341,7 @@ struct SimpleParser {
+                        JSONContainerType container_type) {
+     SimpleParser parser(inp, length, buf, container_type);
+     bool ok = parser.parseValue();
+-    parser.skipSpace();
++    if (ok) parser.skipSpace();
+     if (!ok || parser.p != inp + length) {
+       // Unsupported, malformed, or trailing garbage. Release entire stack.
+       tvDecRefRange(buf, parser.top);
+diff --git a/hphp/test/slow/ext_json/decode_crash.php b/hphp/test/slow/ext_json/decode_crash.php
+index 9944145e454..003b886b2f4 100644
+--- a/hphp/test/slow/ext_json/decode_crash.php
++++ b/hphp/test/slow/ext_json/decode_crash.php
+@@ -1,3 +1,4 @@
+ <?hh
+ 
+ var_dump(json_decode('"a"', false, 0, 0));
++var_dump(json_decode('"abc', true, 1000, 0));
+diff --git a/hphp/test/slow/ext_json/decode_crash.php.expect b/hphp/test/slow/ext_json/decode_crash.php.expect
+index 7951defec19..e2a4ea7d26c 100644
+--- a/hphp/test/slow/ext_json/decode_crash.php.expect
++++ b/hphp/test/slow/ext_json/decode_crash.php.expect
+@@ -1 +1,2 @@
+ NULL
++NULL
