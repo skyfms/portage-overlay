@@ -27,7 +27,7 @@ LICENSE="
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="+async_mysql cotire dbase debug +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter numa +png postgres webp xen cpu_flags_x86_sse4_2"
+IUSE="+async_mysql cotire dbase +freetype gmp imagemagick +jemalloc +jpeg jsonc +mcrouter numa +png postgres webp xen cpu_flags_x86_sse4_2"
 
 DEPEND="
 	app-arch/lz4
@@ -88,9 +88,6 @@ src_prepare() {
 	export CMAKE_PREFIX_PATH="${D}/usr/lib/hhvm"
 
 	CMAKE_BUILD_TYPE="Release"
-	if use debug; then
-		CMAKE_BUILD_TYPE="Debug"
-	fi
 	export CMAKE_BUILD_TYPE
 }
 
