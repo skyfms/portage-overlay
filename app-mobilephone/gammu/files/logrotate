@@ -1,9 +1,0 @@
-/var/log/smsdlog {
-	weekly
-	missingok
-	compress
-	postrotate
-		# We assume some cron script will auto start gammu
-		killall -s 9 gammu-smsd
-	endscript
-}
