@@ -732,7 +732,6 @@ src_prepare() {
 		einfo "Done."
 	fi
 
-	eapply "${FILESDIR}/glibc-2.29-CVE-2019-9169.patch"
 	eapply "${FILESDIR}/glibc-2.29-CVE-2020-10029.patch"
 
 	default
