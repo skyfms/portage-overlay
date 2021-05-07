@@ -20,6 +20,9 @@ IUSE=""
 
 DEPEND=""
 RDEPEND="${DEPEND}"
+BDEPEND="
+	verify-sig? ( app-crypt/openpgp-keys-mysql )
+"
 
 VERIFY_SIG_OPENPGP_KEY_PATH=${BROOT}/usr/share/openpgp-keys/mysql_pubkey.asc
 
